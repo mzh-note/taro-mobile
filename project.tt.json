@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "taro开发小程序",
+  "appid": "wx6d13035910b84f98",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
