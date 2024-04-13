@@ -1,1 +1,1 @@
-使用taro + react + typescript开发微信小程序。
+使用taro 开发小程序，模仿h5 https://toutiao.itheima.net/dist/index.html#/

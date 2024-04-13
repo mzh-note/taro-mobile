@@ -1,9 +1,6 @@
 import type { UserConfigExport } from "@tarojs/cli";
 export default {
-  env: {
-    NODE_ENV: '"development"'
-  },
-  logger: {
+   logger: {
     quiet: false,
     stats: true
   },

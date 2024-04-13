@@ -1,8 +1,5 @@
 import type { UserConfigExport } from "@tarojs/cli";
 export default {
-  env: {
-    NODE_ENV: '"production"'
-  },
   mini: {},
   h5: {
     /**
@@ -27,8 +24,8 @@ export default {
     //     .plugin('prerender')
     //     .use(new Prerender({
     //       staticDir,
-    //       routes: [ '/pages/index/index' ],
-    //       postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'index.html') })
+    //       routes: [ '/pages/login/login' ],
+    //       postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'login.html') })
     //     }))
     // }
   }
