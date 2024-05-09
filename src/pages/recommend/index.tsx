@@ -9,19 +9,17 @@ import SecondZone from '@/pages/recommend/components/SecondZone';
 import styles from './index.module.less'
 
 export default function Recommend () {
-  const [type, setType] = useState(1)
+  const [type, setType] = useState(2)
   return (
-    <>
+    <View className={styles.recommend}>
       <Header />
-      <ScrollView
-        scrollY
-        scrollWithAnimation
-        className={styles.recommend}
-      >
+      <View className={styles.recommend_tabs}>
         <View className={styles.tabs}>
           <Button className={`${styles.tabs__item} ${type === 1 ? styles.active : ''}`} onClick={() => setType(1)}>名家推荐</Button>
           <Button className={`${styles.tabs__item} ${type === 2 ? styles.active : ''}`}  onClick={() => setType(2)}>二串专区</Button>
         </View>
+      </View>
+      <View className={styles.container}>
         {
           type === 1 &&
           <RecommendExpert />
@@ -30,7 +28,7 @@ export default function Recommend () {
           type === 2 &&
           <SecondZone />
         }
-      </ScrollView>
-    </>
+      </View>
+    </View>
   )
 }

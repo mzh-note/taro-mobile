@@ -1,16 +1,19 @@
 .recommend {
   position: absolute;
   width: 100%;
-  top: 150px;
+  top: 0;
   left: 0;
-  height: calc(100% - 150px);
+  bottom: 0;
   background: #dededd;
-  -webkit-overflow-scrolling: touch;
-  touch-action: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  .recommend_tabs {
+    padding: 20px;
+  }
   .tabs {
     display: flex;
     height: 70px;
-    margin: 20px;
     padding: 0 20px;
     border-radius: 30px;
     font-size: 28px;
@@ -32,5 +35,10 @@
     .active {
       background-image: linear-gradient(to right, black, #d4231c);
     }
+  }
+  .container {
+    padding: 0 20px 20px;
+    flex: 1;
+    overflow-y: auto;
   }
 }
