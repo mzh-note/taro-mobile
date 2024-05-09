@@ -1,0 +1,36 @@
+.recommend {
+  position: absolute;
+  width: 100%;
+  top: 150px;
+  left: 0;
+  height: calc(100% - 150px);
+  background: #dededd;
+  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  .tabs {
+    display: flex;
+    height: 70px;
+    margin: 20px;
+    padding: 0 20px;
+    border-radius: 30px;
+    font-size: 28px;
+    align-items: center;
+    justify-content: flex-start;
+    background: #fff;
+    &__item {
+      background: #5f5d5c;
+      padding: 10rpx 30rpx;
+      color: #fff;
+      border-radius: 30rpx;
+      font-size: 24rpx;
+      margin-right: 20rpx;
+      line-height: normal;
+      border: 0;
+      height: auto;
+      min-height: auto;
+    }
+    .active {
+      background-image: linear-gradient(to right, black, #d4231c);
+    }
+  }
+}

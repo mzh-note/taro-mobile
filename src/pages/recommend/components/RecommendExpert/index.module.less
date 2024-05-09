@@ -1,0 +1,123 @@
+.expert__list {
+  display: flex;
+  background: #fff;
+  margin: 20px;
+  border-radius: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+  &__li {
+    width: 24%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  &__img {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+  }
+  &__name {
+    flex: 1;
+    font-size: 24px;
+    margin: 15px 0;
+    color: #666;
+  }
+  &__num {
+    font-size: 20px;
+    background: #d4231c;
+    color: #a9a8a8;
+    border-radius: 30px;
+    padding: 2px 16px;
+  }
+}
+.hot__title {
+  font-size: 30px;
+  color: #333;
+  padding: 0 20px;
+}
+.hot__li {
+  background: #fff;
+  margin: 20px;
+  border-radius: 25px;
+  padding: 40px 50px;
+  .hot__detail {
+    display: flex;
+    height: 88px;
+    .hot__country {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .hot__img {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+      .hot__name {
+        flex: 1;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .hot__score {
+      width: 100px;
+      display: flex;
+      font-size: 24px;
+      font-weight: bold;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .hot__progress {
+    height: 40px;
+    width: 100%;
+    margin: 5PX 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .hot__percent {
+      flex: 1;
+      font-size: 18px;
+      color: #999;
+    }
+    .hot__part {
+      height: 12px;
+      width: 100%;
+      background: #ddd;
+      display: flex;
+      border-radius: 20px;
+      &__p1 {
+        background: #cccccc;
+        border-radius: 20px 0 0 20px;
+      }
+      &__p2 {
+        background: #dddddd;
+      }
+      &__p3 {
+        flex: 1;
+        background: #cb3131;
+        border-radius: 0 20px 20px 0;
+      }
+    }
+  }
+  .hot__note {
+    display: flex;
+    height: 50px;
+    font-size: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    .hot__time {
+      flex: 1;
+      color: #999;
+    }
+    .hot__like {
+      height: 26px;
+      width: 26px;
+      float: right;
+    }
+  }
+}

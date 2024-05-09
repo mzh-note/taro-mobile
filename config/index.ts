@@ -8,7 +8,7 @@ import prodConfig from './prod'
 export default defineConfig(async (merge) => {
   const baseConfig: UserConfigExport = {
     projectName: 'taro-mobile',
-    date: '2024-3-18',
+    date: '2024-5-01',
     designWidth (input) {
       // 配置 NutUI 375 尺寸
       if (input?.file?.replace(/\\+/g, '/').indexOf('@nutui') > -1) {
@@ -72,7 +72,10 @@ export default defineConfig(async (merge) => {
         },
       },
       // 自定义 Webpack 配置
-      webpackChain(chain, webpack) {},
+      webpackChain (chain) {
+        chain.plugin('analyzer')
+          .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
+      }
     },
     h5: {
       publicPath: '/',

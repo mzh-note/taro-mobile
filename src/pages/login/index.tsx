@@ -84,7 +84,7 @@ export default function Login() {
             Taro.setStorageSync('token', res.data.token)
             Taro.setStorageSync('id', res.data.account.id)
             console.log('登录成功，跳转token', Taro.getStorageSync('token'))
-            Taro.redirectTo({
+            Taro.switchTab({
               url: '/pages/home/index'
             })
           }
