@@ -38,8 +38,8 @@ const http = axios.create({
 
 // 请求拦截
 http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const userInfo = Taro.getStorageSync('userInfo')
-  if (userInfo.openid) {
+  const userInfo = Taro.getStorageSync('user')
+  if (userInfo && userInfo.openid) {
     config.headers['Cookies'] = 'token=' + userInfo.openid
     config.headers['token'] = userInfo.openid
   }

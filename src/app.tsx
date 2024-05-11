@@ -1,10 +1,11 @@
-import { PropsWithChildren } from 'react'
+import {PropsWithChildren} from 'react';
 import { useDidHide, useDidShow, useError, useLaunch } from '@tarojs/taro'
 import '@nutui/nutui-react-taro/dist/style.css'
 import './app.less'
+import store from '@/store';
+import {Provider} from 'react-redux';
 
 function App({ children }: PropsWithChildren<any>) {
-
   useLaunch(() => {
     console.log('App launched.')
   })
@@ -21,7 +22,6 @@ function App({ children }: PropsWithChildren<any>) {
     console.log('App error.')
   })
   // children 是将要会渲染的页面
-  return children
+  return <Provider store={store}>{children}</Provider>
 }
-
 export default App

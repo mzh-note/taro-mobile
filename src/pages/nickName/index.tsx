@@ -4,8 +4,12 @@ import {useState} from 'react';
 import styles from './index.module.less'
 import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '../../assets/default-icon.png'
+import {useDispatch} from 'react-redux';
+import {setUser} from '@/store/modules/userReducer';
 
 export default function NickName () {
+  // const userInfo = useAppSelector(state => state.user.user)
+  const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')
   let nickname = ''
   const getChooseAvatar = async (event: any) => {
@@ -13,6 +17,7 @@ export default function NickName () {
   }
   const formSubmit = async (e: any) => {
     nickname = e.currentTarget.value.nickname
+    console.log(e, nickname)
     if (nickname.length === 0) {
       Taro.showToast({
         icon: 'none',
@@ -44,24 +49,25 @@ export default function NickName () {
     })
   }
   const submitLogin = async (code: string) => {
+    console.log('wxlogin')
     const response = await wxLogin({ code })
     console.log('登陆成功', response.data.data)
-    // 存储用户信息
-    Taro.setStorage({
-      key: 'userInfo',
-      data: response.data.data
-    })
-    // console.log(nickname, avatar)
+    // 设置openid、session_key
+    dispatch(setUser(response.data.data))
+    console.log('uploadAvatar')
     const userAvatarResponse = await uploadAvatar(avatar)
-    console.log('头像上传', userAvatarResponse.data, typeof userAvatarResponse.data)
+    console.log('userAvatarResponse')
     const imgUrl = JSON.parse(userAvatarResponse.data)
-    // 设置后的用户头像
-    console.log(`${process.env.TARO_APP_BASEURL}${imgUrl.data.url}`)
+    console.log('userLogin')
     const userNicknameResponse = await userLogin({
       nickName: nickname
     })
-    // 设置后的用户昵称
-    console.log('昵称设置', userNicknameResponse.data.data.nikeName)
+    console.log('userNicknameResponse')
+    // 设置头像、昵称
+    dispatch(setUser({
+      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl.data.url}`,
+      name: userNicknameResponse.data.data.nikeName
+    }))
     Taro.hideLoading()
     Taro.showToast({
       title: '设置成功',
@@ -84,7 +90,6 @@ export default function NickName () {
           src={avatar ? avatar : defaultIcon}
         />
       </Button>
-      {nickname}
       <Form onSubmit={formSubmit} className={styles.nickname__form}>
         <View className={styles.nickname__form__content}>
           <Text className={styles.nickname__form__label}>昵称</Text>

@@ -1,8 +1,5 @@
-import {useState} from 'react';
 import Taro from '@tarojs/taro';
 import {Image, View, Text} from "@tarojs/components";
-
-import {login, uploadAvatar} from '@/http/api';
 
 import styles from './mine.module.less'
 import logo from '../../assets/logo.png'
@@ -12,14 +9,35 @@ import wx from '../../assets/icon-wx.png'
 import mine from '../../assets/icon-mine.png'
 import person from '../../assets/icon-person.png'
 import golden from '../../assets/icon-golden.png'
+import {useAppSelector} from '@/store/hooks';
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {setUser} from '@/store/modules/userReducer';
+import {wxLogin} from '@/http/api';
 
-interface IUserinfo {
-  avatarUrl: string,
-  nickName: string
-}
 export default function Mine () {
-  const [userinfo, setUserinfo] = useState<IUserinfo | null>(null)
-  const setUserInfo = () => {
+  const userInfo = useAppSelector(state => state.user.user)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    Taro.login({
+      success: async function (res) {
+        console.log('获取登录凭证（code）', res.code)
+        const code = res.code
+        if (code) {
+          const response = await wxLogin({ code })
+          console.log(response.data.data)
+          if (response.data.data.userStatus === 1) {
+            console.log('已注册过')
+            dispatch(setUser(response.data.data))
+          } else {
+            console.log('未注册')
+          }
+        }
+      }
+    })
+  }, []);
+
+  const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/nickName/index'
     })
@@ -28,11 +46,11 @@ export default function Mine () {
     <View className={styles.mine}>
       <View className={styles.mine__logo}>
         <Image className={styles.img__logo} src={logo} mode='aspectFit' />
-        <Image className={styles.icon} src={userinfo ? userinfo?.avatarUrl : defaultIcon} onClick={setUserInfo} />
+        <Image className={styles.icon} src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
       </View>
-      <View className={styles.user} onClick={setUserInfo}>
+      <View className={styles.user} onClick={toUserInfo}>
         {
-          userinfo ? userinfo?.nickName : '当前未登陆，请登陆'
+          userInfo.openid ? (userInfo.name || '匿名') : '当前未登陆，请登陆'
         }
       </View>
       <View className={styles.assets}>

@@ -2,7 +2,7 @@ import http, { request } from './index'
 import Taro from '@tarojs/taro';
 
 export const uploadAvatar = (imagePath: string) => {
-  const userInfo = Taro.getStorageSync('userInfo')
+  const userInfo = Taro.getStorageSync('user')
   return Taro.uploadFile({
     url: process.env.TARO_APP_BASEURL + '/api/images/upload', //仅为示例，非真实的接口地址
     filePath: imagePath,
