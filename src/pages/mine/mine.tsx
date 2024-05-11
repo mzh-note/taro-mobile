@@ -2,7 +2,7 @@ import {useState} from 'react';
 import Taro from '@tarojs/taro';
 import {Image, View, Text} from "@tarojs/components";
 
-import { login } from '@/http/api'
+import {login, uploadAvatar} from '@/http/api';
 
 import styles from './mine.module.less'
 import logo from '../../assets/logo.png'
@@ -19,64 +19,18 @@ interface IUserinfo {
 }
 export default function Mine () {
   const [userinfo, setUserinfo] = useState<IUserinfo | null>(null)
-  const getUserInfo = () => {
-    if (userinfo) {
-      console.log('已登陆', userinfo)
-      return false
-    }
-    console.log('未登陆')
-    // 必须是在用户已经授权的情况下调用
-    Taro.showLoading({
-      title: '登陆中',
-      mask: true
+  const setUserInfo = () => {
+    Taro.navigateTo({
+      url: '/pages/nickName/index'
     })
-    // Taro.showToast({
-    //   icon: 'loading',
-    //   title: '获取用户信息'
-    // })
-    Taro.getUserProfile({
-      lang: 'zh_CN',
-      desc: '用于完善会员资料',
-      success: (profile) => {
-        console.log('已授权', profile)
-        Taro.hideLoading()
-        setUserinfo(profile.userInfo)
-        Taro.login({
-          success: async function (res) {
-            if (res.code) {
-              console.log(res.code)
-              const response = await login({
-                code: res.code
-              })
-              console.log('登陆成功', response.data.date)
-            } else {
-              console.log('登录失败！' + res.errMsg)
-            }
-          }
-        })
-      },
-      fail: (error) => {
-        Taro.hideLoading()
-        console.log('拒绝授权', error)
-      }
-    })
-    // Taro.getUserInfo({
-    //   success: (res) => {
-    //     console.log(res)
-    //     setUserinfo(res.userInfo)
-    //   },
-    //   fail: (err) => {
-    //     console.log('获取用户信息失败', err)
-    //   }
-    // })
   }
   return (
     <View className={styles.mine}>
       <View className={styles.mine__logo}>
         <Image className={styles.img__logo} src={logo} mode='aspectFit' />
-        <Image className={styles.icon} src={userinfo ? userinfo?.avatarUrl : defaultIcon} onClick={getUserInfo} />
+        <Image className={styles.icon} src={userinfo ? userinfo?.avatarUrl : defaultIcon} onClick={setUserInfo} />
       </View>
-      <View className={styles.user}>
+      <View className={styles.user} onClick={setUserInfo}>
         {
           userinfo ? userinfo?.nickName : '当前未登陆，请登陆'
         }

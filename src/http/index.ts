@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type {InternalAxiosRequestConfig, AxiosError, AxiosResponse} from 'axios'
+import Taro from '@tarojs/taro';
 
 // 头条请求
 const request = axios.create({
@@ -26,7 +27,6 @@ request.interceptors.response.use((response: AxiosResponse) => {
 
 export { request }
 
-// 网易云音乐请求
 const http = axios.create({
   baseURL: process.env.TARO_APP_BASEURL,
   timeout: 10000,
@@ -38,8 +38,12 @@ const http = axios.create({
 
 // 请求拦截
 http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  // console.log(config)
-  return config;
+  const userInfo = Taro.getStorageSync('userInfo')
+  if (userInfo.openid) {
+    config.headers['Cookies'] = 'token=' + userInfo.openid
+    config.headers['token'] = userInfo.openid
+  }
+  return config
 }, (error: AxiosError) => {
   return Promise.reject(error)
 })

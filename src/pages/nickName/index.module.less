@@ -1,0 +1,62 @@
+.nickname {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 0 0 0;
+  &__setup {
+    height: 130px;
+    line-height: normal;
+    width: 130px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    &__content {
+      margin: 50px 0 0 0;
+      display: flex;
+      height: 72px;
+      justify-content: center;
+      align-items: center;
+      border-top: 1px solid #f1f1f1;
+      border-bottom: 1px solid #f1f1f1;
+    }
+    &__label {
+      width: 200px;
+      font-size: 28px;
+      padding: 0 0 0 15PX;
+      color: #666;
+    }
+    &__input {
+      flex: 1;
+      color: #333;
+      font-size: 28px;
+    }
+    &__btn {
+      border-radius: 0;
+      height: 72px;
+      margin: 20px 0 0 0;
+      padding: 0 20px;
+      font-size: 30px;
+      background: #d4231c;
+      color: #fff;
+    }
+  }
+}

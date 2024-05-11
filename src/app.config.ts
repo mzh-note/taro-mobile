@@ -1,8 +1,9 @@
 export default defineAppConfig({
   pages: [
+    'pages/mine/mine',
+    'pages/nickName/index',
     'pages/recommend/index',
     'pages/course/index',
-    'pages/mine/mine',
     'pages/home/index',
     'pages/score/index',
   ],
