@@ -28,6 +28,8 @@ export default function Mine () {
           console.log(response.data.data)
           if (response.data.data.userStatus === 1) {
             console.log('已注册过')
+            const payload = response.data.data
+            payload.avatar = `${process.env.TARO_APP_BASEURL}${payload.avatar}`
             dispatch(setUser(response.data.data))
           } else {
             console.log('未注册')
