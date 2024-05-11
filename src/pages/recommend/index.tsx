@@ -1,5 +1,5 @@
-import {ScrollView, View} from '@tarojs/components';
-import {useRef, useState} from 'react';
+import {View} from '@tarojs/components';
+import {useState} from 'react';
 import Header from '@/components/Header'
 import {Button} from '@nutui/nutui-react-taro';
 
@@ -9,7 +9,7 @@ import SecondZone from '@/pages/recommend/components/SecondZone';
 import styles from './index.module.less'
 
 export default function Recommend () {
-  const [type, setType] = useState(2)
+  const [type, setType] = useState(1)
   return (
     <View className={styles.recommend}>
       <Header />

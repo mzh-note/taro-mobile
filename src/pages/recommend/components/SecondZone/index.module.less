@@ -3,13 +3,13 @@
     background: #fff;
     border-radius: 25px;
     display: flex;
-    padding: 40px 30px;
+    padding: 30px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     .overview__img {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
     }
     .overview__info {
       flex: 1;
@@ -21,8 +21,9 @@
         margin: 0 0 15px 0;
       }
       .info__rate {
-        font-size: 20px;
-        color: #666;
+        font-size: 18px;
+        color: #000;
+        font-weight: 400;
         &__connect {
           border: 1px solid #fac;
           border-radius: 30px;
@@ -38,6 +39,180 @@
     }
     .info__follow {
       width: 100px;
+      background: #d4231c;
+    }
+  }
+  .plan {
+    background: #fff;
+    border-radius: 25px;
+    display: flex;
+    margin: 20px 0;
+    padding: 20px 30px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    &__detail {
+      flex: 1;
+      font-size: 30px;
+      display: flex;
+      flex-direction: column;
+      &__title {
+        font-weight: bold;
+      }
+      &__status {
+        font-size: 24px;
+        color: #333;
+        font-weight: lighter;
+      }
+      &__li {
+        display: flex;
+        justify-content: flex-start;
+      }
+      &__item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px 10px 0 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 18px;
+        color: #fff;
+        font-weight: bold;
+        padding: 2PX;
+        background-image: linear-gradient(to right, black, #d4231c);
+        &.grey {
+          background: #999;
+        }
+      }
+    }
+    &__rate {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &__percent {
+        flex: 1;
+        font-weight: bold;
+        font-size: 80px;
+        color: #d4231c;
+        position: relative;
+        letter-spacing: 2px;
+        display: flex;
+        &__count {
+          position: relative;
+          top: 10px;
+          color: #d4231c;
+        }
+        &__unit {
+          font-size: 28rpx;
+          position: absolute;
+          top: 10px;
+        }
+      }
+      &__eval {
+        font-size: 28px;
+        color: #000;
+        letter-spacing: 2px;
+        font-weight: lighter;
+        position: relative;
+        top: -10px;
+      }
+    }
+  }
+  .course{
+    background: #fff;
+    border-radius: 25px;
+    display: flex;
+    margin: 0 0 20px 0;
+    padding: 10rpx 70rpx 20rpx;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    &__time {
+      width: 100%;
+      font-size: 18px;
+      color: #666;
+      display: flex;
+      flex-direction: row;
+      margin: 30rpx 0 0 0;
+      &__week{
+        flex: 1;
+        text-align: left;
+      }
+      &__name {
+        flex: 1;
+        text-align: right;
+        font-weight: lighter;
+      }
+    }
+    &__ball{
+      display: flex;
+      flex-direction: row;
+      height: 50px;
+      align-items: center;
+      justify-content: center;
+      margin: 20px 0;
+      &__item{
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &__name{
+          font-size: 20px;
+          color: #333;
+          margin: 0 10px;
+        }
+        &__icon{
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+        }
+      }
+      &__vs {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: bold;
+        width: 200px;
+        text-align: center;
+      }
+    }
+    &__score{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      background: #f6f7f9;
+      width: 100%;
+      font-size: 20px;
+      color: #333;
+      box-sizing: border-box;
+      border-radius: 6px;
+      height: 90px;
+      &__left {
+        width: 90px;
+        height: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-right: 2px solid #fff;
+        display: flex;
+        &__res {
+          color: #666;
+        }
+      }
+      &__right {
+        flex: 1;
+        font-size: 24px;
+        padding: 0 0 0 20px;
+      }
     }
   }
 }
