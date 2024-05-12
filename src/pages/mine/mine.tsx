@@ -41,7 +41,7 @@ export default function Mine () {
 
   const toUserInfo = () => {
     Taro.navigateTo({
-      url: '/pages/nickName/index'
+      url: '/pages/mine/nickName/index'
     })
   }
   return (

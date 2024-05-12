@@ -3,12 +3,11 @@ import {View, Image, Button, Input, Form, Text} from '@tarojs/components';
 import {useState} from 'react';
 import styles from './index.module.less'
 import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
-import defaultIcon from '../../assets/default-icon.png'
+import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
 
 export default function NickName () {
-  // const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')
   let nickname = ''

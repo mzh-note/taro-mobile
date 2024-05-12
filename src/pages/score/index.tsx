@@ -10,7 +10,7 @@ export default function Score () {
       <Header />
       <View className={styles.score}>
         <Sticky
-          threshold={40}
+          threshold={150}
         >
           <Button type='primary'>吸顶</Button>
         </Sticky>

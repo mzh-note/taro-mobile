@@ -1,22 +1,22 @@
 export default defineAppConfig({
   pages: [
+    // 'pages/home/detail/index',
     'pages/home/index',
     'pages/recommend/index',
     'pages/mine/mine',
-    'pages/nickName/index',
     'pages/course/index',
     'pages/score/index',
   ],
   // 分包
   subpackages: [
     {
-      root: 'pages/login',
+      root: 'pages/home/detail',
       pages: [
         'index'
       ]
     },
     {
-      root: 'pages/detail',
+      root: 'pages/mine/nickName',
       pages: [
         'index'
       ]

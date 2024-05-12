@@ -1,4 +1,4 @@
 export default definePageConfig({
-  navigationBarTitleText: '详情页',
+  navigationBarTitleText: '预测详情',
   enablePullDownRefresh: false
 })

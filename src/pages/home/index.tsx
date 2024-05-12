@@ -10,11 +10,21 @@ import logo from '../../assets/logo.png'
 export default function Home() {
   const [code, setCode] = useState('')
   const prediction = () => {
+    if (code.length === 0) {
+      Taro.showToast({
+        title: '请输入赛事编号',
+        icon: 'none'
+      })
+      return
+    }
     Taro.showToast({
       title: '即将预测的编号为' + code,
       icon: 'none'
     })
     setCode('')
+    Taro.navigateTo({
+      url: '/pages/home/detail/index?id=' + code
+    })
   }
   return (
     <View className={styles.home}>

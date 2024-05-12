@@ -45,6 +45,7 @@ export default defineConfig(async (merge) => {
       type: 'webpack5',  // 自定义编译工具，可选 'Webpack4' 或 'Webpack5'
       // 依赖预编译配置
       prebundle: {
+        // exclude: ['@nutui/nutui-react-taro', '@nutui/icons-react-taro']
            enable: false // webpack5可解决微信小程序中出现的打包依赖问题
       }
     },
