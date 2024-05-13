@@ -45,7 +45,6 @@
         }
       }
       .hot__progress {
-        height: 40px;
         width: 100%;
         margin: 5PX 0;
         display: flex;
@@ -57,8 +56,8 @@
           color: #333;
         }
         .hot__part {
-          height: 16px;
           width: 100%;
+          height: 10px;
           background: #ddd;
           display: flex;
           border-radius: 20px;
@@ -212,16 +211,20 @@
       padding: 20px 0;
       &__legend {
         display: flex;
-        margin: 30px 80px;
+        margin: 20px 40px;
         &__item {
           flex: 1;
           display: flex;
+          align-items: center;
+          &__progress {
+            flex: 1;
+          }
           &__txt {
             font-size: 20px;
             color: #333;
-            text-align: center;
+            text-align: left;
             font-weight: lighter;
-            padding: 0 15px 0 5PX;
+            padding-left: 10px;
             width: 80px;
           }
         }
