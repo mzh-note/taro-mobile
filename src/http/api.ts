@@ -1,5 +1,5 @@
-import http, { request } from './index'
 import Taro from '@tarojs/taro';
+import http from './index'
 
 export const uploadAvatar = (imagePath: string) => {
   const userInfo = Taro.getStorageSync('user')
@@ -15,24 +15,24 @@ export const uploadAvatar = (imagePath: string) => {
   })
 }
 export const userLogin = (data) => {
-  return http.post('/api/user/login', data)
+  return http({
+    url: '/api/user/login',
+    method: 'POST',
+    data
+  })
 }
 
 export const wxLogin = (data) => {
-  return http.post('/api/wx/login', data)
+  return http({
+    url: '/api/wx/login',
+    method: 'POST',
+    data
+  })
 }
-export const loginPhone = (data) => {
-  return http.post('/api/login/cellphone', data)
-}
-
-export const getChannels = () => {
-  return request.get('/channels')
-}
-
-export const getArticles = (params) => {
-  return request.get('/articles', {params})
-}
-
-export const getDetail = (id) => {
-  return request.get(`/articles/${id}`)
+export const getList = (data) => {
+  return http({
+    url: '/api/wx/login',
+    method: 'GET',
+    data
+  })
 }
