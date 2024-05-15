@@ -1,19 +1,25 @@
-import {ScrollView, View} from '@tarojs/components';
+import {ScrollView, Text, View} from '@tarojs/components';
 import Header from '@/components/Header'
-import {Tabs, Swiper, Calendar} from '@nutui/nutui-react-taro';
-import {useRef, useState} from 'react';
+import {Tabs, Swiper, Calendar, Empty} from '@nutui/nutui-react-taro';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
+import {ArrowRight} from '@nutui/icons-react-taro';
+import Taro from '@tarojs/taro';
+
+import {getScoreList} from '@/http/api'
+import { currentDate } from '@/utils';
 import styles from './index.module.less'
 
 export default function Score () {
-  const [tab1value, setTab1value] = useState<string | number>('0')
+  const [tabValue, setTabValue] = useState<string | number>('0')
   const swiperRef = useRef(null)
-  const d = new Date()
-  const currDay = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
-  const [date, setDate] = useState(currDay)
+
   const [isVisible, setIsVisible] = useState(false)
+  const [date, setDate] = useState(currentDate())
   const [dateWeek, setDateWeek] = useState('')
 
+
+  const [scoreList, setScoreList] = useState([])
   const openSwitch = () => {
     setIsVisible(true)
   }
@@ -30,30 +36,51 @@ export default function Score () {
   const select = (param: string) => {
     console.log(param)
   }
-  const list = [
-    'https://storage.360buyimg.com/jdc-article/NutUItaro34.jpg',
-    'https://storage.360buyimg.com/jdc-article/NutUItaro2.jpg',
-    'https://storage.360buyimg.com/jdc-article/welcomenutui.jpg',
-    'https://storage.360buyimg.com/jdc-article/fristfabu.jpg',
-    'https://storage.360buyimg.com/jdc-article/welcomenutui.jpg',
-  ]
   const changeSwiper = (current: number) => {
     // @ts-ignore
-    setTab1value(current.detail?.current)
+    setTabValue(current.detail?.current)
     // @ts-ignore
-    console.log(`切换到了${current.detail?.current}`)
   }
+  // const apis = ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo']
+  const apis = useMemo(() => {
+    return ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo']
+  }, [])
+
+  const getList = useCallback(async () => {
+    if (tabValue === 4) {
+      setScoreList([])
+      return false
+    }
+    Taro.showLoading()
+    const params = {
+      matchDate: date
+    }
+    const result = await getScoreList(apis[tabValue], params)
+    console.log(result.data.data)
+    setScoreList(result.data.data)
+    Taro.hideLoading()
+  }, [date, apis, tabValue])
+  // const getList = async () => {
+  //   const params = {
+  //     matchDate: date
+  //   }
+  //   const result = await getScoreList(apis[tabValue], params)
+  //   console.log(result.data.data)
+  //   setScoreList(result.data.data)
+  // }
+  useEffect(() => {
+    getList().then()
+  }, [getList, tabValue])
   return (
     <>
       <Header />
       <View className={styles.score}>
         <Tabs
           className={styles.tabs}
-          value={tab1value}
+          value={tabValue}
           onChange={(value) => {
-            // @ts-ignore
             swiperRef?.current?.to(value)
-            setTab1value(value)
+            setTabValue(value)
           }}
         >
           <Tabs.TabPane title='全部'></Tabs.TabPane>
@@ -62,9 +89,37 @@ export default function Score () {
           <Tabs.TabPane title='赛果'></Tabs.TabPane>
           <Tabs.TabPane title='关注'></Tabs.TabPane>
         </Tabs>
-        <View className={styles.date__tabs} onClick={openSwitch}>
-          {date ? `${date} ${dateWeek}` : '请选择'}
-11      </View>
+        <View className={styles.date__tabs}>
+          <Swiper
+            defaultValue={0}
+            loop={false}
+            ref={swiperRef}
+            height={35}
+          >
+            <Swiper.Item className={styles.date__tabs__container}>
+                <View className={styles.date__tabs__container__item}>
+                  <View className={styles.date__tabs__container__item__date}>04/17</View>
+                  <View className={styles.date__tabs__container__item__week}>星期二</View>
+                </View>
+                <View className={styles.date__tabs__container__item}>
+                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
+                  <Text className={styles.date__tabs__container__item__week}>星期三</Text>
+                </View>
+                <View className={styles.date__tabs__container__item}>
+                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
+                  <Text className={styles.date__tabs__container__item__week}>星期四</Text>
+                </View>
+                <View className={styles.date__tabs__container__item}>
+                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
+                  <Text className={styles.date__tabs__container__item__week}>星期五</Text>
+                </View>
+                <View className={styles.date__tabs__container__item} onClick={openSwitch}>
+                  <Text className={styles.date__tabs__container__item__date}>今天</Text>
+                  <Text className={styles.date__tabs__container__item__week}>{dateWeek}</Text>
+                </View>
+            </Swiper.Item>
+          </Swiper>
+        </View>
         <Calendar visible={isVisible} showTitle={false} defaultValue={date} onClose={closeSwitch} onConfirm={setChooseValue} onDayClick={select} />
         <Swiper
           className='score-swiper'
@@ -73,7 +128,7 @@ export default function Score () {
           defaultValue={0}
           onChange={changeSwiper}
         >
-          {list.map((item) => (
+          {apis.map((item) => (
             <Swiper.Item key={item} className='score-swiper-item'>
               <ScrollView
                 enhanced
@@ -81,11 +136,48 @@ export default function Score () {
                 scrollY
                 style={{height: '100%'}}
               >
-                <View style={{height: '200px'}}>222</View>
-                <View style={{height: '200px'}}>333</View>
-                <View style={{height: '200px'}}>444</View>
-                <View style={{height: '200px'}}>555</View>
-                <View style={{height: '200px'}}>666</View>
+                <View className={styles.outer}>
+                  {
+                    scoreList.length > 0 &&
+                    scoreList.map(scoreItem => (
+                      <View className={styles.item} key={scoreItem.matchId}>
+                        <View className={styles.item__top}>
+                          <View className={styles.item__top__left}>
+                            <Text className={styles.item__top__left__name}>{scoreItem.matchTypeName}</Text>
+                            <Text className={styles.item__top__left__time}>{scoreItem.startTime.slice(-8,-3)}</Text>
+                          </View>
+                          <Text>{
+                            scoreItem.state === 1 ?
+                              '未开赛' : scoreItem.state === 4 ?
+                              '进行中' : '完'
+                          }</Text>
+                        </View>
+                        <View className={styles.item__lineup}>
+                          <View className={styles.item__lineup__title}>
+                            <Text className={styles.item__lineup__title__name}>{scoreItem.homeName}</Text>
+                            <Text className={styles.item__lineup__title__score}>{scoreItem.homeScore[0]}-{scoreItem.awayScore[0]}</Text>
+                            <Text className={styles.item__lineup__title__name}>{scoreItem.awayName}</Text>
+                          </View>
+                          {
+                            tabValue === 3
+                            &&
+                            <View className={styles.item__lineup__result}>
+                              <Text className={styles.item__lineup__result__txt}>{scoreItem.aiResult === 0 ? '否' : '中'}</Text>
+                              <ArrowRight size={10} color='#999' />
+                            </View>
+                          }
+                        </View>
+                        <View className={styles.item__bottom}>
+                          <Text className={styles.item__bottom__left}>{scoreItem.matchLotteryOne}</Text>
+                          <Text>半：{scoreItem.homeScore[2]}-{scoreItem.awayScore[2]} 角：{scoreItem.homeScore[4]}-{scoreItem.awayScore[4]}</Text>
+                        </View>
+                      </View>
+                    ))
+                  }
+                  {
+                    scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
+                  }
+                </View>
               </ScrollView>
             </Swiper.Item>
           ))}

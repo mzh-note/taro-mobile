@@ -29,9 +29,9 @@ export const wxLogin = (data) => {
     data
   })
 }
-export const getList = (data) => {
+export const getScoreList = (path: string, data) => {
   return http({
-    url: '/api/wx/login',
+    url: '/api/football/' + path,
     method: 'GET',
     data
   })
