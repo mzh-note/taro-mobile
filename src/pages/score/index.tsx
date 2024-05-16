@@ -16,8 +16,12 @@ export default function Score () {
 
   const [isVisible, setIsVisible] = useState(false)
   const [date, setDate] = useState(currentDate())
-  const [dateWeek, setDateWeek] = useState('')
-
+  const days = useMemo(() => {
+    return ['', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+  }, [])
+  const [dateWeek, setDateWeek] = useState(() => {
+    return days[new Date().getDay()]
+  })
 
   const [scoreList, setScoreList] = useState([])
   const openSwitch = () => {
@@ -43,17 +47,20 @@ export default function Score () {
   }
   // const apis = ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo']
   const apis = useMemo(() => {
-    return ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo']
+    return ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo', 'attention']
   }, [])
 
   const getList = useCallback(async () => {
+    // 关注
     if (tabValue === 4) {
       setScoreList([])
       return false
     }
     Taro.showLoading()
+    console.log('date', date)
+    const matchDate = date.replace(/\//g, '-')
     const params = {
-      matchDate: date
+      matchDate
     }
     const result = await getScoreList(apis[tabValue], params)
     console.log(result.data.data)
@@ -97,30 +104,39 @@ export default function Score () {
             height={35}
           >
             <Swiper.Item className={styles.date__tabs__container}>
-                <View className={styles.date__tabs__container__item}>
-                  <View className={styles.date__tabs__container__item__date}>04/17</View>
-                  <View className={styles.date__tabs__container__item__week}>星期二</View>
-                </View>
-                <View className={styles.date__tabs__container__item}>
-                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
-                  <Text className={styles.date__tabs__container__item__week}>星期三</Text>
-                </View>
-                <View className={styles.date__tabs__container__item}>
-                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
-                  <Text className={styles.date__tabs__container__item__week}>星期四</Text>
-                </View>
-                <View className={styles.date__tabs__container__item}>
-                  <Text className={styles.date__tabs__container__item__date}>04/17</Text>
-                  <Text className={styles.date__tabs__container__item__week}>星期五</Text>
-                </View>
+                {/*<View className={styles.date__tabs__container__item}>*/}
+                {/*  <View className={styles.date__tabs__container__item__date}>04/17</View>*/}
+                {/*  <View className={styles.date__tabs__container__item__week}>星期二</View>*/}
+                {/*</View>*/}
+                {/*<View className={styles.date__tabs__container__item}>*/}
+                {/*  <Text className={styles.date__tabs__container__item__date}>04/17</Text>*/}
+                {/*  <Text className={styles.date__tabs__container__item__week}>星期三</Text>*/}
+                {/*</View>*/}
+                {/*<View className={styles.date__tabs__container__item}>*/}
+                {/*  <Text className={styles.date__tabs__container__item__date}>04/17</Text>*/}
+                {/*  <Text className={styles.date__tabs__container__item__week}>星期四</Text>*/}
+                {/*</View>*/}
+                {/*<View className={styles.date__tabs__container__item}>*/}
+                {/*  <Text className={styles.date__tabs__container__item__date}>04/17</Text>*/}
+                {/*  <Text className={styles.date__tabs__container__item__week}>星期五</Text>*/}
+                {/*</View>*/}
                 <View className={styles.date__tabs__container__item} onClick={openSwitch}>
-                  <Text className={styles.date__tabs__container__item__date}>今天</Text>
-                  <Text className={styles.date__tabs__container__item__week}>{dateWeek}</Text>
+                  {date}&emsp;{dateWeek}
+                  {/*<Text className={styles.date__tabs__container__item__date}>{date}</Text>*/}
+                  {/*<Text className={styles.date__tabs__container__item__week}>{dateWeek}</Text>*/}
                 </View>
             </Swiper.Item>
           </Swiper>
         </View>
-        <Calendar visible={isVisible} showTitle={false} defaultValue={date} onClose={closeSwitch} onConfirm={setChooseValue} onDayClick={select} />
+        <Calendar
+          visible={isVisible}
+          showTitle={false}
+          defaultValue={date}
+          onClose={closeSwitch}
+          onConfirm={setChooseValue}
+          onDayClick={select}
+          startDate='2023-01-01'
+        />
         <Swiper
           className='score-swiper'
           ref={swiperRef}
