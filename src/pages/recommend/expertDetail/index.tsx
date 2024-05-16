@@ -91,7 +91,7 @@ export default function ExpertDetail () {
                   <Text className={styles.course__ball__item__name}>{sugItem.homeName1}</Text>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`${process.env.TARO_APP_BASEURL}/images/${sugItem.homeLogo1}`}
+                    src={`https://images.weserv.nl/?url=${sugItem.homeLogo1}`}
                     mode='aspectFill'
                   />
                 </View>
@@ -99,108 +99,152 @@ export default function ExpertDetail () {
                 <View className={styles.course__ball__item}>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`${process.env.TARO_APP_BASEURL}/images/${sugItem.homeLogo2}`}
+                    src={`https://images.weserv.nl/?url=${sugItem.awayLogo1}`}
                     mode='aspectFill'
                   />
-                  <Text className={styles.course__ball__item__name}>{sugItem.homeName2}</Text>
+                  <Text className={styles.course__ball__item__name}>{sugItem.awayName1}</Text>
                 </View>
               </View>
               <View className={styles.course__score}>
                 <View className={styles.course__score__left}>
-                  <View className={styles.course__score__left__res}>胜平负</View>
+                  <View className={styles.course__score__left__res}>
+                    {sugItem.winState1 === 0 ? '胜负平' : '-'}
+                  </View>
                 </View>
-                <View className={styles.course__score__right}>负(1.65)</View>
+                <View className={styles.course__score__right}>
+                  {sugItem.forecast1 === 0 ? '负' : '胜'}({sugItem.winRate1})
+                </View>
               </View>
+          {
+            sugItem.suggestType === 1
+            &&
+            <>
+              <View className={styles.course__time}>
+                <Text className={styles.course__time__week}>{sugItem.matchLotteryOne2}</Text>
+                <Text className={styles.course__time__name}>{sugItem.matchTypeName2}</Text>
+              </View>
+              <View className={styles.course__ball}>
+                <View className={styles.course__ball__item}>
+                  <Text className={styles.course__ball__item__name}>{sugItem.homeName2}</Text>
+                  <Image
+                    className={styles.course__ball__item__icon}
+                    src={`https://images.weserv.nl/?url=${sugItem.homeLogo2}`}
+                    mode='aspectFill'
+                  />
+                </View>
+                <View className={styles.course__ball__vs}>VS</View>
+                <View className={styles.course__ball__item}>
+                  <Image
+                    className={styles.course__ball__item__icon}
+                    src={`https://images.weserv.nl/?url=${sugItem.awayLogo2}`}
+                    mode='aspectFill'
+                  />
+                  <Text className={styles.course__ball__item__name}>{sugItem.awayName2}</Text>
+                </View>
+              </View>
+              <View className={styles.course__score}>
+                <View className={styles.course__score__left}>
+                  <View className={styles.course__score__left__res}>
+                    {sugItem.winState2 === 0 ? '胜负平' : '-'}
+                  </View>
+                </View>
+                <View className={styles.course__score__right}>
+                  {sugItem.forecast2 === 0 ? '负' : '胜'}({sugItem.winRate2})
+                </View>
+              </View>
+            </>
+
+          }
             </View>
           ))
         }
-        <View className={styles.course}>
-          <View className={styles.course__time}>
-            <Text className={styles.course__time__week}>zhoufi 1</Text>
-            <Text className={styles.course__time__name}>U23亚洲杯</Text>
-          </View>
-          <View className={styles.course__ball}>
-            <View className={styles.course__ball__item}>
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-            </View>
-            <View className={styles.course__ball__vs}>VS</View>
-            <View className={styles.course__ball__item}>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-            </View>
-          </View>
-          <View className={styles.course__score}>
-            <View className={styles.course__score__left}>
-              <View className={styles.course__score__left__res}>胜平负</View>
-            </View>
-            <View className={styles.course__score__right}>负(1.65)</View>
-          </View>
-        </View>
-        <View className={styles.course}>
-          <View className={styles.course__time}>
-            <Text className={styles.course__time__week}>周一001</Text>
-            <Text className={styles.course__time__name}>U23亚洲杯</Text>
-          </View>
-          <View className={styles.course__ball}>
-            <View className={styles.course__ball__item}>
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-            </View>
-            <View className={styles.course__ball__vs}>VS</View>
-            <View className={styles.course__ball__item}>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-            </View>
-          </View>
-          <View className={styles.course__score}>
-            <View className={styles.course__score__left}>
-              <View className={styles.course__score__left__res}>让球</View>
-              <View className={styles.course__score__left__res}>-1</View>
-            </View>
-            <View className={styles.course__score__right}>负(1.65)</View>
-          </View>
+        {/*<View className={styles.course}>*/}
+        {/*  <View className={styles.course__time}>*/}
+        {/*    <Text className={styles.course__time__week}>zhoufi 1</Text>*/}
+        {/*    <Text className={styles.course__time__name}>U23亚洲杯</Text>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__ball}>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__ball__vs}>VS</View>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*    </View>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__score}>*/}
+        {/*    <View className={styles.course__score__left}>*/}
+        {/*      <View className={styles.course__score__left__res}>胜平负</View>*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__score__right}>负(1.65)</View>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
+        {/*<View className={styles.course}>*/}
+        {/*  <View className={styles.course__time}>*/}
+        {/*    <Text className={styles.course__time__week}>周一001</Text>*/}
+        {/*    <Text className={styles.course__time__name}>U23亚洲杯</Text>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__ball}>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__ball__vs}>VS</View>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*    </View>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__score}>*/}
+        {/*    <View className={styles.course__score__left}>*/}
+        {/*      <View className={styles.course__score__left__res}>让球</View>*/}
+        {/*      <View className={styles.course__score__left__res}>-1</View>*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__score__right}>负(1.65)</View>*/}
+        {/*  </View>*/}
 
-          <View className={styles.course__time}>
-            <Text className={styles.course__time__week}>周一001</Text>
-            <Text className={styles.course__time__name}>U23亚洲杯</Text>
-          </View>
-          <View className={styles.course__ball}>
-            <View className={styles.course__ball__item}>
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-            </View>
-            <View className={styles.course__ball__vs}>VS</View>
-            <View className={styles.course__ball__item}>
-              <Image
-                className={styles.course__ball__item__icon}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
-                mode='aspectFill' />
-              <Text className={styles.course__ball__item__name}>日本U23</Text>
-            </View>
-          </View>
-          <View className={styles.course__score}>
-            <View className={styles.course__score__left}>
-              <View className={styles.course__score__left__res}>胜平负</View>
-            </View>
-            <View className={styles.course__score__right}>负(1.65)</View>
-          </View>
-        </View>
+        {/*  <View className={styles.course__time}>*/}
+        {/*    <Text className={styles.course__time__week}>周一001</Text>*/}
+        {/*    <Text className={styles.course__time__name}>U23亚洲杯</Text>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__ball}>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__ball__vs}>VS</View>*/}
+        {/*    <View className={styles.course__ball__item}>*/}
+        {/*      <Image*/}
+        {/*        className={styles.course__ball__item__icon}*/}
+        {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
+        {/*        mode='aspectFill' />*/}
+        {/*      <Text className={styles.course__ball__item__name}>日本U23</Text>*/}
+        {/*    </View>*/}
+        {/*  </View>*/}
+        {/*  <View className={styles.course__score}>*/}
+        {/*    <View className={styles.course__score__left}>*/}
+        {/*      <View className={styles.course__score__left__res}>胜平负</View>*/}
+        {/*    </View>*/}
+        {/*    <View className={styles.course__score__right}>负(1.65)</View>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
       </View>
     </>
   )
