@@ -1,16 +1,22 @@
 export default defineAppConfig({
   pages: [
-    // 'pages/home/detail/index',
+    'pages/recommend/index',
+    'pages/home/index',
+    // 'pages/recommend/index',
     'pages/score/index',
     'pages/course/index',
-    'pages/home/index',
-    'pages/recommend/index',
     'pages/mine/mine',
   ],
   // 分包
   subpackages: [
     {
       root: 'pages/home/detail',
+      pages: [
+        'index'
+      ]
+    },
+    {
+      root: 'pages/recommend/expertDetail',
       pages: [
         'index'
       ]

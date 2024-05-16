@@ -4,7 +4,6 @@ import Header from '@/components/Header'
 import {Button} from '@nutui/nutui-react-taro';
 
 import RecommendExpert from '@/pages/recommend/components/RecommendExpert';
-import SecondZone from '@/pages/recommend/components/SecondZone';
 
 import styles from './index.module.less'
 
@@ -22,11 +21,11 @@ export default function Recommend () {
       <View className={styles.container}>
         {
           type === 1 &&
-          <RecommendExpert />
+          <RecommendExpert type={type} />
         }
         {
           type === 2 &&
-          <SecondZone />
+          <RecommendExpert type={type} />
         }
       </View>
     </View>

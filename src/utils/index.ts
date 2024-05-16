@@ -1,10 +1,3 @@
-// 获取当前时间前后一周时间
-export const lastWeek = () => {
-  const currDate = new Date()
-  const list = []
-  return list
-}
-
 export const currentDate = () => {
   const d = new Date()
   const year = d.getFullYear()

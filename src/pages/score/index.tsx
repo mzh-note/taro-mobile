@@ -1,4 +1,4 @@
-import {ScrollView, Text, View} from '@tarojs/components';
+import {Image, ScrollView, Text, View} from '@tarojs/components';
 import Header from '@/components/Header'
 import {Tabs, Swiper, Calendar, Empty} from '@nutui/nutui-react-taro';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -8,9 +8,10 @@ import Taro from '@tarojs/taro';
 
 import {getScoreList} from '@/http/api'
 import { currentDate } from '@/utils';
+import like from "@/assets/like.png";
 import styles from './index.module.less'
 
-export default function Score () {
+export default function Course () {
   const [tabValue, setTabValue] = useState<string | number>('0')
   const swiperRef = useRef(null)
 
@@ -169,6 +170,9 @@ export default function Score () {
                           }</Text>
                         </View>
                         <View className={styles.item__lineup}>
+                          <View className={styles.item__lineup__like}>
+                            <Image className={styles.item__lineup__like__img} src={like} mode='aspectFit' />
+                          </View>
                           <View className={styles.item__lineup__title}>
                             <Text className={styles.item__lineup__title__name}>{scoreItem.homeName}</Text>
                             <Text className={styles.item__lineup__title__score}>{scoreItem.homeScore[0]}-{scoreItem.awayScore[0]}</Text>

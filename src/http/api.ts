@@ -36,3 +36,42 @@ export const getScoreList = (path: string, data) => {
     data
   })
 }
+
+// 名家推荐
+export const allList = () => {
+  return http({
+    url: '/api/pro/allList',
+    method: 'GET'
+  })
+}
+// 二串专区
+export const towList = () => {
+  return http({
+    url: '/api/pro/towList',
+    method: 'GET'
+  })
+}
+// 热门赛事
+export const hotMatchList = () => {
+  return http({
+    url: '/api/football/hotMatchList',
+    method: 'GET'
+  })
+}
+// 专家详情
+export const proInfo = (data) => {
+  return http({
+    url: '/api/pro/info',
+    method: 'POST',
+    data
+  })
+}
+
+// 专家推荐列表
+export const suggestList = (data) => {
+  return http({
+    url: '/api/pro/suggestList',
+    method: 'POST',
+    data
+  })
+}
