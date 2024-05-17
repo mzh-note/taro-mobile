@@ -1,6 +1,12 @@
 import Taro from '@tarojs/taro';
 import {Image, View, Text} from "@tarojs/components";
 
+import {useAppSelector} from '@/store/hooks';
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {setUser} from '@/store/modules/userReducer';
+import {wxLogin} from '@/http/api';
+
 import styles from './mine.module.less'
 import logo from '../../assets/logo.png'
 import defaultIcon from '../../assets/default-icon.png'
@@ -9,11 +15,6 @@ import wx from '../../assets/icon-wx.png'
 import mine from '../../assets/icon-mine.png'
 import person from '../../assets/icon-person.png'
 import golden from '../../assets/icon-golden.png'
-import {useAppSelector} from '@/store/hooks';
-import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {setUser} from '@/store/modules/userReducer';
-import {wxLogin} from '@/http/api';
 
 export default function Mine () {
   const userInfo = useAppSelector(state => state.user.user)
@@ -25,7 +26,6 @@ export default function Mine () {
         const code = res.code
         if (code) {
           const response = await wxLogin({ code })
-          console.log(response.data.data)
           if (response.data.data.userStatus === 1) {
             console.log('已注册过')
             const payload = response.data.data
@@ -42,6 +42,11 @@ export default function Mine () {
   const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/mine/nickName/index'
+    })
+  }
+  const goMyAttention = () => {
+    Taro.switchTab({
+      url: '/pages/course/index'
     })
   }
   return (
@@ -70,7 +75,7 @@ export default function Mine () {
             <Text className={styles.list_item_bottom}>免费分享私推单</Text>
           </View>
         </View>
-        <View className={styles.list_li}>
+        <View className={styles.list_li} onClick={goMyAttention}>
           <View className={styles.list__img}>
             <Image src={mine} mode='aspectFit' />
           </View>

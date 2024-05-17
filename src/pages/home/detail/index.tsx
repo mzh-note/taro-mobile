@@ -68,7 +68,7 @@ export default function Detail() {
     },
   ])
   useEffect(() => {
-    console.log(id)
+
   }, []);
   return (
     <View className={styles.detail}>
@@ -157,9 +157,6 @@ export default function Detail() {
           <View className={styles.warning__chart}>
             <LineChart />
           </View>
-          <View className={styles.warning__tips}>
-            温馨提示：胜负概率曲线是基于足球大数据AI机器模型自动生成，从而产生预测方向，欺负变化越大，越有可能产生冷门。
-          </View>
           <View className={styles.warning__chart__legend}>
             <View className={styles.warning__chart__legend__item}>
               <View className={styles.warning__chart__legend__item__progress}>
@@ -179,6 +176,9 @@ export default function Detail() {
               </View>
               <Text className={styles.warning__chart__legend__item__txt}>负赔</Text>
             </View>
+          </View>
+          <View className={styles.warning__tips}>
+            温馨提示：胜负概率曲线是基于足球大数据AI机器模型自动生成，从而产生预测方向，欺负变化越大，越有可能产生冷门。
           </View>
         </View>
         <Tabs

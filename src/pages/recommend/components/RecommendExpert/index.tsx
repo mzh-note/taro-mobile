@@ -1,10 +1,12 @@
-import {Image, Text, View} from "@tarojs/components";
+import Taro from '@tarojs/taro';
+import {Image, Text, View} from '@tarojs/components';
 import {Empty} from '@nutui/nutui-react-taro';
 import {useEffect, useState} from 'react';
 import {allList, hotMatchList, towList} from '@/http/api';
-import like from "@/assets/like.png";
-import styles from './index.module.less';
-import Taro from '@tarojs/taro';
+import ExpertItem from '@/components/ExpertItem';
+import like from '@/assets/like.png';
+
+import styles from './index.module.less'
 
 export default function RecommendExpert (props) {
   const type = props.type
@@ -41,25 +43,12 @@ export default function RecommendExpert (props) {
     setHotList(data)
     Taro.hideLoading()
   }
-  const goDetail = item => {
-    Taro.navigateTo({
-      url: `/pages/recommend/expertDetail/index?proId=${item.proId}`
-    })
-  }
   return (
     <>
       <View className={styles.expert__list}>
         {
-          list.map(item => (
-            <View
-              key={item}
-              className={styles.expert__list__li}
-              onClick={() => goDetail(item)}
-            >
-              <Image className={styles.expert__list__img} src={`${process.env.TARO_APP_BASEURL}/images/${item.avatar}`} mode='aspectFit' />
-              <Text className={styles.expert__list__name}>{item.nickName}</Text>
-              <Text className={styles.expert__list__num}>{item.sustainWin}连红</Text>
-            </View>
+          list.map((currItem: any) => (
+            <ExpertItem item={currItem} key={currItem.proId} />
           ))
         }
       </View>

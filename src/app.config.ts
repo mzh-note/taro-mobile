@@ -1,8 +1,7 @@
 export default defineAppConfig({
   pages: [
-    'pages/recommend/index',
     'pages/home/index',
-    // 'pages/recommend/index',
+    'pages/recommend/index',
     'pages/score/index',
     'pages/course/index',
     'pages/mine/mine',

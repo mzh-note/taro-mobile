@@ -13,10 +13,9 @@
     position: relative;
     height: calc(100% - 150px);
     .hot__li {
-      padding: 20px 50px;
+      padding: 20px 50px 8px;
       .hot__detail {
         display: flex;
-        height: 88px;
         .hot__country {
           flex: 1;
           display: flex;
@@ -24,21 +23,22 @@
           align-items: center;
           justify-content: center;
           .hot__img {
-            height: 50px;
-            width: 50px;
+            height: 60px;
+            width: 60px;
             border-radius: 50%;
           }
           .hot__name {
             flex: 1;
-            font-size: 20px;
+            font-size: 26px;
             display: flex;
             align-items: center;
+            padding: 10px 0 0 0;
           }
         }
         .hot__score {
           width: 100px;
           display: flex;
-          font-size: 24px;
+          font-size: 34px;
           font-weight: bold;
           justify-content: center;
           align-items: center;
@@ -52,12 +52,13 @@
         flex-direction: column;
         .hot__percent {
           flex: 1;
-          font-size: 18px;
+          font-size: 28px;
           color: #333;
         }
         .hot__part {
           width: 100%;
-          height: 10px;
+          height: 14px;
+          margin-top: 3PX;
           background: #ddd;
           display: flex;
           border-radius: 20px;
@@ -78,7 +79,7 @@
       .hot__note {
         display: flex;
         height: 50px;
-        font-size: 20px;
+        font-size: 24px;
         justify-content: flex-start;
         align-items: center;
         .hot__time {
@@ -86,8 +87,8 @@
           color: #333;
         }
         .hot__like {
-          height: 26px;
-          width: 26px;
+          height: 40px;
+          width: 40px;
           float: right;
         }
       }
@@ -102,7 +103,7 @@
       padding-top: 30px;
       flex: 1;
       &__h3 {
-        font-size: 26px;
+        font-size: 30px;
       }
       &__res {
         background-image: linear-gradient(to right, black, #d4231c);
@@ -112,22 +113,22 @@
         width: 130px;
         padding: 2PX 0;
         margin: 15px 0 30px 0;
-        font-size: 32px;
+        font-size: 34px;
         border-radius: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
       &__p{
-        font-size: 20px;
+        font-size: 24px;
         color: #333;
       }
     }
     &__chart {
       border-top: 1px solid #ddd;
-      width: 150px;
+      width: 180px;
       padding: 100px 30px 0;
-      font-size: 24px;
+      font-size: 28px;
     }
   }
   .percent {
@@ -164,16 +165,17 @@
   .intelligence{
     padding: 0 40px;
     &__h3{
-      font-size: 24px;
+      font-size: 34px;
       color: #333;
-      padding: 0 0 3PX 0;
+      padding: 0 0 5PX 0;
+      display: flex;
     }
     &__scroll{
       background: #dededd;
       color: #625e5d;
       height: 200px;
       &__container {
-        font-size: 18px;
+        font-size: 24px;
         padding: 20px 30px 20px 20px;
         line-height: 38px;
       }
@@ -192,7 +194,7 @@
         letter-spacing: 3PX;
         width: 130px;
         padding: 2PX 0;
-        font-size: 32px;
+        font-size: 34px;
         border-radius: 40px;
         display: flex;
         justify-content: center;
@@ -200,13 +202,12 @@
       }
       &__tip {
         flex: 1;
-        font-size: 20px;
+        font-size: 24px;
         padding-left: 20px;
         color: #666;
       }
     }
     &__chart {
-      height: 200px;
       width: 100%;
       position: relative;
       &__legend {
@@ -220,7 +221,7 @@
             flex: 1;
           }
           &__txt {
-            font-size: 20px;
+            font-size: 24px;
             color: #333;
             text-align: left;
             font-weight: lighter;
@@ -231,7 +232,7 @@
       }
     }
     &__tips {
-      font-size: 18px;
+      font-size: 24px;
       color: #999;
     }
   }

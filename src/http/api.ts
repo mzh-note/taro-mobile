@@ -75,3 +75,76 @@ export const suggestList = (data) => {
     data
   })
 }
+
+
+export const addSuggest = (data) => {
+  return http({
+    url: '/api/pro/addSugges',
+    method: 'POST',
+    data
+  })
+}
+
+
+
+export const getMatchId = (data) => {
+  return http({
+    url: '/api/football/getMatchId',
+    method: 'POST',
+    data
+  })
+}
+
+export const matchInfo = (data) => {
+  return http({
+    url: '/api/football/matchInfo',
+    method: 'POST',
+    data
+  })
+}
+
+
+export const favoriteProList = (data) => {
+  return http({
+    url: '/api/favorite/proList',
+    method: 'GET',
+    data
+  })
+}
+
+export const favoriteDelPro = (data) => {
+  return http({
+    url: '/api/favorite/delPro',
+    method: 'POST',
+    data
+  })
+}
+
+export const favoriteAddPro = (data) => {
+  return http({
+    url: '/api/favorite/addPro',
+    method: 'POST',
+    data
+  })
+}
+export const favoriteMatchList = (data) => {
+  return http({
+    url: '/api/favorite/matchList',
+    method: 'GET',
+    data
+  })
+}
+export const favoriteDelMatch = (data) => {
+  return http({
+    url: '/api/favorite/delMatch',
+    method: 'POST',
+    data
+  })
+}
+export const favoriteAddMatch = (data) => {
+  return http({
+    url: '/api/favorite/addMatch',
+    method: 'POST',
+    data
+  })
+}
