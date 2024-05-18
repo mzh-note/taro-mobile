@@ -1,0 +1,111 @@
+.mine{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #eceded;
+  &__logo {
+    height: 300px;
+    width: 100%;
+    background: #000;
+    border-radius: 0 0 20PX 20PX;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .img__logo {
+      width: 350px;
+      height: 100%;
+    }
+  }
+  &__icon {
+    position: absolute;
+    display: flex;
+    top: 240px;
+    width: 100%;
+    height: 120px;
+    z-index: 1000;
+    justify-content: center;
+    &__img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+  }
+  .user {
+    display: flex;
+    justify-content: center;
+    font-size: 28px;
+    padding: 10px;
+    color: #999;
+    margin-top: 60px;
+  }
+  .assets {
+    display: flex;
+    height: 80px;
+    font-size: 30px;
+    align-items: center;
+    margin: 10px 20px 10px 20px;
+    padding: 6px 50px 6px 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    .assets__txt {
+      flex: 1;
+      .assets_num {
+        color: #f22;
+        font-weight: bold;
+      }
+    }
+    .assets__img {
+      width: 48px;
+    }
+  }
+  .list {
+    display: flex;
+    width: 100%;
+    .list_li {
+      flex: 1;
+      margin: 10px 10px 10px 20px;
+      padding: 20px 5px 10px;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      &:nth-child(2) {
+        margin: 10px 20px 10px 10px;
+        padding: 20px 10px 5px;
+      }
+      .list__img {
+        width: 120px;
+        display: flex;
+        align-items: center;
+        image {
+          height: 60px;
+        }
+      }
+      .list__item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 0 20px 0 0;
+        .list_item_top {
+          flex: 1;
+          font-size: 28px;
+          font-weight: bold;
+          padding: 5PX 0 2PX 0;
+          letter-spacing: 1PX;
+          color: #380a08;
+        }
+        .list_item_bottom {
+          flex: 1;
+          color: #999;
+          font-size: 22px;
+          padding: 0 0 5PX 0;
+          letter-spacing: 1PX;
+        }
+      }
+    }
+  }
+}

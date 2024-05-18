@@ -1,3 +1,4 @@
-export default {
-  navigationBarTitleText: '登录'
-}
+export default definePageConfig({
+  navigationBarTitleText: '登陆',
+  disableScroll: true
+})

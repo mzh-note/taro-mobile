@@ -1,4 +1,4 @@
 export default definePageConfig({
-  navigationBarTitleText: '昵称设置',
+  navigationBarTitleText: '个人设置',
   enablePullDownRefresh: false
 })

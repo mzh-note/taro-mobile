@@ -1,9 +1,18 @@
-使用taro 开发小程序，功能原型：https://toutiao.itheima.net/dist/index.html#/
-# 安装
+### 使用taro3.x 开发微信小程序
+技术栈 Taro3.6.24 + typescript + NUTUI-React
+### 安装
+```shell
 pnpm install 
+```
 
-# 本地运行
-pnpm run dev:h5 启动h5
-pnpm run dev:weapp 启动微信小程序
+### 本地开发
+启动h5
+```shell
+pnpm run dev:h5 
+```
+启动微信小程序
+```shell
+pnpm run dev:weapp 
+```
 
-小程序开发者工具导入 dist/weapp目录
+微信小程序开发者工具导入 dist/weapp 目录
