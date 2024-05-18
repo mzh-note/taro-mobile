@@ -27,7 +27,8 @@ export default defineConfig(async (merge) => {
     outputRoot: `dist/${process.env.TARO_ENV}`,
     plugins: [
       '@tarojs/plugin-html',
-      '@tarojs/plugin-http'
+      '@tarojs/plugin-http',
+      path.resolve(__dirname, './plugin/echarts.ts')
     ],
     defineConstants: {
     },

@@ -82,10 +82,11 @@ export default function NickName () {
       <Button
         className={styles.nickname__setup}
         openType='chooseAvatar'
-        onChooseAvatar={getChooseAvatar}>
+        onChooseAvatar={getChooseAvatar}
+      >
         <Image
           className={styles.nickname__img}
-          mode='aspectFill'
+          mode='aspectFit'
           src={avatar ? avatar : defaultIcon}
         />
       </Button>

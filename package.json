@@ -62,6 +62,7 @@
     "@tarojs/runtime": "3.6.24",
     "@tarojs/shared": "3.6.24",
     "@tarojs/taro": "3.6.24",
+    "echarts-taro3-react": "^1.0.13",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^9.1.2",

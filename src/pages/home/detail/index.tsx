@@ -1,26 +1,17 @@
 import { Image, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import {useCallback, useEffect, useState} from 'react';
-import {CircleProgress, Progress, Table, Tabs} from '@nutui/nutui-react-taro';
+import {CircleProgress, Progress, Tabs} from '@nutui/nutui-react-taro';
 import Header from '@/components/Header';
-import LineChart from '@/components/LineChart/LineChart';
+import LineChart from '@/components/LineChart';
+import PineChart from '@/components/PieChart';
 import like from '@/assets/like.png';
 import {matchInfo} from '@/http/api';
 import styles from './index.module.less'
 
-interface TableColumnProps {
-  key: string
-  title?: string
-  align?: string
-  sorter?: ((a: any, b: any) => number) | boolean | string
-  render?: (rowData: any, rowIndex: number) => string | React.ReactNode
-  fixed?: 'left' | 'right'
-  width?: number
-}
-
 export default function Detail() {
   const instance = Taro.getCurrentInstance()
-  const id = instance?.router?.params?.id || 4123425
+  const id = instance?.router?.params?.id
 
   const [detail, setDetail] = useState({})
   const [tab1value, setTab1value] = useState<string | number>('0')
@@ -28,11 +19,9 @@ export default function Detail() {
   const [list2, setList2] = useState([]) // 胜平负下半部分
   const [list21, setList21] = useState([]) // 胜平负上半部分
   const [list3, setList3] = useState([]) // 总进球
-  const [list4, setList4] = useState([]) // 必发
 
   const getMatchInfo = useCallback(async () => {
     const res = await matchInfo({matchId: id})
-    console.log(res.data.data)
     const result = res?.data?.data
     result.baseInfo.confidence = (result.baseInfo.confidence * 100).toFixed(0)
     result.bf.homeRate = `${(result?.bf?.homeRate * 100).toFixed(0)}%`
@@ -77,8 +66,6 @@ export default function Detail() {
     setList21(result.average)
     // 总进球
     setList3(result.zjq)
-    // 必发
-    setList4(result.bf)
   },[id])
   useEffect(() => {
     getMatchInfo().then()
@@ -98,7 +85,7 @@ export default function Detail() {
               <Image
                 className={styles.hot__img}
                 src={`https://images.weserv.nl/?url=${detail?.baseInfo?.home_logo}`}
-                mode='aspectFill'
+                mode='aspectFit'
               />
               <Text className={styles.hot__name}>{detail?.baseInfo?.home_name}</Text>
             </View>
@@ -109,7 +96,7 @@ export default function Detail() {
               <Image
                 className={styles.hot__img}
                 src={`https://images.weserv.nl/?url=${detail?.baseInfo?.away_logo}`}
-                mode='aspectFill'
+                mode='aspectFit'
               />
               <Text className={styles.hot__name}>{detail?.baseInfo?.away_name}</Text>
             </View>
@@ -184,7 +171,10 @@ export default function Detail() {
             </View>
           }
           <View className={styles.warning__chart}>
-            <LineChart />
+            {
+              list2.length > 0 &&
+              <LineChart item={detail?.sf} />
+            }
           </View>
           <View className={styles.warning__chart__legend}>
             <View className={styles.warning__chart__legend__item}>
@@ -347,7 +337,13 @@ export default function Detail() {
                 </View>
               </View>
               <View className={styles.bflist__right}>
-                chart
+                <View className={styles.bflist__right__total}>
+                  总数：¥{detail?.bf?.total_home + detail?.bf?.total_draw + detail?.bf?.total_away}
+                </View>
+                {
+                  detail?.bf &&
+                  <PineChart item={detail?.bf} />
+                }
               </View>
             </View>
             <View className={styles.bflist__table}>

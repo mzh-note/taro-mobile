@@ -331,7 +331,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      font-size: 26rpx;
+      font-size: 26px;
       margin: 10px 0;
       padding: 0 20px;
       border-right: 1px solid #eaeaea;
@@ -379,6 +379,13 @@
       justify-content: center;
       align-items: center;
       display: flex;
+      position: relative;
+      &__total {
+        position: absolute;
+        top: 40px;
+        font-size: 28px;
+        left: 50px;
+      }
     }
     &__table {
       display: flex;

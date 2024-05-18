@@ -24,12 +24,12 @@
       padding: 0 10px;
       .info__author {
         font-weight: bold;
-        font-size: 26px;
+        font-size: 28px;
         color: #444;
         margin: 0 0 15px 0;
       }
       .info__rate {
-        font-size: 18px;
+        font-size: 24px;
         color: #000;
         font-weight: 400;
         &__connect {
@@ -54,7 +54,7 @@
     background: #fff;
     border-radius: 25px;
     display: flex;
-    margin: 20px 0;
+    margin: 30px 0;
     padding: 20px 30px;
     flex-direction: row;
     align-items: center;
@@ -68,7 +68,7 @@
         font-weight: bold;
       }
       &__status {
-        font-size: 24px;
+        font-size: 26px;
         color: #333;
         font-weight: lighter;
       }
@@ -114,7 +114,7 @@
           color: #d4231c;
         }
         &__unit {
-          font-size: 28rpx;
+          font-size: 28px;
           position: absolute;
           top: 10px;
         }
@@ -134,18 +134,18 @@
     border-radius: 25px;
     display: flex;
     margin: 0 0 20px 0;
-    padding: 10rpx 70rpx 20rpx;
+    padding: 10px 50px 20px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     &__time {
       width: 100%;
-      font-size: 18px;
+      font-size: 24px;
       color: #666;
       display: flex;
       flex-direction: row;
-      margin: 30rpx 0 0 0;
+      margin: 30px 0 0 0;
       &__week{
         flex: 1;
         text-align: left;
@@ -157,26 +157,27 @@
       }
     }
     &__ball{
+      box-sizing: border-box;
+      width: 100%;
       display: flex;
       flex-direction: row;
-      height: 50px;
       align-items: center;
       justify-content: center;
       margin: 20px 0;
+      padding: 0 30px;
       &__item{
         flex: 1;
-        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         &__name{
-          font-size: 20px;
+          font-size: 24px;
           color: #333;
           margin: 0 10px;
         }
         &__icon{
-          width: 20px;
-          height: 20px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
         }
       }
@@ -185,9 +186,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
+        font-size: 28px;
         font-weight: bold;
-        width: 200px;
+        width: 80px;
         text-align: center;
       }
     }
@@ -198,11 +199,11 @@
       flex-direction: row;
       background: #f6f7f9;
       width: 100%;
-      font-size: 20px;
+      font-size: 26px;
       color: #333;
       box-sizing: border-box;
       border-radius: 6px;
-      height: 90px;
+      padding: 28px 0;
       &__left {
         width: 90px;
         height: 100%;
@@ -212,6 +213,7 @@
         flex-direction: column;
         border-right: 2px solid #fff;
         display: flex;
+        padding: 0 0 0 4PX;
         &__res {
           color: #666;
         }

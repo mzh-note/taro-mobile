@@ -54,35 +54,35 @@ export default function RecommendExpert (props) {
       </View>
       <View className={styles.hot__title}>热门赛事</View>
       {
-        hotList.length > 0 ?
+        hotList.length > 0 &&
         hotList.map(item => (
           <View className={styles.hot__li} key={item}>
             <View className={styles.hot__detail}>
               <View className={styles.hot__country}>
                 <Image
                   className={styles.hot__img}
-                  src={`https://images.weserv.nl/?url=${item.homeLogo}`}
-                  mode='aspectFill'
+                  src={`https://images.weserv.nl/?url=${item?.homeLogo}`}
+                  mode='aspectFit'
                 />
-                <Text className={styles.hot__name}>{item.homeName}</Text>
+                <Text className={styles.hot__name}>{item?.homeName}</Text>
               </View>
-              <View className={styles.hot__score}>{item.homeScore[0]} : {item.awayScore[0]}</View>
+              <View className={styles.hot__score}>{item?.homeScore[0]} : {item?.awayScore[0]}</View>
               <View className={styles.hot__country}>
                 <Image
                   className={styles.hot__img}
-                  src={`https://images.weserv.nl/?url=${item.awayLogo}`}
-                  mode='aspectFill'
+                  src={`https://images.weserv.nl/?url=${item?.awayLogo}`}
+                  mode='aspectFit'
                 />
-                <Text className={styles.hot__name}>{item.awayName}</Text>
+                <Text className={styles.hot__name}>{item?.awayName}</Text>
               </View>
             </View>
             <View className={styles.hot__progress}>
               <View className={styles.hot__percent}>
-                {item.totalHome}&emsp;{item.totalAway}&emsp;{item.totalDraw}
+                {item?.totalHome}&emsp;{item?.totalAway}&emsp;{item?.totalDraw}
               </View>
               <View className={styles.hot__part}>
-                <Text className={styles.hot__part__p1} style={{width: item.totalHome}}></Text>
-                <Text className={styles.hot__part__p2} style={{width: item.totalAway}}></Text>
+                <Text className={styles.hot__part__p1} style={{width: item?.totalHome}}></Text>
+                <Text className={styles.hot__part__p2} style={{width: item?.totalAway}}></Text>
                 <Text className={styles.hot__part__p3}></Text>
               </View>
             </View>
@@ -92,77 +92,13 @@ export default function RecommendExpert (props) {
             </View>
           </View>
         ))
-          :
-          <View className={styles.hot__li}>
-            <Empty description='无数据' imageSize={80} />
-          </View>
       }
-      {/*<View className={styles.hot__li}>*/}
-      {/*  <View className={styles.hot__detail}>*/}
-      {/*    <View className={styles.hot__country}>*/}
-      {/*      <Image*/}
-      {/*        className={styles.hot__img}*/}
-      {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
-      {/*        mode='aspectFill'*/}
-      {/*      />*/}
-      {/*      <Text className={styles.hot__name}>圣路易斯竞技</Text>*/}
-      {/*    </View>*/}
-      {/*    <View className={styles.hot__score}>1:5</View>*/}
-      {/*    <View className={styles.hot__country}>*/}
-      {/*      <Image*/}
-      {/*        className={styles.hot__img}*/}
-      {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
-      {/*        mode='aspectFill'*/}
-      {/*      />*/}
-      {/*      <Text className={styles.hot__name}>托卢卡</Text>*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*  <View className={styles.hot__progress}>*/}
-      {/*    <View className={styles.hot__percent}>26%&emsp;27%&emsp;48%</View>*/}
-      {/*    <View className={styles.hot__part}>*/}
-      {/*      <Text className={styles.hot__part__p1} style={{width: '30%'}}></Text>*/}
-      {/*      <Text className={styles.hot__part__p2} style={{width: '30%'}}></Text>*/}
-      {/*      <Text className={styles.hot__part__p3}></Text>*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*  <View className={styles.hot__note}>*/}
-      {/*    <Text className={styles.hot__time}>2024-04-20 11:00:00</Text>*/}
-      {/*    <Image className={styles.hot__like} src={like} mode='aspectFit' />*/}
-      {/*  </View>*/}
-      {/*</View>*/}
-      {/*<View className={styles.hot__li}>*/}
-      {/*  <View className={styles.hot__detail}>*/}
-      {/*    <View className={styles.hot__country}>*/}
-      {/*      <Image*/}
-      {/*        className={styles.hot__img}*/}
-      {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
-      {/*        mode='aspectFill'*/}
-      {/*      />*/}
-      {/*      <Text className={styles.hot__name}>圣路易斯竞技</Text>*/}
-      {/*    </View>*/}
-      {/*    <View className={styles.hot__score}>1:5</View>*/}
-      {/*    <View className={styles.hot__country}>*/}
-      {/*      <Image*/}
-      {/*        className={styles.hot__img}*/}
-      {/*        src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'*/}
-      {/*        mode='aspectFill'*/}
-      {/*      />*/}
-      {/*      <Text className={styles.hot__name}>托卢卡</Text>*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*  <View className={styles.hot__progress}>*/}
-      {/*    <View className={styles.hot__percent}>26%&emsp;27%&emsp;48%</View>*/}
-      {/*    <View className={styles.hot__part}>*/}
-      {/*      <Text className={styles.hot__part__p1} style={{width: '30%'}}></Text>*/}
-      {/*      <Text className={styles.hot__part__p2} style={{width: '30%'}}></Text>*/}
-      {/*      <Text className={styles.hot__part__p3}></Text>*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*  <View className={styles.hot__note}>*/}
-      {/*    <Text className={styles.hot__time}>2024-04-20 11:00:00</Text>*/}
-      {/*    <Image className={styles.hot__like} src={like} mode='aspectFit' />*/}
-      {/*  </View>*/}
-      {/*</View>*/}
+      {
+        hotList.length === 0 &&
+        <View className={styles.hot__li}>
+          <Empty description='无数据' imageSize={80} />
+        </View>
+      }
     </>
   )
 }
