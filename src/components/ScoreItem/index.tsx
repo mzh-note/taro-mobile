@@ -47,6 +47,12 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
       }
     }
   }
+
+  const viewDetail = (item) => {
+    Taro.navigateTo({
+      url: '/pages/home/detail/index?id=' + item.matchId
+    })
+  }
   return (
     <>
       <View className={styles.item}>
@@ -75,14 +81,13 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
             <Text className={styles.item__lineup__title__score}>{scoreItem.homeScore[0]}-{scoreItem.awayScore[0]}</Text>
             <Text className={styles.item__lineup__title__name}>{scoreItem.awayName}</Text>
           </View>
-          {
-            tabValue === 3
-            &&
-            <View className={styles.item__lineup__result}>
+          <View className={styles.item__lineup__result} onClick={() => viewDetail(scoreItem)}>
+            {
+              tabValue === 3 &&
               <Text className={styles.item__lineup__result__txt}>{scoreItem.aiResult === 0 ? '否' : '中'}</Text>
-              <ArrowRight size={10} color='#999' />
-            </View>
-          }
+            }
+            <ArrowRight size={10} color='#999' />
+          </View>
         </View>
         <View className={styles.item__bottom}>
           <Text className={styles.item__bottom__left}>{scoreItem.matchLotteryOne}</Text>
