@@ -16,11 +16,11 @@ export default function Mine () {
         if (code) {
           const response = await wxLogin({ code })
           Taro.hideLoading()
-          if (response.data.data.userStatus === 1) {
+          if (response?.data?.data?.userStatus === 1) {
             console.log('已注册')
-            const payload = response.data.data
+            const payload = response?.data?.data
             payload.avatar = `${process.env.TARO_APP_BASEURL}${payload.avatar}`
-            dispatch(setUser(response.data.data))
+            dispatch(setUser(response?.data?.data))
             Taro.switchTab({
               url: '/pages/mine/mine'
             })
