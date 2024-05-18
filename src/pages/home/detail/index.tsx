@@ -1,10 +1,11 @@
 import { Image, ScrollView, Text, View} from '@tarojs/components';
 import Taro from '@tarojs/taro';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {CircleProgress, Progress, Table, Tabs} from '@nutui/nutui-react-taro';
 import Header from '@/components/Header';
 import LineChart from '@/components/LineChart/LineChart';
 import like from '@/assets/like.png';
+import {matchInfo} from '@/http/api';
 import styles from './index.module.less'
 
 interface TableColumnProps {
@@ -19,57 +20,70 @@ interface TableColumnProps {
 
 export default function Detail() {
   const instance = Taro.getCurrentInstance()
-  const id = instance?.router?.params?.id
+  const id = instance?.router?.params?.id || 4123425
+
+  const [detail, setDetail] = useState({})
   const [tab1value, setTab1value] = useState<string | number>('0')
-  const [columns, _setColumns] = useState<Array<TableColumnProps>>([
-    {
-      title: 'ID',
-      key: 'id',
-      render: (_record: any, index) => {
-        return index + 1
-      },
-    },
-    {
-      title: '姓名',
-      key: 'name',
-    },
-    {
-      title: '性别',
-      key: 'sex',
-      render: (record: any) => {
-        return (
-          <span style={{ color: record.sex === '女' ? 'blue' : 'green' }}>
-            {record.sex}
-          </span>
-        )
-      },
-    },
-    {
-      title: '学历',
-      key: 'record',
-    },
-  ])
+  const [list, setList] = useState([]) //进球
+  const [list2, setList2] = useState([]) // 胜平负下半部分
+  const [list21, setList21] = useState([]) // 胜平负上半部分
+  const [list3, setList3] = useState([]) // 总进球
+  const [list4, setList4] = useState([]) // 必发
 
-  const [table, _setTable] = useState([
-    {
-      name: 'Tom',
-      sex: '男',
-      record: '小学',
-    },
-    {
-      name: 'Lucy',
-      sex: '女',
-      record: '本科',
-    },
-    {
-      name: 'Jack',
-      sex: '男',
-      record: '高中',
-    },
-  ])
+  const getMatchInfo = useCallback(async () => {
+    const res = await matchInfo({matchId: id})
+    console.log(res.data.data)
+    const result = res?.data?.data
+    result.baseInfo.confidence = (result.baseInfo.confidence * 100).toFixed(0)
+    result.bf.homeRate = `${(result?.bf?.homeRate * 100).toFixed(0)}%`
+    result.bf.drawRate = `${(result?.bf?.drawRate * 100).toFixed(0)}%`
+    result.bf.awayRate = `${(result?.bf?.awayRate * 100).toFixed(0)}%`
+
+    // 处理胜平负的数据，计算最高值，最低值，平均值
+    result.average = [
+      {
+        name: '最高值',
+        val: []
+      },
+      {
+        name: '最低值',
+        val: []
+      },
+      {
+        name: '平均值',
+        val: []
+      }
+    ]
+    // 所有胜平负数据
+    const total: any[] = Array.from({length: 8}, () => [])
+    for (let i = 0; i < total.length; i++) {
+      let item: string[] = []
+      for (let j = 0; j < result.sf.length; j++) {
+        item.push(result?.sf[j]?.val[i] as string)
+      }
+      total[i].push(item)
+    }
+    for (let k = 0; k < total.length; k++) {
+      result.average[0].val[k] = Math.max.apply(null, total[k][0])
+      result.average[1].val[k] = Math.min.apply(null, total[k][0])
+      const sum = total[k][0].reduce((prev: string, next: string) => Number(prev) + Number(next))
+      result.average[2].val[k] = (sum /total[k][0].length).toFixed(2)
+    }
+    setDetail(result)
+    // 让球
+    setList(result.rq)
+    // 胜平负
+    setList2(result.sf)
+    setList21(result.average)
+    // 总进球
+    setList3(result.zjq)
+    // 必发
+    setList4(result.bf)
+  },[id])
   useEffect(() => {
+    getMatchInfo().then()
+  }, [getMatchInfo]);
 
-  }, []);
   return (
     <View className={styles.detail}>
       <Header />
@@ -83,77 +97,92 @@ export default function Detail() {
             <View className={styles.hot__country}>
               <Image
                 className={styles.hot__img}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
+                src={`https://images.weserv.nl/?url=${detail?.baseInfo?.home_logo}`}
                 mode='aspectFill'
               />
-              <Text className={styles.hot__name}>圣路易斯竞技</Text>
+              <Text className={styles.hot__name}>{detail?.baseInfo?.home_name}</Text>
             </View>
-            <View className={styles.hot__score}>1:5</View>
+            <View className={styles.hot__score}>
+              {detail?.baseInfo?.home_score} : {detail?.baseInfo?.away_score}
+            </View>
             <View className={styles.hot__country}>
               <Image
                 className={styles.hot__img}
-                src='https://storage.360buyimg.com/imgtools/e067cd5b69-07c864c0-dd02-11ed-8b2c-d7f58b17086a.png'
+                src={`https://images.weserv.nl/?url=${detail?.baseInfo?.away_logo}`}
                 mode='aspectFill'
               />
-              <Text className={styles.hot__name}>托卢卡</Text>
+              <Text className={styles.hot__name}>{detail?.baseInfo?.away_name}</Text>
             </View>
           </View>
           <View className={styles.hot__progress}>
-            <View className={styles.hot__percent}>26%&emsp;27%&emsp;48%</View>
+            <View className={styles.hot__percent}>
+              {detail?.bf?.homeRate}&emsp;{detail?.bf?.drawRate}&emsp;{detail?.bf?.awayRate}
+            </View>
             <View className={styles.hot__part}>
-              <Text className={styles.hot__part__p1} style={{width: '30%'}}></Text>
-              <Text className={styles.hot__part__p2} style={{width: '30%'}}></Text>
+              <Text className={styles.hot__part__p1} style={{width: detail?.bf?.homeRate}}></Text>
+              <Text className={styles.hot__part__p2} style={{width: detail?.bf?.drawRate}}></Text>
               <Text className={styles.hot__part__p3}></Text>
             </View>
           </View>
           <View className={styles.hot__note}>
-            <Text className={styles.hot__time}>2024-04-20 11:00:00</Text>
+            <Text className={styles.hot__time}>{detail?.baseInfo?.start_time?.slice(0, 19)}</Text>
             <Image className={styles.hot__like} src={like} mode='aspectFit' />
           </View>
         </View>
         <View className={styles.result}>
           <View className={styles.result__detail}>
             <View className={styles.result__detail__h3}>Ai预测结果：</View>
-            <View className={styles.result__detail__res}>让胜</View>
+            <View className={styles.result__detail__res}>
+              {detail?.baseInfo?.ai_forecast}
+            </View>
             <View className={styles.result__detail__p}>结合Ai模型预测，专家预<br />测及必发指数的综合信心指数。</View>
             <View className={styles.result__detail__p}>该预测可能会随比赛临近而改变。</View>
           </View>
           <View className={styles.result__chart}>
             <CircleProgress
               key={1}
-              percent={80}
+              percent={detail?.baseInfo?.confidence}
               radius={50}
               strokeWidth={10}
               color={{'0%': '#a3221b', '50%': '#a5211b', '100%': '#541c17'}}
             >
-              50%
+              {detail?.baseInfo?.confidence}%
             </CircleProgress>
           </View>
         </View>
         <View className={styles.percent}>
           <View className={styles.percent__rate}>信心指数：
-            <Text className={styles.percent__rate__p}>85%</Text>
+            <Text className={styles.percent__rate__p}>
+              {detail?.baseInfo?.confidence}%
+            </Text>
           </View>
           <View className={styles.percent__win}><Text className={styles.percent__win__tip}></Text>胜概率</View>
         </View>
-        <View className={styles.intelligence}>
-          <Text className={styles.intelligence__h3}>情报抓取：</Text>
-          <ScrollView
-            scrollY
-            enhanced
-            showScrollbar
-            className={styles.intelligence__scroll}
-          >
-            <View className={styles.intelligence__scroll__container}>
-              考虑到那不勒斯的防守问题和恩波利在主场的稳健表现，这场比赛恩波利完全有可能给那不勒斯制造麻烦，那不勒斯的进攻依然十分强劲，但防守不稳可能会给恩波利提供机会，指数当下也是徘徊在那不勒斯-0.75，并不牢靠，因此本场着好思波利主场不败。推荐让胜1:12:2
-            </View>
-          </ScrollView>
-        </View>
-        <View className={styles.warning}>
-          <View className={styles.warning__title}>
-            <Text className={styles.warning__title__status}>预警</Text>
-            <Text className={styles.warning__title__tip}>重要提示，本场比赛有出下盘爆冷风险。</Text>
+        {
+          detail?.baseInfo?.intelligence &&
+          <View className={styles.intelligence}>
+            <Text className={styles.intelligence__h3}>情报抓取：</Text>
+            <ScrollView
+              scrollY
+              enhanced
+              showScrollbar
+              className={styles.intelligence__scroll}
+            >
+              <View className={styles.intelligence__scroll__container}>
+                {detail?.baseInfo?.intelligence}
+              </View>
+            </ScrollView>
           </View>
+        }
+        <View className={styles.warning}>
+          {
+            detail?.baseInfo?.is_warning !== 0
+            &&
+            <View className={styles.warning__title}>
+              <Text className={styles.warning__title__status}>预警</Text>
+              <Text className={styles.warning__title__tip}>重要提示，本场比赛有出下盘爆冷风险。</Text>
+            </View>
+          }
           <View className={styles.warning__chart}>
             <LineChart />
           </View>
@@ -182,6 +211,7 @@ export default function Detail() {
           </View>
         </View>
         <Tabs
+          autoHeight
           value={tab1value}
           onChange={(value) => {
             setTab1value(value)
@@ -190,21 +220,158 @@ export default function Detail() {
           className={styles.tabs}
         >
           <Tabs.TabPane title='让球'>
-            <Table
-              striped
-              style={{border: 0}}
-              columns={columns}
-              data={table} bordered={false}
-            />
+            <View className={styles.list__header}>
+              <View className={styles.list__header__item}>公司</View>
+              <View className={styles.list__header__item}>初始</View>
+              <View className={styles.list__header__item}>即时</View>
+            </View>
+            {
+              list.map((item, index) => (
+                <View className={styles.list__li} key={index}>
+                  <Text className={styles.list__li__item}>{item?.name}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[0]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[1]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[2]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[4]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[5]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[6]}</Text>
+                </View>
+              ))
+            }
           </Tabs.TabPane>
           <Tabs.TabPane title='胜平负'>
-            <Table
-              striped
-              style={{border: 0}}
-              columns={columns}
-              data={table}
-              bordered={false}
-            />
+            <View className={styles.spfli__header}>
+              <View className={styles.spfli__header__item}></View>
+              <View className={styles.spfli__header__item}></View>
+              <View className={styles.spfli__header__item}>主胜</View>
+              <View className={styles.spfli__header__item}>平局</View>
+              <View className={styles.spfli__header__item}>客胜</View>
+            </View>
+            {
+              list21.map((item, index) => (
+                <View className={styles.list__li} key={index}>
+                  <View className={styles.spfli__li__item}>{item?.name}</View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>初始</Text>
+                    <Text className={styles.spfli__li__item__td}>即时</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[0]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[4]}</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[1]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[5]}</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[2]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[6]}</Text>
+                  </View>
+                </View>
+              ))
+            }
+            <View className={styles.spfli__header}>
+              <View className={styles.spfli__header__item}>公司</View>
+              <View className={styles.spfli__header__item}>即时</View>
+              <View className={styles.spfli__header__item}>主胜</View>
+              <View className={styles.spfli__header__item}>平局</View>
+              <View className={styles.spfli__header__item}>客胜</View>
+            </View>
+            {
+              list2.map((item, index) => (
+                <View className={`${styles.spfli__li} ${index === 0 ? `${styles.spfli__li_active}` : ''}`} key={index}>
+                  <View className={styles.spfli__li__item}>{item?.name}</View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>初始</Text>
+                    <Text className={styles.spfli__li__item__td}>即时</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[0]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[4]}</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[1]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[5]}</Text>
+                  </View>
+                  <View className={styles.spfli__li__item}>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[2]}</Text>
+                    <Text className={styles.spfli__li__item__td}>{item?.val[6]}</Text>
+                  </View>
+                </View>
+              ))
+            }
+          </Tabs.TabPane>
+          <Tabs.TabPane title='总进球'>
+            <View className={styles.list__header}>
+              <View className={styles.list__header__item}>公司</View>
+              <View className={styles.list__header__item}>初始</View>
+              <View className={styles.list__header__item}>即时</View>
+            </View>
+            {
+              list3.map((item, index) => (
+                <View className={styles.list__li} key={index}>
+                  <Text className={styles.list__li__item}>{item?.name}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[0]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[1]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[2]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[4]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[5]}</Text>
+                  <Text className={styles.list__li__item}>{item?.val[6]}</Text>
+                </View>
+              ))
+            }
+          </Tabs.TabPane>
+          <Tabs.TabPane title='必发'>
+            <View className={styles.bflist}>
+              <View className={styles.bflist__left}>
+                <View className={styles.bflist__left__li}>
+                  <View className={styles.bflist__left__li__name}>主</View>
+                  <View className={styles.bflist__left__li__num}>
+                    <Text className={styles.bflist__left__li__num__percent}>{detail?.bf?.homeRate}</Text>
+                    <Text className={styles.bflist__left__li__num__count}>{detail?.bf?.total_home}</Text>
+                  </View>
+                </View>
+                <View className={styles.bflist__left__li}>
+                  <View className={styles.bflist__left__li__name}>和</View>
+                  <View className={styles.bflist__left__li__num}>
+                    <Text className={styles.bflist__left__li__num__percent}>{detail?.bf?.drawRate}</Text>
+                    <Text className={styles.bflist__left__li__num__count}>{detail?.bf?.total_draw}</Text>
+                  </View>
+                </View>
+                <View className={styles.bflist__left__li}>
+                  <View className={styles.bflist__left__li__name}>客</View>
+                  <View className={styles.bflist__left__li__num}>
+                    <Text className={styles.bflist__left__li__num__percent}>{detail?.bf?.awayRate}</Text>
+                    <Text className={styles.bflist__left__li__num__count}>{detail?.bf?.total_away}</Text>
+                  </View>
+                </View>
+              </View>
+              <View className={styles.bflist__right}>
+                chart
+              </View>
+            </View>
+            <View className={styles.bflist__table}>
+              <View className={styles.bflist__table__tr}>
+                <Text className={styles.bflist__table__tr__th}></Text>
+                <Text className={styles.bflist__table__tr__th}>奖金</Text>
+                <Text className={styles.bflist__table__tr__th}>总数</Text>
+              </View>
+              <View className={styles.bflist__table__tr}>
+                <Text className={styles.bflist__table__tr__td}>主</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_home?.price}</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_home?.turn_over}</Text>
+              </View>
+              <View className={styles.bflist__table__tr}>
+                <Text className={styles.bflist__table__tr__td}>和</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_draw?.price}</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_draw?.turn_over}</Text>
+              </View>
+              <View className={styles.bflist__table__tr}>
+                <Text className={styles.bflist__table__tr__td}>客</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_away?.price}</Text>
+                <Text className={styles.bflist__table__tr__td}>{detail?.bf?.detail_away?.turn_over}</Text>
+              </View>
+            </View>
           </Tabs.TabPane>
         </Tabs>
       </ScrollView>

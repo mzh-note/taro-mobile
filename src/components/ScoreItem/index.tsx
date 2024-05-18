@@ -25,7 +25,7 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
         <View className={styles.item__top}>
           <View className={styles.item__top__left}>
             <Text className={styles.item__top__left__name}>{scoreItem.matchTypeName}</Text>
-            <Text className={styles.item__top__left__time}>{scoreItem.startTime.slice(-8,-3)}</Text>
+            <Text className={styles.item__top__left__time}>{scoreItem.startTime.slice(11, 16)}</Text>
           </View>
           <Text>{
             scoreItem.state === 1 ?

@@ -16,7 +16,7 @@ export default function ExpertDetail () {
 
   const getInfo = useCallback(async () => {
     const result = await proInfo({proId})
-    console.log(result.data.data)
+    console.log(result.data.data.tenList.forecast_result)
     setProBase(result.data.data.proBase)
     setList(result.data.data.tenList.forecast_result)
   }, [proId])

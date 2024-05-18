@@ -64,7 +64,11 @@ export default function Course () {
       matchDate
     }
     const result = await getScoreList(apis[tabValue], params)
-    setScoreList(result?.data?.data || [])
+    if (result?.data?.data && result?.data?.data.length) {
+      setScoreList(result?.data?.data || [])
+    } else {
+      setScoreList([])
+    }
     Taro.hideLoading()
   }, [date, apis, tabValue])
   // const getList = async () => {
@@ -155,22 +159,24 @@ export default function Course () {
                 scrollY
                 style={{height: '100%'}}
               >
-                <View className={styles.outer}>
-                  {
-                    tabValue !== 4 &&
-                    scoreList.length > 0 &&
-                    scoreList.map((scoreItem: any) => (
-                      <ScoreItem scoreItem={scoreItem} tabValue={tabValue} key={scoreItem.matchId} />
-                    ))
-                  }
-                  {
-                    tabValue !== 4 && scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
-                  }
-                  {
-                    tabValue === 4 &&
-                    <MyAttention />
-                  }
-                </View>
+                {
+                  tabValue !== 4 &&
+                  <View className={styles.outer}>
+                    {
+                      scoreList.length > 0 &&
+                      scoreList.map((scoreItem: any) => (
+                        <ScoreItem scoreItem={scoreItem} tabValue={tabValue} key={scoreItem.matchId} />
+                      ))
+                    }
+                    {
+                      scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
+                    }
+                  </View>
+                }
+                {
+                  tabValue === 4 &&
+                  <MyAttention />
+                }
               </ScrollView>
             </Swiper.Item>
           ))}

@@ -3,13 +3,14 @@ import {useState} from 'react'
 import {Image, RichText, Text, View} from '@tarojs/components';
 import { Input, Button } from '@nutui/nutui-react-taro'
 
-import styles from './index.module.less'
+import {getMatchId} from '@/http/api';
 
 import logo from '../../assets/logo.png'
+import styles from './index.module.less'
 
 export default function Home() {
   const [code, setCode] = useState('')
-  const prediction = () => {
+  const prediction = async () => {
     // if (code.length === 0) {
     //   Taro.showToast({
     //     title: '请输入赛事编号',
@@ -21,9 +22,10 @@ export default function Home() {
     //   title: '即将预测的编号为' + code,
     //   icon: 'none'
     // })
+    const res = await getMatchId({code: ''})
     setCode('')
     Taro.navigateTo({
-      url: '/pages/home/detail/index?id=' + code
+      url: '/pages/home/detail/index?id=' + res.data.data.matchId
     })
   }
   return (
