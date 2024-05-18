@@ -9,7 +9,6 @@ export default function LineChart(props) {
   const chartRef = useRef(null)
   useEffect(() => {
     const category = pieItem.map(x => x.name)
-    console.log(pieItem, category)
     const chartData = []
     const chartData2 = []
     const chartData3 = []
@@ -22,7 +21,6 @@ export default function LineChart(props) {
       chartData3.push(Number(pieItem[i]?.val[2]))
       chartData3.push(Number(pieItem[i]?.val[6]))
     }
-    console.log(chartData, chartData2, chartData3)
     const options = {
       grid: {
         top: '0',
@@ -33,7 +31,7 @@ export default function LineChart(props) {
       },
       xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: category,
         axisLabel: {
           show: false
         }

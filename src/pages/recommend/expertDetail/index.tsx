@@ -16,14 +16,12 @@ export default function ExpertDetail () {
 
   const getInfo = useCallback(async () => {
     const result = await proInfo({proId})
-    console.log(result.data.data.tenList.forecast_result)
     setProBase(result.data.data.proBase)
     setList(result.data.data.tenList.forecast_result)
   }, [proId])
 
   const getSuggestList = useCallback(async () => {
     const result = await suggestList({proId})
-    console.log(result.data.data)
     setSugList(result.data.data)
   }, [proId])
   useEffect(() => {
