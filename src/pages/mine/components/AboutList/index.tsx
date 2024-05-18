@@ -7,16 +7,17 @@ import person from '@/assets/icon-person.png';
 import logo from '@/assets/logo.png';
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppSelector} from '@/store/hooks';
-import {useEffect} from 'react';
+import {useEffect, memo} from 'react';
 import styles from './index.module.less'
 
-export default function AboutList(){
+const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
   console.log(isLogin ? '已登陆' : '未登陆', userInfo)
   useEffect(() => {
 
   }, []);
+
   const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/mine/nickName/index'
@@ -95,4 +96,5 @@ export default function AboutList(){
       </View>
     </>
   )
-}
+}, [])
+export default AboutList

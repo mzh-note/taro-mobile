@@ -25,6 +25,10 @@ export default function Mine () {
               url: '/pages/mine/mine'
             })
           } else {
+            Taro.showToast({
+              icon: 'none',
+              title: '请先登陆'
+            })
             console.log('未注册')
           }
         } else {
