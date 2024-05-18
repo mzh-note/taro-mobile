@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro';
 import Header from '@/components/Header';
 import {Avatar, Button} from '@nutui/nutui-react-taro';
 import {useCallback, useEffect, useState} from 'react';
-import {proInfo, suggestList} from '@/http/api';
+import {favoriteAddPro, favoriteDelPro, proInfo, suggestList} from '@/http/api';
 
 import styles from './index.module.less'
 
@@ -15,19 +15,53 @@ export default function ExpertDetail () {
   const [sugList, setSugList] = useState([])
 
   const getInfo = useCallback(async () => {
+    Taro.showLoading()
     const result = await proInfo({proId})
     setProBase(result.data.data.proBase)
     setList(result.data.data.tenList.forecast_result)
+    Taro.hideLoading()
   }, [proId])
 
   const getSuggestList = useCallback(async () => {
+    Taro.showLoading()
     const result = await suggestList({proId})
     setSugList(result.data.data)
+    Taro.hideLoading()
   }, [proId])
   useEffect(() => {
     getInfo().then()
     getSuggestList().then()
   }, [getInfo, getSuggestList])
+  const getFavoriteAddPro = async (params: any) => {
+    if (!params.proId) {
+      return false
+    }
+    if (params.favorite_state === 0) {
+      const res = await favoriteAddPro({proId: params.proId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '关注成功'
+        })
+        setProBase({
+          ...proBase,
+          favorite_state: 1
+        })
+      }
+    } else {
+      const res = await favoriteDelPro({proId: params.proId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '取消关注成功'
+        })
+        setProBase({
+          ...proBase,
+          favorite_state: 0
+        })
+      }
+    }
+  }
   return (
     <>
       <Header />
@@ -36,16 +70,23 @@ export default function ExpertDetail () {
           <Avatar
             className={styles.overview__img}
             size='normal'
-            src={`${process.env.TARO_APP_BASEURL}/images/${proBase.avatar}`}
+            src={`${process.env.TARO_APP_BASEURL}/images/${proBase?.avatar}`}
           />
           <View className={styles.overview__info}>
-            <View className={styles.info__author}>{proBase.nickName}</View>
+            <View className={styles.info__author}>{proBase?.nickName}</View>
             <View className={styles.info__rate}>
-              <Text className={styles.info__rate__connect}>连中{proBase.sustainWin}场</Text>
-              <Text className={styles.info__rate__hit}>二串一命中率{proBase.towRate}%</Text>
+              <Text className={styles.info__rate__connect}>连中{proBase?.sustainWin}场</Text>
+              <Text className={styles.info__rate__hit}>二串一命中率{proBase?.towRate}%</Text>
             </View>
           </View>
-          <Button className={styles.info__follow} type='primary' size='small'>关注</Button>
+          <Button
+            className={`${styles.info__follow} ${proBase?.favorite_state === 1 ? `${styles.info__follow_active}`: ''}`}
+            type='primary'
+            size='small'
+            onClick={() => getFavoriteAddPro(proBase)}
+          >
+            {proBase?.favorite_state === 1 ? '已关注' : '关注' }
+          </Button>
         </View>
         <View className={styles.plan}>
           <View className={styles.plan__detail}>

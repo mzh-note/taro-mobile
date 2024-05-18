@@ -20,7 +20,7 @@ export default function Course () {
 
   const [isVisible, setIsVisible] = useState(false)
   const [date, setDate] = useState(currentDate())
-  const [scoreList, setScoreList] = useState([])
+  const [scoreList, setScoreList] = useState<any>([])
 
   let weeks = useMemo(() => {
     return lastWeek(date)
@@ -82,6 +82,20 @@ export default function Course () {
   useEffect(() => {
     getList().then()
   }, [getList, tabValue])
+
+  const updateParent = (matchId, value) => {
+    const newList = scoreList.map(item => {
+      if (item?.matchId === matchId) {
+        return {
+          ...item,
+          favorite_state: value
+        }
+      } else {
+        return item
+      }
+    })
+    setScoreList(newList)
+  }
   return (
     <>
       <Header />
@@ -165,7 +179,12 @@ export default function Course () {
                     {
                       scoreList.length > 0 &&
                       scoreList.map((scoreItem: any) => (
-                        <ScoreItem scoreItem={scoreItem} tabValue={tabValue} key={scoreItem.matchId} />
+                        <ScoreItem
+                          scoreItem={scoreItem}
+                          tabValue={tabValue}
+                          updateParent={updateParent}
+                          key={scoreItem.matchId}
+                        />
                       ))
                     }
                     {

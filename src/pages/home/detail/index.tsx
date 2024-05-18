@@ -6,7 +6,9 @@ import Header from '@/components/Header';
 import LineChart from '@/components/LineChart';
 import PineChart from '@/components/PieChart';
 import like from '@/assets/like.png';
-import {matchInfo} from '@/http/api';
+import {favoriteAddMatch, favoriteDelMatch, matchInfo} from '@/http/api';
+
+import like_active from '@/assets/like_active.png';
 import styles from './index.module.less'
 
 export default function Detail() {
@@ -23,7 +25,7 @@ export default function Detail() {
   const getMatchInfo = useCallback(async () => {
     const res = await matchInfo({matchId: id})
     const result = res?.data?.data
-    result.baseInfo.confidence = (result.baseInfo.confidence * 100).toFixed(0)
+    result.baseInfo.confidence = (result?.baseInfo?.confidence * 100).toFixed(0)
     result.bf.homeRate = `${(result?.bf?.homeRate * 100).toFixed(0)}%`
     result.bf.drawRate = `${(result?.bf?.drawRate * 100).toFixed(0)}%`
     result.bf.awayRate = `${(result?.bf?.awayRate * 100).toFixed(0)}%`
@@ -70,7 +72,42 @@ export default function Detail() {
   useEffect(() => {
     getMatchInfo().then()
   }, [getMatchInfo]);
-
+  const toAddMatch = async (selectItem) => {
+    console.log('关注比赛', selectItem)
+    if (!selectItem.matchId) {
+      return false
+    }
+    if (selectItem.favorite_state === 0) {
+      const res = await favoriteAddMatch({matchId: selectItem.matchId})
+      console.log(res.data.status)
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '收藏成功'
+        })
+        setDetail({
+          ...detail,
+          baseInfo: {
+            favorite_state: 1
+          }
+        })
+      }
+    } else {
+      const res = await favoriteDelMatch({matchId: selectItem.matchId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '取消收藏成功'
+        })
+        setDetail({
+          ...detail,
+          baseInfo: {
+            favorite_state: 0
+          }
+        })
+      }
+    }
+  }
   return (
     <View className={styles.detail}>
       <Header />
@@ -113,7 +150,12 @@ export default function Detail() {
           </View>
           <View className={styles.hot__note}>
             <Text className={styles.hot__time}>{detail?.baseInfo?.start_time?.slice(0, 19)}</Text>
-            <Image className={styles.hot__like} src={like} mode='aspectFit' />
+            <Image
+              className={styles.hot__like}
+              src={`${detail?.baseInfo?.favorite_state === 1 ? like_active : like}`}
+              mode='aspectFit'
+              onClick={() => toAddMatch(detail?.baseInfo)}
+            />
           </View>
         </View>
         <View className={styles.result}>

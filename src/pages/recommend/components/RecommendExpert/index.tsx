@@ -2,16 +2,17 @@ import Taro from '@tarojs/taro';
 import {Image, Text, View} from '@tarojs/components';
 import {Empty} from '@nutui/nutui-react-taro';
 import {useEffect, useState} from 'react';
-import {allList, hotMatchList, towList} from '@/http/api';
+import {allList, favoriteAddMatch, favoriteDelMatch, hotMatchList, towList} from '@/http/api';
 import ExpertItem from '@/components/ExpertItem';
 import like from '@/assets/like.png';
+import like_active from '@/assets/like_active.png'
 
 import styles from './index.module.less'
 
 export default function RecommendExpert (props) {
   const type = props.type
   const [list, setList] = useState([])
-  const [hotList, setHotList] = useState([])
+  const [hotList, setHotList] = useState<any>([])
   useEffect(() => {
     Taro.showLoading()
     if (type === 1) {
@@ -42,6 +43,52 @@ export default function RecommendExpert (props) {
     })
     setHotList(data)
     Taro.hideLoading()
+  }
+  const toAddMatch = async (selectItem) => {
+    console.log('关注比赛', selectItem)
+    if (!selectItem.matchId) {
+      return false
+    }
+    if (selectItem.favorite_state === 0) {
+      const res = await favoriteAddMatch({matchId: selectItem.matchId})
+      console.log(res.data.status)
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '收藏成功'
+        })
+        const newList = hotList.map((item: any) => {
+          if (item?.matchId === selectItem.matchId) {
+            return {
+              ...item,
+              favorite_state: 1
+            }
+          } else {
+            return item
+          }
+        })
+        setHotList(newList)
+      }
+    } else {
+      const res = await favoriteDelMatch({matchId: selectItem.matchId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '取消收藏成功'
+        })
+        const newList = hotList.map((item: any) => {
+          if (item?.matchId === selectItem.matchId) {
+            return {
+              ...item,
+              favorite_state: 0
+            }
+          } else {
+            return item
+          }
+        })
+        setHotList(newList)
+      }
+    }
   }
   return (
     <>
@@ -88,7 +135,12 @@ export default function RecommendExpert (props) {
             </View>
             <View className={styles.hot__note}>
               <Text className={styles.hot__time}>{item?.startTime?.slice(0, 19)}</Text>
-              <Image className={styles.hot__like} src={like} mode='aspectFit' />
+              <Image
+                className={styles.hot__like}
+                src={`${item?.favorite_state === 0 ? like : like_active}`}
+                mode='aspectFit'
+                onClick={() => toAddMatch(item)}
+              />
             </View>
           </View>
         ))

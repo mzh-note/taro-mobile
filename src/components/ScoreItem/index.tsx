@@ -3,6 +3,9 @@ import { Image, Text, View } from '@tarojs/components';
 import { ArrowRight } from '@nutui/icons-react-taro';
 import like from '@/assets/like.png';
 
+import {favoriteAddMatch, favoriteDelMatch} from '@/http/api';
+import Taro from '@tarojs/taro';
+import like_active from '@/assets/like_active.png';
 import styles from './index.module.less'
 
 type IScoreItemType = {
@@ -17,8 +20,33 @@ type IScoreItemType = {
   aiResult: number,
   matchLotteryOne: string
 }
-export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: number | string}) {
-  const {scoreItem, tabValue} = props
+export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: number | string, updateParent: any}) {
+  const {scoreItem, tabValue, updateParent} = props
+
+  const toAddMatch = async (selectItem) => {
+    if (!selectItem.matchId) {
+      return false
+    }
+    if (selectItem.favorite_state === 0) {
+      const res = await favoriteAddMatch({matchId: selectItem.matchId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '收藏成功'
+        })
+      }
+      updateParent(selectItem.matchId, 1)
+    } else {
+      const res = await favoriteDelMatch({matchId: selectItem.matchId})
+      if (res.data.status === 0) {
+        Taro.showToast({
+          icon: 'none',
+          title: '取消收藏成功'
+        })
+        updateParent(selectItem.matchId, 0)
+      }
+    }
+  }
   return (
     <>
       <View className={styles.item}>
@@ -35,7 +63,12 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
         </View>
         <View className={styles.item__lineup}>
           <View className={styles.item__lineup__like}>
-            <Image className={styles.item__lineup__like__img} src={like} mode='aspectFit' />
+            <Image
+              className={styles.item__lineup__like__img}
+              src={`${scoreItem?.favorite_state === 0 ? like : like_active}`}
+              mode='aspectFit'
+              onClick={() => toAddMatch(scoreItem)}
+            />
           </View>
           <View className={styles.item__lineup__title}>
             <Text className={styles.item__lineup__title__name}>{scoreItem.homeName}</Text>

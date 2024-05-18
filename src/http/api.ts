@@ -102,11 +102,10 @@ export const matchInfo = (data) => {
 }
 
 
-export const favoriteProList = (data) => {
+export const favoriteProList = () => {
   return http({
     url: '/api/favorite/proList',
-    method: 'GET',
-    data
+    method: 'GET'
   })
 }
 
@@ -125,11 +124,10 @@ export const favoriteAddPro = (data) => {
     data
   })
 }
-export const favoriteMatchList = (data) => {
+export const favoriteMatchList = () => {
   return http({
     url: '/api/favorite/matchList',
-    method: 'GET',
-    data
+    method: 'GET'
   })
 }
 export const favoriteDelMatch = (data) => {
