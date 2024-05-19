@@ -1,9 +1,9 @@
 import {PropsWithChildren} from 'react';
 import { useDidHide, useDidShow, useError, useLaunch } from '@tarojs/taro'
 import '@nutui/nutui-react-taro/dist/style.css'
-import './app.less'
 import store from '@/store';
 import {Provider} from 'react-redux';
+import './app.less'
 
 function App({ children }: PropsWithChildren<any>) {
   useLaunch(() => {

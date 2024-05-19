@@ -3,6 +3,8 @@ import {useEffect} from 'react';
 import { ArrowRight } from '@nutui/icons-react-taro';
 import like from '@/assets/like.png';
 
+import {useAppDispatch} from '@/store/hooks';
+import {setScore} from '@/store/modules/scoreReducer';
 import {favoriteAddMatch, favoriteDelMatch} from '@/http/api';
 import Taro from '@tarojs/taro';
 import like_active from '@/assets/like_active.png';
@@ -22,6 +24,7 @@ type IScoreItemType = {
 }
 export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: number | string, updateParent: any}) {
   const {scoreItem, tabValue, updateParent} = props
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     // console.log('scoreItem useEffect')
@@ -39,6 +42,10 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
         })
       }
       updateParent(selectItem.matchId, 1)
+      dispatch(setScore({
+        matchId: selectItem.matchId,
+        state: 1
+      }))
     } else {
       const res = await favoriteDelMatch({matchId: selectItem.matchId})
       if (res?.data?.status === 0) {
@@ -47,6 +54,10 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
           title: '取消收藏成功'
         })
         updateParent(selectItem.matchId, 0)
+        dispatch(setScore({
+          matchId: selectItem.matchId,
+          state: 0
+        }))
       }
     }
   }

@@ -7,11 +7,14 @@ import LineChart from '@/components/LineChart';
 import PineChart from '@/components/PieChart';
 import like from '@/assets/like.png';
 import {favoriteAddMatch, favoriteDelMatch, matchInfo} from '@/http/api';
+import {useAppDispatch} from '@/store/hooks';
+import {setScore} from '@/store/modules/scoreReducer';
 
 import like_active from '@/assets/like_active.png';
 import styles from './index.module.less'
 
 export default function Detail() {
+  const dispatch = useAppDispatch()
   const instance = Taro.getCurrentInstance()
   const id = instance?.router?.params?.id
 
@@ -73,14 +76,12 @@ export default function Detail() {
     getMatchInfo().then()
   }, [getMatchInfo]);
   const toAddMatch = async (selectItem) => {
-    console.log('关注比赛', selectItem)
     if (!selectItem.matchId) {
       return false
     }
     if (selectItem.favorite_state === 0) {
       const res = await favoriteAddMatch({matchId: selectItem.matchId})
-      console.log(res.data.status)
-      if (res.data.status === 0) {
+      if (res?.data?.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '收藏成功'
@@ -88,13 +89,18 @@ export default function Detail() {
         setDetail({
           ...detail,
           baseInfo: {
+            ...detail?.baseInfo,
             favorite_state: 1
           }
         })
+        dispatch(setScore({
+          matchId: selectItem.matchId,
+          state: 1
+        }))
       }
     } else {
       const res = await favoriteDelMatch({matchId: selectItem.matchId})
-      if (res.data.status === 0) {
+      if (res?.data?.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '取消收藏成功'
@@ -102,9 +108,14 @@ export default function Detail() {
         setDetail({
           ...detail,
           baseInfo: {
+            ...detail?.baseInfo,
             favorite_state: 0
           }
         })
+        dispatch(setScore({
+          matchId: selectItem.matchId,
+          state: 0
+        }))
       }
     }
   }

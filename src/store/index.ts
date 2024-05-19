@@ -1,9 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import userSlice from '@/store/modules/userReducer';
+import scoreSlice from '@/store/modules/scoreReducer';
 
 const store = configureStore({
   reducer: {
-    user: userSlice
+    user: userSlice,
+    score: scoreSlice
   }
 })
 

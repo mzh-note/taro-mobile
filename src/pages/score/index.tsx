@@ -1,5 +1,5 @@
 import {ScrollView, View} from '@tarojs/components';
-import Taro from '@tarojs/taro';
+import Taro, {useDidShow, useLoad} from '@tarojs/taro';
 import {Tabs, Swiper, Calendar, Empty} from '@nutui/nutui-react-taro';
 import {Calendar as CalendarIcon} from '@nutui/icons-react-taro';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -10,9 +10,11 @@ import ScoreItem from '@/components/ScoreItem';
 import {getScoreList} from '@/http/api'
 import { currentDate, lastWeek } from '@/utils';
 
+import {useAppSelector} from '@/store/hooks';
 import styles from './index.module.less'
 
 export default function Course () {
+  const score = useAppSelector(state => state.score.score)
   const [tabValue, setTabValue] = useState<string | number>('0')
   const swiperRef = useRef(null)
 
@@ -69,22 +71,28 @@ export default function Course () {
     }
     Taro.hideLoading()
   }, [date, apis, tabValue])
-  // const getList = async () => {
-  //   const params = {
-  //     matchDate: date
-  //   }
-  //   const result = await getScoreList(apis[tabValue], params)
-  //   console.log(result.data.data)
-  //   setScoreList(result.data.data)
-  // }
-  useEffect(() => {
-    if (tabValue === 4) {
-      console.log('关注页面')
-    } else {
-      getList().then()
-    }
-  }, [getList, tabValue])
 
+  useEffect(() => {
+    console.log('useEffect')
+    getList().then()
+  }, [getList])
+
+  useLoad(() => {
+    console.log('useLoad')
+  })
+  useDidShow(() => {
+    const newList = scoreList.map(item => {
+      if (item.matchId === score.matchId) {
+        return {
+          ...item,
+          favorite_state: score.state
+        }
+      } else {
+        return item
+      }
+    })
+    setScoreList(newList)
+  })
   const updateParent = (matchId, value) => {
     const newList = scoreList.map(item => {
       if (item?.matchId === matchId) {
@@ -98,6 +106,10 @@ export default function Course () {
     })
     setScoreList(newList)
   }
+  Taro.useTabItemTap((payload) => {
+    console.log('点击了当前tab', payload)
+  })
+
   return (
     <>
       <Header />
