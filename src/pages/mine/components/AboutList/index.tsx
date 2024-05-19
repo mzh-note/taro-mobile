@@ -30,6 +30,14 @@ const AboutList = memo(() => {
       })
     }
   }
+  const applyExpert = () => {
+    console.log('申请专家')
+  }
+  const toInviteFriends = () => {
+    Taro.navigateTo({
+      url: '/pages/mine/inviteFriends/index'
+    })
+  }
   return (
     <>
       <View className={styles.mine}>
@@ -70,7 +78,7 @@ const AboutList = memo(() => {
           </View>
         </View>
         <View className={styles.list}>
-          <View className={styles.list_li}>
+          <View className={styles.list_li} onClick={toInviteFriends}>
             <View className={styles.list__img}>
               <Image src={person} mode='aspectFit' />
             </View>
@@ -79,7 +87,7 @@ const AboutList = memo(() => {
               <Text className={styles.list_item_bottom}>邀好友得bob币</Text>
             </View>
           </View>
-          <View className={styles.list_li}>
+          <View className={styles.list_li} onClick={applyExpert}>
             <View className={styles.list__img}>
               <Image src={person} mode='aspectFit' />
             </View>

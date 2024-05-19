@@ -1,0 +1,120 @@
+.invite__friends {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background: #eceded;
+  &__rules {
+    display: flex;
+    margin: 30px;
+    padding: 20px;
+    background: #fff;
+    font-size: 24px;
+    flex-direction: column;
+    border-radius: 10px;
+    color: #666;
+    &__title {
+      flex: 1;
+      font-size: 30px;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    &__content {
+      flex: 1;
+      padding-bottom: 30px;
+      color: #999;
+    }
+  }
+  &__author {
+    display: flex;
+    position: relative;
+    height: 80px;
+    background-image: linear-gradient(to right, black, #d4231c);
+    border-radius: 35px 15px 0 35px;
+    margin: 30px;
+    padding: 10px 20px 10px 0;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 26px;
+    &__icon {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      left: -15px;
+      top: -15px;
+      &__img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+      }
+    }
+    &__info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding-left: 130px;
+      &__name {
+        font-size: 34px;
+      }
+      &__level {
+        font-size: 24px;
+      }
+    }
+    &__rule {
+      width: 100px;
+    }
+  }
+  &__tips {
+    display: flex;
+    height: 120px;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px 30px 60px;
+    &__coin {
+      flex: 1;
+      color: #f22;
+      display: flex;
+      flex-direction: column;
+      &__up {
+        flex: 1;
+        font-size: 44px;
+        font-weight: bold;
+      }
+      &__down {
+        flex: 1;
+        font-size: 28px;
+        color: #666;
+        position: relative;
+        display: flex;
+        &__img {
+          margin-left: 10px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+    }
+    &__btn {
+      font-size: 28px;
+      width: 150px;
+      text-align: center;
+      border-radius: 35px;
+      font-weight: bold;
+      color: #fff;
+      background-image: linear-gradient(to right, black, #d4231c);
+    }
+  }
+  &__list {
+    background: #fff;
+    display: flex;
+    margin: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    &__header {
+      display: flex;
+    }
+  }
+}
