@@ -17,9 +17,9 @@ export default function Mine () {
           const response = await wxLogin({ code })
           Taro.hideLoading()
           if (response?.data?.data?.userStatus === 1) {
-            console.log('已注册')
+            // console.log('已注册')
             const payload = response?.data?.data
-            payload.avatar = `${process.env.TARO_APP_BASEURL}${payload.avatar}`
+            payload.avatar = `${process.env.TARO_APP_BASEURL}${payload.avatar}?t=${new Date().getTime()}`
             dispatch(setUser(response?.data?.data))
             Taro.switchTab({
               url: '/pages/mine/mine'
@@ -29,7 +29,7 @@ export default function Mine () {
               icon: 'none',
               title: '请先登陆'
             })
-            console.log('未注册')
+            // console.log('未注册')
           }
         } else {
           Taro.hideLoading()

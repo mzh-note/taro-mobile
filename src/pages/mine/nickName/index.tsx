@@ -64,7 +64,7 @@ export default function NickName () {
     // console.log('userNicknameResponse')
     // 设置头像、昵称
     dispatch(setUser({
-      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl.data.url}`,
+      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl.data.url}?t=${new Date().getTime()}`,
       name: userNicknameResponse?.data?.data?.nikeName
     }))
     Taro.hideLoading()
