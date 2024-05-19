@@ -1,9 +1,9 @@
 import { View } from '@tarojs/components'
 
 import { Empty } from '@nutui/nutui-react-taro';
-import {useEffect, useState} from 'react';
+import {memo, useEffect, useState} from 'react';
 
-import Taro, {useDidHide, useDidShow, useReady} from '@tarojs/taro';
+import {useDidHide, useDidShow, useReady} from '@tarojs/taro';
 import ScoreItem from '@/components/ScoreItem';
 import ExpertItem from '@/components/ExpertItem';
 
@@ -11,7 +11,7 @@ import {favoriteMatchList, favoriteProList} from '@/http/api';
 
 import styles from './index.module.less'
 
-export default function MyAttention() {
+const MyAttention = memo(() => {
   const tabValue = 3;
   const [scoreList, setScoreList] = useState<any>([])
   const [list, setList] = useState([])
@@ -32,28 +32,24 @@ export default function MyAttention() {
   }, []);
 
   const getFavoriteMatchList = async () => {
-    Taro.showLoading()
     const res = await favoriteMatchList()
-    if (res.data.data.length > 0) {
-      setScoreList(res.data.data)
+    if (res?.data?.data.length > 0) {
+      setScoreList(res?.data?.data)
     } else {
       setScoreList([])
     }
-    Taro.hideLoading()
   }
   const updateParent = async (_matchId, _value) => {
     getFavoriteMatchList().then()
   }
 
   const getFavoriteProList = async () => {
-    Taro.showLoading()
     const res = await favoriteProList()
-    if (res.data.data.length > 0) {
-      setList(res.data.data)
+    if (res?.data?.data.length > 0) {
+      setList(res?.data?.data)
     } else {
       setList([])
     }
-    Taro.hideLoading()
   }
   return (
     <View className={styles.my__attention}>
@@ -93,4 +89,5 @@ export default function MyAttention() {
       </View>
     </View>
   )
-}
+})
+export default MyAttention

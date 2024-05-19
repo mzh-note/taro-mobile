@@ -1,5 +1,5 @@
 import { Image, Text, View } from '@tarojs/components';
-
+import {useEffect} from 'react';
 import { ArrowRight } from '@nutui/icons-react-taro';
 import like from '@/assets/like.png';
 
@@ -23,13 +23,16 @@ type IScoreItemType = {
 export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: number | string, updateParent: any}) {
   const {scoreItem, tabValue, updateParent} = props
 
+  useEffect(() => {
+    // console.log('scoreItem useEffect')
+  }, []);
   const toAddMatch = async (selectItem) => {
     if (!selectItem.matchId) {
       return false
     }
     if (selectItem.favorite_state === 0) {
       const res = await favoriteAddMatch({matchId: selectItem.matchId})
-      if (res.data.status === 0) {
+      if (res?.data?.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '收藏成功'
@@ -38,7 +41,7 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
       updateParent(selectItem.matchId, 1)
     } else {
       const res = await favoriteDelMatch({matchId: selectItem.matchId})
-      if (res.data.status === 0) {
+      if (res?.data?.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '取消收藏成功'

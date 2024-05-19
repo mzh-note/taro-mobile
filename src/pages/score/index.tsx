@@ -5,12 +5,10 @@ import {Calendar as CalendarIcon} from '@nutui/icons-react-taro';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import Header from '@/components/Header'
-import MyAttention from '@/components/MyAttention';
-
-import {getScoreList} from '@/http/api'
-import { currentDate, lastWeek } from '@/utils';
 
 import ScoreItem from '@/components/ScoreItem';
+import {getScoreList} from '@/http/api'
+import { currentDate, lastWeek } from '@/utils';
 
 import styles from './index.module.less'
 
@@ -45,11 +43,11 @@ export default function Course () {
   }
   const changeSwiper = (current: number) => {
     // @ts-ignore
-    setTabValue(current.detail?.current)
+    setTabValue(current?.detail?.current)
     // @ts-ignore
   }
   const apis = useMemo(() => {
-    return ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo', 'attention']
+    return ['matchAll', 'matchLive', 'matchSaiCheng', 'matchSaiGuo']
   }, [])
 
   const getList = useCallback(async () => {
@@ -80,7 +78,11 @@ export default function Course () {
   //   setScoreList(result.data.data)
   // }
   useEffect(() => {
-    getList().then()
+    if (tabValue === 4) {
+      console.log('关注页面')
+    } else {
+      getList().then()
+    }
   }, [getList, tabValue])
 
   const updateParent = (matchId, value) => {
@@ -112,7 +114,7 @@ export default function Course () {
           <Tabs.TabPane title='进行中'></Tabs.TabPane>
           <Tabs.TabPane title='赛程'></Tabs.TabPane>
           <Tabs.TabPane title='赛果'></Tabs.TabPane>
-          <Tabs.TabPane title='关注'></Tabs.TabPane>
+          {/*<Tabs.TabPane title='关注'></Tabs.TabPane>*/}
         </Tabs>
         {
           tabValue !== 4
@@ -156,50 +158,43 @@ export default function Course () {
               onDayClick={select}
               startDate='2023-01-01'
             />
+            <Swiper
+              className='score-swiper'
+              ref={swiperRef}
+              loop={false}
+              defaultValue={0}
+              onChange={changeSwiper}
+            >
+              {apis.map((item) => (
+                <Swiper.Item key={item} className='score-swiper-item'>
+                  <ScrollView
+                    enhanced
+                    showScrollbar={false}
+                    scrollY
+                    style={{height: '100%'}}
+                  >
+                    <View className={styles.outer}>
+                      {
+                        scoreList.length > 0 &&
+                        scoreList.map((scoreItem: any) => (
+                          <ScoreItem
+                            scoreItem={scoreItem}
+                            tabValue={tabValue}
+                            updateParent={updateParent}
+                            key={scoreItem.matchId}
+                          />
+                        ))
+                      }
+                      {
+                        scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
+                      }
+                    </View>
+                  </ScrollView>
+                </Swiper.Item>
+              ))}
+            </Swiper>
           </>
         }
-        <Swiper
-          className='score-swiper'
-          ref={swiperRef}
-          loop={false}
-          defaultValue={0}
-          onChange={changeSwiper}
-        >
-          {apis.map((item) => (
-            <Swiper.Item key={item} className='score-swiper-item'>
-              <ScrollView
-                enhanced
-                showScrollbar={false}
-                scrollY
-                style={{height: '100%'}}
-              >
-                {
-                  tabValue !== 4 &&
-                  <View className={styles.outer}>
-                    {
-                      scoreList.length > 0 &&
-                      scoreList.map((scoreItem: any) => (
-                        <ScoreItem
-                          scoreItem={scoreItem}
-                          tabValue={tabValue}
-                          updateParent={updateParent}
-                          key={scoreItem.matchId}
-                        />
-                      ))
-                    }
-                    {
-                      scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
-                    }
-                  </View>
-                }
-                {
-                  tabValue === 4 &&
-                  <MyAttention />
-                }
-              </ScrollView>
-            </Swiper.Item>
-          ))}
-        </Swiper>
       </View>
     </>
   )
