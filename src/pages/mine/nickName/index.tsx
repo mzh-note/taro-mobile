@@ -1,11 +1,11 @@
 import Taro from '@tarojs/taro';
 import {View, Image, Button, Input, Form, Text} from '@tarojs/components';
 import {useState} from 'react';
-import styles from './index.module.less'
 import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
+import styles from './index.module.less'
 
 export default function NickName () {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ export default function NickName () {
   }
   const formSubmit = async (e: any) => {
     nickname = e.currentTarget.value.nickname
-    console.log(e, nickname)
+    // console.log(e, nickname)
     if (nickname.length === 0) {
       Taro.showToast({
         icon: 'none',
@@ -39,7 +39,7 @@ export default function NickName () {
     })
     Taro.login({
       success: async function (res) {
-        console.log('获取登录凭证（code）', res.code)
+        // console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
           await submitLogin(code)
@@ -48,24 +48,24 @@ export default function NickName () {
     })
   }
   const submitLogin = async (code: string) => {
-    console.log('wxlogin')
+    // console.log('wxlogin')
     const response = await wxLogin({ code })
-    console.log('登陆成功', response.data.data)
+    // console.log('登陆成功', response.data.data)
     // 设置openid、session_key
-    dispatch(setUser(response.data.data))
-    console.log('uploadAvatar')
+    dispatch(setUser(response?.data?.data))
+    // console.log('uploadAvatar')
     const userAvatarResponse = await uploadAvatar(avatar)
-    console.log('userAvatarResponse')
+    // console.log('userAvatarResponse')
     const imgUrl = JSON.parse(userAvatarResponse.data)
-    console.log('userLogin')
+    // console.log('userLogin')
     const userNicknameResponse = await userLogin({
       nickName: nickname
     })
-    console.log('userNicknameResponse')
+    // console.log('userNicknameResponse')
     // 设置头像、昵称
     dispatch(setUser({
       avatar: `${process.env.TARO_APP_BASEURL}${imgUrl.data.url}`,
-      name: userNicknameResponse.data.data.nikeName
+      name: userNicknameResponse?.data?.data?.nikeName
     }))
     Taro.hideLoading()
     Taro.showToast({

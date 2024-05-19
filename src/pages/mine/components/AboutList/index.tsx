@@ -13,24 +13,22 @@ import styles from './index.module.less'
 const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
-  console.log(isLogin ? '已登陆' : '未登陆', userInfo)
+  console.log('获取userInfo', userInfo)
   useEffect(() => {
 
   }, []);
 
   const toUserInfo = () => {
-    Taro.navigateTo({
-      url: '/pages/mine/nickName/index'
-    })
+    if (!isLogin) {
+      Taro.navigateTo({
+        url: '/pages/mine/nickName/index'
+      })
+    }
   }
   const goMyAttention = () => {
     if (isLogin) {
       Taro.switchTab({
         url: '/pages/course/index'
-      })
-    } else {
-      Taro.navigateTo({
-        url: '/pages/mine/nickName/index'
       })
     }
   }
