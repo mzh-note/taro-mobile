@@ -99,7 +99,8 @@
     }
     &__btn {
       font-size: 28px;
-      width: 150px;
+      padding: 6px 0;
+      width: 160px;
       text-align: center;
       border-radius: 35px;
       font-weight: bold;
@@ -113,8 +114,83 @@
     margin: 30px;
     padding: 20px;
     border-radius: 10px;
+    flex-direction: column;
+    &__tabs {
+      display: flex;
+      align-items: center;
+      margin: 3px;
+      background: #c2c1c1;
+      border-radius: 10px;
+      padding: 6px;
+      font-size: 30px;
+      &__active {
+        background: #fff;
+      }
+      &__lose {
+        padding: 16px 0;
+        flex: 1;
+        text-align: center;
+        border-radius: 10px;
+      }
+    }
     &__header {
       display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 0;
+      &__th {
+        flex: 1;
+        font-size: 30px;
+        text-align: center;
+        padding: 20px 0;
+      }
+    }
+    &__li {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #ddd;
+      padding: 20px 10px;
+      &:last-of-type {
+        border: 0;
+        padding-bottom: 50px;
+      }
+      &__item {
+        flex: 1;
+        font-size: 28px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        &__img {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+        }
+        &__info {
+          padding-left: 10px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          &__h4 {
+            font-size: 28px;
+          }
+          &__h5 {
+            font-size: 22px;
+          }
+        }
+        &__h6 {
+          font-size: 22px;
+        }
+      }
+      &__last__item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

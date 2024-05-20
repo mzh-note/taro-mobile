@@ -144,3 +144,19 @@ export const favoriteAddMatch = (data) => {
     data
   })
 }
+
+// 邀请好友
+export const inviteInfo = () => {
+  return http({
+    url: '/api/user/inviteInfo',
+    method: 'GET'
+  })
+}
+
+// 申请专家
+export const applyPro = () => {
+  return http({
+    url: '/api/pro/apply',
+    method: 'POST'
+  })
+}

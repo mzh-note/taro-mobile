@@ -1,6 +1,6 @@
 export default defineAppConfig({
   pages: [
-    'pages/mine/inviteFriends/index',
+    // 'pages/mine/inviteFriends/index',
     'pages/login/index',
     'pages/home/index',
     'pages/recommend/index',
@@ -28,12 +28,12 @@ export default defineAppConfig({
         'index'
       ]
     },
-    // {
-    //   root: 'pages/mine/inviteFriends',
-    //   pages: [
-    //     'index'
-    //   ]
-    // }
+    {
+      root: 'pages/mine/inviteFriends',
+      pages: [
+        'index'
+      ]
+    }
   ],
   tabBar: {
     list: [

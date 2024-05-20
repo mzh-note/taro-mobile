@@ -8,6 +8,7 @@ import logo from '@/assets/logo.png';
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppSelector} from '@/store/hooks';
 import {useEffect, memo} from 'react';
+import {applyPro} from '@/http/api';
 import styles from './index.module.less'
 
 const AboutList = memo(() => {
@@ -30,8 +31,12 @@ const AboutList = memo(() => {
       })
     }
   }
-  const applyExpert = () => {
-    console.log('申请专家')
+  const applyExpert = async () => {
+    await applyPro()
+    Taro.showToast({
+      icon: 'none',
+      title: '申请成功'
+    })
   }
   const toInviteFriends = () => {
     Taro.navigateTo({
