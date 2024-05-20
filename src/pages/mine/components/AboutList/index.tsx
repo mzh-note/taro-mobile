@@ -7,16 +7,24 @@ import person from '@/assets/icon-person.png';
 import logo from '@/assets/logo.png';
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppSelector} from '@/store/hooks';
-import {useEffect, memo} from 'react';
-import {applyPro} from '@/http/api';
+import {useEffect, memo, useState} from 'react';
+import {applyPro, getUserInfo} from '@/http/api';
 import styles from './index.module.less'
 
 const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
+  const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
-  // console.log('获取userInfo', userInfo)
+  console.log('获取userInfo', userInfo)
   useEffect(() => {
-
+    const getInfo = async () => {
+      if (isLogin) {
+        const res = await getUserInfo()
+        console.log(res?.data.data)
+        setInfo(res?.data.data)
+      }
+    }
+    getInfo()
   }, []);
 
   const toUserInfo = () => {
@@ -32,18 +40,21 @@ const AboutList = memo(() => {
     }
   }
   const applyExpert = async () => {
-    await applyPro()
-    Taro.showToast({
-      icon: 'none',
-      title: '申请成功'
-    })
-    Taro.navigateTo({
-      url: '/pages/mine/calculatePro/index'
-    })
+    if (info?.isPro === 0) {
+      await applyPro()
+      Taro.showToast({
+        icon: 'none',
+        title: '申请成功'
+      })
+    } else {
+      Taro.navigateTo({
+        url: '/pages/mine/calculatePro/index'
+      })
+    }
   }
   const toInviteFriends = () => {
     Taro.navigateTo({
-      url: '/pages/mine/inviteFriends/index'
+      url: `/pages/mine/inviteFriends/index?balance=${info?.balance}&freezeBalance=${info?.freezeBalance}`
     })
   }
   return (
@@ -61,8 +72,8 @@ const AboutList = memo(() => {
           }
         </View>
         <View className={styles.assets}>
-          <Text className={styles.assets__txt}>个人资产：<Text className={styles.assets_num}>0</Text> 币</Text>
-          <Text className={styles.assets__txt}>锁定：<Text className={styles.assets_num}>0</Text> 币</Text>
+          <Text className={styles.assets__txt}>个人资产：<Text className={styles.assets_num}>{info?.balance}</Text> 币</Text>
+          <Text className={styles.assets__txt}>锁定：<Text className={styles.assets_num}>{info?.freezeBalance}</Text> 币</Text>
           <Image className={styles.assets__img} src={golden} mode='aspectFit' />
         </View>
         <View className={styles.list}>
@@ -100,7 +111,7 @@ const AboutList = memo(() => {
               <Image src={person} mode='aspectFit' />
             </View>
             <View className={styles.list__item}>
-              <Text className={styles.list_item_top}>申请专家</Text>
+              <Text className={styles.list_item_top}>{info?.isPro === 0 ? '申请专家' : '计算器'}</Text>
               <Text className={styles.list_item_bottom}>推单赚金币</Text>
             </View>
           </View>

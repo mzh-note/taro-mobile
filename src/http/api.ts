@@ -14,6 +14,14 @@ export const uploadAvatar = (imagePath: string) => {
     }
   })
 }
+
+export const getUserInfo = () => {
+  return http({
+    url: '/api/user/info',
+    method: 'GET'
+  })
+}
+
 export const userLogin = (data) => {
   return http({
     url: '/api/user/login',

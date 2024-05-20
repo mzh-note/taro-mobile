@@ -1,5 +1,5 @@
 import {View, Text, Image} from '@tarojs/components';
-
+import {getCurrentInstance} from '@tarojs/runtime';
 import {useAppSelector} from '@/store/hooks';
 import {ArrowRight} from '@nutui/icons-react-taro';
 import {Empty} from '@nutui/nutui-react-taro';
@@ -12,13 +12,13 @@ import styles from './index.module.less'
 
 export default function InviteFriends () {
   const userInfo = useAppSelector(state => state.user.user)
-  console.log(userInfo)
+  const instance = getCurrentInstance()
+  const balance = instance?.router?.params.balance || 0
+  const freezeBalance = instance?.router?.params.freezeBalance || 0
   const [tab, setTab] = useState(1)
   const [list, setList] = useState([])
   const [inviteList, setInviteList] = useState([])
   const [loseCount, setLoseCount] = useState(0)
-  const [balance, setBalance] = useState(0)
-  const [freezBalance, setFreezBalance] = useState(0)
   useEffect( () => {
     const getInviteInfo = async() => {
       const res = await inviteInfo()
@@ -67,7 +67,7 @@ export default function InviteFriends () {
             </View>
           </View>
           <View className={styles.invite__friends__tips__coin}>
-            <View className={styles.invite__friends__tips__coin__up}>{freezBalance}</View>
+            <View className={styles.invite__friends__tips__coin__up}>{freezeBalance}</View>
             <View className={styles.invite__friends__tips__coin__down}>锁定
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
@@ -82,7 +82,7 @@ export default function InviteFriends () {
               ${styles.invite__friends__list__tabs__lose}
               ${tab === 1 ? styles.invite__friends__list__tabs__active : ''}
              `}
-            >已邀请{list.length - loseCount}人</Text>
+            >已邀请{list.length}人</Text>
             <Text
               onClick={() => changeTab(2)}
               className={`
