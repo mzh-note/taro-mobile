@@ -1,7 +1,7 @@
 import {View, Text, Image} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import Header from '@/components/Header';
-import {Avatar, Button} from '@nutui/nutui-react-taro';
+import {Avatar, Button, Empty} from '@nutui/nutui-react-taro';
 import {useCallback, useEffect, useState} from 'react';
 import {favoriteAddPro, favoriteDelPro, proInfo, suggestList} from '@/http/api';
 
@@ -13,20 +13,19 @@ export default function ExpertDetail () {
   const [proBase, setProBase] = useState({})
   const [list, setList] = useState([])
   const [sugList, setSugList] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const getInfo = useCallback(async () => {
-    Taro.showLoading()
+    setLoading(true)
     const result = await proInfo({proId})
-    setProBase(result.data.data.proBase)
-    setList(result.data.data.tenList.forecast_result)
-    Taro.hideLoading()
+    setProBase(result?.data.data.proBase)
+    setList(result?.data.data.tenList.forecast_result)
+    setLoading(false)
   }, [proId])
 
   const getSuggestList = useCallback(async () => {
-    Taro.showLoading()
     const result = await suggestList({proId})
-    setSugList(result.data.data)
-    Taro.hideLoading()
+    setSugList(result?.data?.data?.length ? result?.data?.data : [])
   }, [proId])
   useEffect(() => {
     getInfo().then()
@@ -38,7 +37,7 @@ export default function ExpertDetail () {
     }
     if (params.favorite_state === 0) {
       const res = await favoriteAddPro({proId: params.proId})
-      if (res.data.status === 0) {
+      if (res?.data.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '关注成功'
@@ -50,7 +49,7 @@ export default function ExpertDetail () {
       }
     } else {
       const res = await favoriteDelPro({proId: params.proId})
-      if (res.data.status === 0) {
+      if (res?.data.status === 0) {
         Taro.showToast({
           icon: 'none',
           title: '取消关注成功'
@@ -94,31 +93,28 @@ export default function ExpertDetail () {
             <Text className={styles.plan__detail__status}>近10命中</Text>
             <View className={styles.plan__detail__li}>
               {
+                list.length > 0 &&
                 list.map(item => (
                   <Text key={item} className={styles.plan__detail__item}>wr</Text>
                 ))
               }
-              {/*<Text className={`${styles.plan__detail__item} ${styles.grey}`}>RT</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>wr</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>RT</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>wr</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>RT</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>wr</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>RT</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>wr</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>RT</Text>*/}
-              {/*<Text className={styles.plan__detail__item}>wr</Text>*/}
+              {
+                !loading &&
+                list.length === 0 &&
+                <Empty description='暂无数据' size='small' />
+              }
             </View>
           </View>
           <View className={styles.plan__rate}>
             <Text className={styles.plan__rate__percent}>
-              <Text className={styles.plan__rate__percent__count}>{proBase.sustainWin}</Text>
+              <Text className={styles.plan__rate__percent__count}>{proBase?.sustainWin}</Text>
               <Text className={styles.plan__rate__percent__unit}>%</Text>
             </Text>
             <Text className={styles.plan__rate__eval}>本场回报率</Text>
           </View>
         </View>
         {
+          sugList.length > 0 &&
           sugList.map(sugItem => (
             <View className={styles.course} key={sugItem}>
               <View className={styles.course__time}>
@@ -196,6 +192,10 @@ export default function ExpertDetail () {
           }
             </View>
           ))
+        }
+        {
+          !loading && sugList.length === 0 &&
+          <Empty description='暂无数据' size='small' />
         }
       </View>
     </>
