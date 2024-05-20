@@ -37,6 +37,9 @@ const AboutList = memo(() => {
       icon: 'none',
       title: '申请成功'
     })
+    Taro.navigateTo({
+      url: '/pages/mine/calculatePro/index'
+    })
   }
   const toInviteFriends = () => {
     Taro.navigateTo({

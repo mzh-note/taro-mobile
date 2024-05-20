@@ -3,7 +3,7 @@ import {View, Text, Image} from '@tarojs/components';
 import {useAppSelector} from '@/store/hooks';
 import {ArrowRight} from '@nutui/icons-react-taro';
 import {Empty} from '@nutui/nutui-react-taro';
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {inviteInfo} from '@/http/api';
 import golden from '@/assets/icon-golden.png';
@@ -17,7 +17,8 @@ export default function InviteFriends () {
   const [list, setList] = useState([])
   const [inviteList, setInviteList] = useState([])
   const [loseCount, setLoseCount] = useState(0)
-
+  const [balance, setBalance] = useState(0)
+  const [freezBalance, setFreezBalance] = useState(0)
   useEffect( () => {
     const getInviteInfo = async() => {
       const res = await inviteInfo()
@@ -60,13 +61,13 @@ export default function InviteFriends () {
         </View>
         <View className={styles.invite__friends__tips}>
           <View className={styles.invite__friends__tips__coin}>
-            <View className={styles.invite__friends__tips__coin__up}>0</View>
+            <View className={styles.invite__friends__tips__coin__up}>{balance}</View>
             <View className={styles.invite__friends__tips__coin__down}>百包币
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
           </View>
           <View className={styles.invite__friends__tips__coin}>
-            <View className={styles.invite__friends__tips__coin__up}>0</View>
+            <View className={styles.invite__friends__tips__coin__up}>{freezBalance}</View>
             <View className={styles.invite__friends__tips__coin__down}>锁定
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>

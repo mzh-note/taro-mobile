@@ -1,6 +1,5 @@
 export default defineAppConfig({
   pages: [
-    // 'pages/mine/inviteFriends/index',
     'pages/login/index',
     'pages/home/index',
     'pages/recommend/index',
@@ -30,6 +29,12 @@ export default defineAppConfig({
     },
     {
       root: 'pages/mine/inviteFriends',
+      pages: [
+        'index'
+      ]
+    },
+    {
+      root: 'pages/mine/calculatePro',
       pages: [
         'index'
       ]
