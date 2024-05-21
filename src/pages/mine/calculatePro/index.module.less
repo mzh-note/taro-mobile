@@ -11,6 +11,9 @@
   }
   &__scroll{
     height: 100%;
+    &__container {
+      padding: 0 0 120px 0;
+    }
   }
   &__list {
     display: flex;
@@ -22,13 +25,10 @@
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 3px 3px #ddd;
-    &:last-of-type {
-      padding-bottom: 150px;
-    }
     &__title {
       border-radius: 10px 10px 0 0;
-      background-color: #ddd;
-      padding: 15px;
+      background-color: #f4f9fa;
+      padding: 20px;
       width: 100%;
       box-sizing: border-box;
       flex: 1;
@@ -39,29 +39,39 @@
       justify-content: flex-start;
       align-items: flex-start;
     }
-  
-    &__item {
-      padding: 10px 15px;
+    &__top {
       width: 100%;
       box-sizing: border-box;
       flex: 1;
       display: flex;
       justify-content: flex-start;
-      align-items: flex-start;
       align-items: center;
-      padding: 15px;
+      padding: 20px 20px 0;
+      margin-top: 20px;
       font-size: 26px;
-      color: #999;
+      color: #666;
       &__date {
         flex: 1;
       }
       &__time {
         flex: 1;
       }
+
       &__team {
         flex: 1;
         text-align: right;
       }
+    }
+    &__item {
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 20px 0;
+      font-size: 26px;
+      color: #666;
       &__name {
         flex: 1;
         display: flex;
@@ -78,13 +88,13 @@
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background-color: #fac;
           margin: 0 5px;
         }
       }
       &__vs {
         width: 80px;
-        color: #333;
+        color: #000;
+        font-weight: bold;
         font-size: 30px;
         text-align: center;
       }
@@ -116,8 +126,8 @@
           box-sizing: border-box;
           background-color: #f2f2f2;
           &:last-child{
-            background: #9fe39f;
-            border: 1px solid #9fe39f;
+            background: #d6eadb;
+            border: 1px solid #d6eadb;
             border-radius: 0 0 5px 5px;
             color: green;
           }
@@ -161,34 +171,12 @@
     left: 0;
     bottom: 0;
     right: 0;
-    height: 130px;
     background-color: #fff;
     border-top: 1px solid #ddd;
     padding: 20px;
     font-size: 26px;
     display: flex;
     flex-direction: column;
-    &__item {
-      flex: 1;
-      display: flex;
-      width: 100%;
-      height: 50px;
-      &__text {
-        flex: 1;
-      }
-      &__input {
-        display: flex;
-        flex-direction: row;
-        justify-items: flex-end;
-        align-items: center;
-        &__text {
-          width: 80px;
-        }
-        &__number {
-          flex: 1;
-        }
-      }
-    }
     &__submit {
       margin-top: 10px;
       flex: 1;
@@ -199,15 +187,21 @@
         font-size: 24px;
         flex: 1;
         display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: flex-start;
-        &__text {
+        align-items: center;
+        &__input {
           flex: 1;
+          border: 1px solid #f2f2f2;
+          border-radius: 10px;
+          padding: 15px 20px;
+        }
+        &__unit {
+          margin-left: 10px;
+          font-size: 28px;
         }
       }
       &__right {
-        width: 300px;
+        flex: 1;
         text-align: right;
       }
     }

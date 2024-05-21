@@ -37,6 +37,7 @@ export const wxLogin = (data) => {
     data
   })
 }
+
 export const getScoreList = (path: string, data) => {
   return http({
     url: '/api/football/' + path,
@@ -52,6 +53,7 @@ export const allList = () => {
     method: 'GET'
   })
 }
+
 // 二串专区
 export const towList = () => {
   return http({
@@ -59,6 +61,7 @@ export const towList = () => {
     method: 'GET'
   })
 }
+
 // 热门赛事
 export const hotMatchList = () => {
   return http({
@@ -66,6 +69,7 @@ export const hotMatchList = () => {
     method: 'GET'
   })
 }
+
 // 专家详情
 export const proInfo = (data) => {
   return http({
@@ -79,15 +83,6 @@ export const proInfo = (data) => {
 export const suggestList = (data) => {
   return http({
     url: '/api/pro/suggestList',
-    method: 'POST',
-    data
-  })
-}
-
-
-export const addSuggest = (data) => {
-  return http({
-    url: '/api/pro/addSugges',
     method: 'POST',
     data
   })
@@ -108,7 +103,6 @@ export const matchInfo = (data) => {
     data
   })
 }
-
 
 export const favoriteProList = () => {
   return http({
@@ -132,12 +126,14 @@ export const favoriteAddPro = (data) => {
     data
   })
 }
+
 export const favoriteMatchList = () => {
   return http({
     url: '/api/favorite/matchList',
     method: 'GET'
   })
 }
+
 export const favoriteDelMatch = (data) => {
   return http({
     url: '/api/favorite/delMatch',
@@ -145,6 +141,7 @@ export const favoriteDelMatch = (data) => {
     data
   })
 }
+
 export const favoriteAddMatch = (data) => {
   return http({
     url: '/api/favorite/addMatch',
@@ -166,5 +163,22 @@ export const applyPro = () => {
   return http({
     url: '/api/pro/apply',
     method: 'POST'
+  })
+}
+
+// 计算器
+export const calculatorList = () => {
+  return http({
+    url: '/api/football/calculatorList',
+    method: 'GET'
+  })
+}
+
+// 提交计算器
+export const addSuggest = (data) => {
+  return http({
+    url: '/api/pro/addSuggest',
+    method: 'POST',
+    data
   })
 }
