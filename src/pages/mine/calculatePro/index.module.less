@@ -1,11 +1,215 @@
-.calculate__pro {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.calculate-pro {
   position: absolute;
   background: #eceded;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  overflow: hidden;
+  &__red {
+    color: #f22;
+  }
+  &__scroll{
+    height: 100%;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 3px #ddd;
+    &:last-of-type {
+      padding-bottom: 150px;
+    }
+    &__title {
+      border-radius: 10px 10px 0 0;
+      background-color: #ddd;
+      padding: 15px;
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      font-size: 26px;
+      color: #333;
+      font-weight: 600;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  
+    &__item {
+      padding: 10px 15px;
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-items: center;
+      padding: 15px;
+      font-size: 26px;
+      color: #999;
+      &__date {
+        flex: 1;
+      }
+      &__time {
+        flex: 1;
+      }
+      &__team {
+        flex: 1;
+        text-align: right;
+      }
+      &__name {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        &:first-child{
+          text-align: right;
+        }
+        &__text {
+          flex: 1;
+        }
+        &__logo {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #fac;
+          margin: 0 5px;
+        }
+      }
+      &__vs {
+        width: 80px;
+        color: #333;
+        font-size: 30px;
+        text-align: center;
+      }
+    }
+    &__odds {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 26px;
+      flex-direction: row;
+      &__left {
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        &__score {
+          flex: 1;
+          border-radius: 5px 5px 0 0;
+          padding: 15px 0;
+          width: 100%;
+          text-align: center;
+          border: 1px solid #f2f2f2;
+          border-bottom: 0;
+          box-sizing: border-box;
+          background-color: #f2f2f2;
+          &:last-child{
+            background: #9fe39f;
+            border: 1px solid #9fe39f;
+            border-radius: 0 0 5px 5px;
+            color: green;
+          }
+        }
+      }
+      &__right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
+        border: 1px solid #e7e7e7;
+        border-radius: 5px;
+        &__up, &__down{
+          width: 100%;
+          flex: 1;
+          display: flex;
+        }
+        &__down {
+          border-top: 1px solid #e7e7e7;
+        }
+        &__text {
+          padding: 15px 0;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          border: 0 solid #e7e7e7;
+          display: flex;
+          box-sizing: border-box;
+          &:nth-child(2) {
+            border-left-width: 1px;
+            border-right-width: 1px;
+          }
+        }
+      }
+    }
+  }
+  &__fix {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 130px;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    padding: 20px;
+    font-size: 26px;
+    display: flex;
+    flex-direction: column;
+    &__item {
+      flex: 1;
+      display: flex;
+      width: 100%;
+      height: 50px;
+      &__text {
+        flex: 1;
+      }
+      &__input {
+        display: flex;
+        flex-direction: row;
+        justify-items: flex-end;
+        align-items: center;
+        &__text {
+          width: 80px;
+        }
+        &__number {
+          flex: 1;
+        }
+      }
+    }
+    &__submit {
+      margin-top: 10px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__left {
+        font-size: 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        &__text {
+          flex: 1;
+        }
+      }
+      &__right {
+        width: 300px;
+        text-align: right;
+      }
+    }
+  }
 }
