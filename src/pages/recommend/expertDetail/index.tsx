@@ -1,7 +1,7 @@
 import {View, Text, Image} from '@tarojs/components';
 import Taro from '@tarojs/taro';
 import Header from '@/components/Header';
-import {Avatar, Button, Empty} from '@nutui/nutui-react-taro';
+import {Overlay, Avatar, Button, Empty} from '@nutui/nutui-react-taro';
 import {useCallback, useEffect, useState} from 'react';
 import {favoriteAddPro, favoriteDelPro, proInfo, suggestList} from '@/http/api';
 
@@ -14,6 +14,13 @@ export default function ExpertDetail () {
   const [list, setList] = useState([])
   const [sugList, setSugList] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const [visible, setVisible] = useState(true)
+  const onClose = () => {
+    setVisible(false)
+    getInfo().then()
+    getSuggestList().then()
+  }
 
   const getInfo = useCallback(async () => {
     setLoading(true)
@@ -28,8 +35,8 @@ export default function ExpertDetail () {
     setSugList(result?.data?.data?.length ? result?.data?.data : [])
   }, [proId])
   useEffect(() => {
-    getInfo().then()
-    getSuggestList().then()
+    // getInfo().then()
+    // getSuggestList().then()
   }, [getInfo, getSuggestList])
   const getFavoriteAddPro = async (params: any) => {
     if (!params.proId) {
@@ -99,7 +106,7 @@ export default function ExpertDetail () {
                 ))
               }
               {
-                !loading &&
+                !visible && !loading &&
                 list.length === 0 &&
                 <Empty description='暂无数据' size='small' />
               }
@@ -118,15 +125,15 @@ export default function ExpertDetail () {
           sugList.map(sugItem => (
             <View className={styles.course} key={sugItem}>
               <View className={styles.course__time}>
-                <Text className={styles.course__time__week}>{sugItem.matchLotteryOne1}</Text>
-                <Text className={styles.course__time__name}>{sugItem.matchTypeName1}</Text>
+                <Text className={styles.course__time__week}>{sugItem?.matchLotteryOne1}</Text>
+                <Text className={styles.course__time__name}>{sugItem?.matchTypeName1}</Text>
               </View>
               <View className={styles.course__ball}>
                 <View className={styles.course__ball__item}>
-                  <Text className={styles.course__ball__item__name}>{sugItem.homeName1}</Text>
+                  <Text className={styles.course__ball__item__name}>{sugItem?.homeName1}</Text>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem.homeLogo1}`}
+                    src={`https://images.weserv.nl/?url=${sugItem?.homeLogo1}`}
                     mode='aspectFit'
                   />
                 </View>
@@ -134,24 +141,24 @@ export default function ExpertDetail () {
                 <View className={styles.course__ball__item}>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem.awayLogo1}`}
+                    src={`https://images.weserv.nl/?url=${sugItem?.awayLogo1}`}
                     mode='aspectFit'
                   />
-                  <Text className={styles.course__ball__item__name}>{sugItem.awayName1}</Text>
+                  <Text className={styles.course__ball__item__name}>{sugItem?.awayName1}</Text>
                 </View>
               </View>
               <View className={styles.course__score}>
                 <View className={styles.course__score__left}>
                   <View className={styles.course__score__left__res}>
-                    {sugItem.forecast1}
+                    {sugItem?.forecast1}
                   </View>
                 </View>
                 <View className={styles.course__score__right}>
-                  {sugItem.winState1 === 0 ? '负' : '胜'}({sugItem.winRate1})
+                  {sugItem?.winState1 === 0 ? '负' : '胜'}({sugItem?.winRate1})
                 </View>
               </View>
           {
-            sugItem.suggestType === 1
+            sugItem?.suggestType === 1
             &&
             <>
               <View className={styles.course__time}>
@@ -194,10 +201,18 @@ export default function ExpertDetail () {
           ))
         }
         {
-          !loading && sugList.length === 0 &&
+          !visible && !loading && sugList.length === 0 &&
           <Empty description='暂无数据' size='small' />
         }
       </View>
+      <Overlay visible={visible} closeOnOverlayClick={false}>
+        <div className={styles.expert__detail__overlay}>
+          <div className={styles.expert__detail__overlay__content}>
+            <Text className={styles.expert__detail__overlay__content__text}>解锁专家方案需要200B</Text>
+            <Text className={styles.expert__detail__overlay__content__btn} onClick={onClose}>立即解锁</Text>
+          </div>
+        </div>
+      </Overlay>
     </>
   )
 }

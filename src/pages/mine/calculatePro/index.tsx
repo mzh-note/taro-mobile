@@ -141,9 +141,11 @@ export default function CalculatePro() {
       icon: 'none',
       title: '保存成功'
     })
-    setSelectMatch([])
-    setActive({})
-    setCost(1)
+    setTimeout(() => {
+      Taro.switchTab({
+        url: '/pages/mine/mine'
+      })
+    }, 1000)
   }
   return (
     <View className={styles['calculate-pro']}>

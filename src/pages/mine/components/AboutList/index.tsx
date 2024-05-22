@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro';
+import Taro, {useDidShow} from '@tarojs/taro';
 import {Image, Text, View} from '@tarojs/components';
 import golden from '@/assets/icon-golden.png';
 import wx from '@/assets/icon-wx.png';
@@ -16,17 +16,20 @@ const AboutList = memo(() => {
   const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
   console.log('获取userInfo', userInfo)
-  useEffect(() => {
-    const getInfo = async () => {
-      if (isLogin) {
-        const res = await getUserInfo()
-        console.log(res?.data.data)
-        setInfo(res?.data.data)
-      }
-    }
-    getInfo()
-  }, []);
 
+  useDidShow(() => {
+    getInfo().then()
+  })
+  useEffect(() => {
+
+  }, []);
+  const getInfo = async () => {
+    if (isLogin) {
+      const res = await getUserInfo()
+      console.log(res?.data.data)
+      setInfo(res?.data.data)
+    }
+  }
   const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/mine/nickName/index'

@@ -228,4 +228,30 @@
       }
     }
   }
+  &__overlay {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    &__content {
+      display: flex;
+      width: 300px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      flex-direction: column;
+      font-size: 28px;
+      &__text {
+        flex: 1;
+      }
+      &__btn {
+        padding-top: 20px;
+        color: #f22;
+        flex: 1;
+      }
+    }
+  }
 }
