@@ -18,7 +18,6 @@ export default function ExpertDetail () {
   const [visible, setVisible] = useState(true)
   const onClose = () => {
     setVisible(false)
-    getInfo().then()
     getSuggestList().then()
   }
 
@@ -35,9 +34,8 @@ export default function ExpertDetail () {
     setSugList(result?.data?.data?.length ? result?.data?.data : [])
   }, [proId])
   useEffect(() => {
-    // getInfo().then()
-    // getSuggestList().then()
-  }, [getInfo, getSuggestList])
+    getInfo().then()
+  }, [getInfo])
   const getFavoriteAddPro = async (params: any) => {
     if (!params.proId) {
       return false
@@ -208,7 +206,7 @@ export default function ExpertDetail () {
       <Overlay visible={visible} closeOnOverlayClick={false}>
         <div className={styles.expert__detail__overlay}>
           <div className={styles.expert__detail__overlay__content}>
-            <Text className={styles.expert__detail__overlay__content__text}>解锁专家方案需要200B</Text>
+            <Text className={styles.expert__detail__overlay__content__text}>解锁专家方案需要{proBase?.cost}币</Text>
             <Text className={styles.expert__detail__overlay__content__btn} onClick={onClose}>立即解锁</Text>
           </div>
         </div>
