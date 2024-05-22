@@ -24,9 +24,16 @@ export default function Home() {
     // })
     const res = await getMatchId({code: ''})
     setCode('')
-    Taro.navigateTo({
-      url: '/pages/home/detail/index?id=' + res.data.data.matchId
-    })
+    if (res?.data?.data?.matchId) {
+      Taro.navigateTo({
+        url: '/pages/home/detail/index?id=' + res.data.data.matchId
+      })
+    } else {
+      Taro.showToast({
+        icon: 'none',
+        title: '当前无可查赛事详情'
+      })
+    }
   }
   return (
     <View className={styles.home}>
