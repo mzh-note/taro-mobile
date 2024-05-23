@@ -15,7 +15,6 @@ const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
-  // console.log('获取userInfo', userInfo)
 
   useDidShow(() => {
     getInfo().then()
@@ -32,6 +31,14 @@ const AboutList = memo(() => {
   const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/mine/nickName/index'
+    })
+  }
+  const showPreview = () => {
+    Taro.previewImage({
+      enablesavephoto: true,
+      enableShowPhotoDownload: true,
+      current: `${process.env.TARO_APP_BASEURL}/images/2`, // 当前显示图片的http链接
+      urls: [`${process.env.TARO_APP_BASEURL}/images/2`] // 需要预览的图片http链接列表
     })
   }
   const goMyAttention = () => {
@@ -63,7 +70,8 @@ const AboutList = memo(() => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          <Image className={styles.img__logo} src={logo} mode='aspectFit' />
+          {/*<Image className={styles.img__logo} src={logo} mode='aspectFit' />*/}
+          <Image className={styles.img__logo} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFit' />
         </View>
         <View className={styles.mine__icon}>
           <Image className={styles.mine__icon__img} src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
@@ -79,7 +87,7 @@ const AboutList = memo(() => {
           <Image className={styles.assets__img} src={golden} mode='aspectFit' />
         </View>
         <View className={styles.list}>
-          <View className={styles.list_li}>
+          <View className={styles.list_li} onClick={showPreview}>
             <View className={`${styles.list__img} }`}>
               <Image src={wx} mode='aspectFit' />
             </View>

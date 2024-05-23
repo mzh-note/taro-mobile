@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 import {View, Text, Image} from '@tarojs/components';
 import {getCurrentInstance} from '@tarojs/runtime';
 import {useAppSelector} from '@/store/hooks';
@@ -38,6 +39,14 @@ export default function InviteFriends () {
     const newList = list.filter(item => item.state === val)
     setInviteList(newList)
   }
+  const showPreview = () => {
+    Taro.previewImage({
+      enablesavephoto: true,
+      enableShowPhotoDownload: true,
+      current: `${process.env.TARO_APP_BASEURL}/images/3`, // 当前显示图片的http链接
+      urls: [`${process.env.TARO_APP_BASEURL}/images/3`] // 需要预览的图片http链接列表
+    })
+  }
   return (
     <>
       <View className={styles.invite__friends}>
@@ -72,7 +81,7 @@ export default function InviteFriends () {
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
           </View>
-          <View className={styles.invite__friends__tips__btn}>邀请好友</View>
+          <View className={styles.invite__friends__tips__btn} onClick={showPreview}>邀请好友</View>
         </View>
         <View className={styles.invite__friends__list}>
           <View className={styles.invite__friends__list__tabs}>

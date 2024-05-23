@@ -38,7 +38,8 @@ export default function Home() {
   return (
     <View className={styles.home}>
       <View className={styles.home__logo}>
-        <Image className={styles.img__logo} mode='aspectFit' src={logo} />
+        {/*<Image className={styles.img__logo} mode='aspectFit' src={logo} />*/}
+        <Image className={styles.img__logo} mode='aspectFit' src={`${process.env.TARO_APP_BASEURL}/images/1`} />
       </View>
       <View className={styles.search__form}>
         <div className={styles.search__input}>
