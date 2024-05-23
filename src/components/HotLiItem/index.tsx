@@ -51,8 +51,8 @@ export default function HotLiItem (props) {
   }
   return (
     <>
-      <View className={styles.hot__li} onClick={viewDetail}>
-        <View className={styles.hot__detail}>
+      <View className={styles.hot__li}>
+        <View className={styles.hot__detail} onClick={viewDetail}>
           <View className={styles.hot__country}>
             <Image
               className={styles.hot__img}
@@ -71,7 +71,7 @@ export default function HotLiItem (props) {
             <Text className={styles.hot__name}>{item?.awayName}</Text>
           </View>
         </View>
-        <View className={styles.hot__progress}>
+        <View className={styles.hot__progress} onClick={viewDetail}>
           <View className={styles.hot__percent}>
             {item?.totalHome}&emsp;{item?.totalAway}&emsp;{item?.totalDraw}
           </View>
