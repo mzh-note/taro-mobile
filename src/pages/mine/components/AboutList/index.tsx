@@ -15,7 +15,7 @@ const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
-  console.log('获取userInfo', userInfo)
+  // console.log('获取userInfo', userInfo)
 
   useDidShow(() => {
     getInfo().then()
@@ -26,7 +26,6 @@ const AboutList = memo(() => {
   const getInfo = async () => {
     if (isLogin) {
       const res = await getUserInfo()
-      console.log(res?.data.data)
       setInfo(res?.data.data)
     }
   }

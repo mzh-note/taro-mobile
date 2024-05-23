@@ -100,7 +100,7 @@ export default function ScoreItem(props: {scoreItem: IScoreItemType, tabValue: n
               tabValue === 3 &&
               <Text className={styles.item__lineup__result__txt}>{scoreItem.aiResult === 0 ? '否' : '中'}</Text>
             }
-            <ArrowRight size={10} color='#999' />
+            <ArrowRight size={18} color='#666' />
           </View>
         </View>
         <View className={styles.item__bottom}>

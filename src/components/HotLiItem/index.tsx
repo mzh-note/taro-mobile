@@ -43,9 +43,15 @@ export default function HotLiItem (props) {
       }
     }
   }
+  const viewDetail = () => {
+    console.log(item.matchId)
+    Taro.navigateTo({
+      url: '/pages/home/detail/index?id=' + item.matchId
+    })
+  }
   return (
     <>
-      <View className={styles.hot__li}>
+      <View className={styles.hot__li} onClick={viewDetail}>
         <View className={styles.hot__detail}>
           <View className={styles.hot__country}>
             <Image
