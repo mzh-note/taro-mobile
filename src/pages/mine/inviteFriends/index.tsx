@@ -14,8 +14,8 @@ import styles from './index.module.less'
 export default function InviteFriends () {
   const userInfo = useAppSelector(state => state.user.user)
   const instance = getCurrentInstance()
-  const balance = instance?.router?.params.balance || 0
-  const freezeBalance = instance?.router?.params.freezeBalance || 0
+  const balance = instance?.router?.params?.balance as string
+  const freezeBalance = instance?.router?.params?.freezeBalance as string
   const [tab, setTab] = useState(1)
   const [list, setList] = useState([])
   const [inviteList, setInviteList] = useState([])
@@ -36,7 +36,7 @@ export default function InviteFriends () {
 
   const changeTab = (val: number) => {
     setTab(val)
-    const newList = list.filter(item => item.state === val)
+    const newList = list.filter(item => item?.state === val)
     setInviteList(newList)
   }
   const showPreview = () => {
@@ -54,7 +54,7 @@ export default function InviteFriends () {
           <Text className={styles.invite__friends__rules__title}>【如何获得BOB币】</Text>
           <Text className={styles.invite__friends__rules__content}>把我们的小程序链接或者二维码，分享给你的好友，只要好友添加我们客服微信，即可获得70BOB币。</Text>
           <Text className={styles.invite__friends__rules__title}>【BOB可以做什么】</Text>
-          <Text className={styles.invite__friends__rules__content}>BoB币可以在全站使用，一个BOB币即等于1原人民币，不可提现，不可买卖。可以查看专家推荐方案。可以兑换年度会员。年度会员365BOB币。</Text>
+          <Text className={styles.invite__friends__rules__content}>BoB币可以在全站使用，一个BOB币即等于1元人民币，不可提现，不可买卖。可以查看专家推荐方案。可以兑换年度会员。年度会员365BOB币。</Text>
         </View>
         <View className={styles.invite__friends__author}>
           <View className={styles.invite__friends__author__icon}>
@@ -70,13 +70,13 @@ export default function InviteFriends () {
         </View>
         <View className={styles.invite__friends__tips}>
           <View className={styles.invite__friends__tips__coin}>
-            <View className={styles.invite__friends__tips__coin__up}>{balance}</View>
-            <View className={styles.invite__friends__tips__coin__down}>百包币
+            <View className={styles.invite__friends__tips__coin__up}>{ balance }</View>
+            <View className={styles.invite__friends__tips__coin__down}>百宝币
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
           </View>
           <View className={styles.invite__friends__tips__coin}>
-            <View className={styles.invite__friends__tips__coin__up}>{freezeBalance}</View>
+            <View className={styles.invite__friends__tips__coin__up}>{ freezeBalance }</View>
             <View className={styles.invite__friends__tips__coin__down}>锁定
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
@@ -112,11 +112,11 @@ export default function InviteFriends () {
                 <View className={styles.invite__friends__list__li__item}>
                   <Image
                     className={styles.invite__friends__list__li__item__img}
-                    src={item.avatar ? `${process.env.TARO_APP_BASEURL}/${item.avatar}` : defaultIcon}
+                    src={item?.avatar ? `${process.env.TARO_APP_BASEURL}/${item?.avatar}` : defaultIcon}
                     mode='aspectFit'
                   />
                   <View className={styles.invite__friends__list__li__item__info}>
-                    <Text className={styles.invite__friends__list__li__item__info__h4}>{item.nickName}</Text>
+                    <Text className={styles.invite__friends__list__li__item__info__h4}>{item?.nickName}</Text>
                     <Text className={styles.invite__friends__list__li__item__info__h5}>一级会员</Text>
                   </View>
                 </View>
