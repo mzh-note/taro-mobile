@@ -34,6 +34,13 @@ const AboutList = memo(() => {
     })
   }
   const showPreview = () => {
+    if (!isLogin) {
+      Taro.showToast({
+        icon: 'none',
+        title: '请先登陆'
+      })
+      return false
+    }
     Taro.previewImage({
       enablesavephoto: true,
       enableShowPhotoDownload: true,
@@ -42,13 +49,25 @@ const AboutList = memo(() => {
     })
   }
   const goMyAttention = () => {
-    if (isLogin) {
-      Taro.switchTab({
-        url: '/pages/course/index'
+    if (!isLogin) {
+      Taro.showToast({
+        icon: 'none',
+        title: '请先登陆'
       })
+      return false
     }
+    Taro.switchTab({
+      url: '/pages/course/index'
+    })
   }
   const applyExpert = async () => {
+    if (!isLogin) {
+      Taro.showToast({
+        icon: 'none',
+        title: '请先登陆'
+      })
+      return false
+    }
     if (info?.isPro === 0) {
       await applyPro()
       Taro.showToast({
@@ -62,6 +81,13 @@ const AboutList = memo(() => {
     }
   }
   const toInviteFriends = () => {
+    if (!isLogin) {
+      Taro.showToast({
+        icon: 'none',
+        title: '请先登陆'
+      })
+      return false
+    }
     Taro.navigateTo({
       url: `/pages/mine/inviteFriends/index?balance=${info?.balance}&freezeBalance=${info?.freezeBalance}`
     })
@@ -82,8 +108,8 @@ const AboutList = memo(() => {
           }
         </View>
         <View className={styles.assets}>
-          <Text className={styles.assets__txt}>个人资产：<Text className={styles.assets_num}>{info?.balance}</Text> 币</Text>
-          <Text className={styles.assets__txt}>锁定：<Text className={styles.assets_num}>{info?.freezeBalance}</Text> 币</Text>
+          <Text className={styles.assets__txt}>个人资产：<Text className={styles.assets_num}>{info?.balance || 0}</Text> 币</Text>
+          <Text className={styles.assets__txt}>锁定：<Text className={styles.assets_num}>{info?.freezeBalance || 0}</Text> 币</Text>
           <Image className={styles.assets__img} src={golden} mode='aspectFit' />
         </View>
         <View className={styles.list}>
