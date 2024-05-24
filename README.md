@@ -1,4 +1,4 @@
-![image](https://github.com/mzh-note/taro-mobile/assets/15724309/7eea06a2-0841-4c1a-ac3c-55d11aa9dcee)####  使用Taro进行多端开发的实例 - 足球AI预测（微信小程序 + H5）。
+####  使用Taro进行多端开发的实例 - 足球AI预测（微信小程序 + H5）。
 技术栈 Taro3.6.24 + typescript + react18，所用技术涉及
 
 UI：NUTUI-React
@@ -42,3 +42,5 @@ pnpm run build:weapp
 
 ##### 项目旨在对使用taro + react进行小程序开发的实践，对taro、react技术上的一些常用功能、细节进行踩坑。
 
+##### 效果预览：
+![image](https://github.com/mzh-note/taro-mobile/assets/15724309/7eea06a2-0841-4c1a-ac3c-55d11aa9dcee)
