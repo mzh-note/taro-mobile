@@ -76,7 +76,7 @@ const MyAttention = memo(() => {
       <View className={styles.my__attention__title}>
         关注专家
       </View>
-      <View className={styles.my__attention__expert__li}>
+      <View className={`${styles.my__attention__expert__li} ${list.length === 0 ? styles.my__attention__expert__li_empty : ''}`}>
         {
           list.length > 0 &&
           list.map((currItem: any) => (

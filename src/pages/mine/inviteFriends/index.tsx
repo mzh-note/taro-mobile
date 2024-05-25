@@ -18,31 +18,38 @@ export default function InviteFriends () {
   const freezeBalance = instance?.router?.params?.freezeBalance as string
   const [tab, setTab] = useState(1)
   const [list, setList] = useState([])
-  const [inviteList, setInviteList] = useState([])
+  const [inviteList, setInviteList] = useState<any>([])
   const [loseCount, setLoseCount] = useState(0)
   useEffect( () => {
     const getInviteInfo = async() => {
       const res = await inviteInfo()
-      setList(res?.data?.data)
-      // 计算失效数
-      const count = res?.data?.data.filter(item => item?.state === 2).length
-      setLoseCount(count)
-      // 计算初始化的有效邀请列表
-      const newList = res?.data?.data.filter(item => item?.state === tab)
-      setInviteList(newList)
+      let result = res?.data?.data || []
+      // result = [{avatar: '', state: 1, nickName: '测试', balance: 1, time: '2024-04-11 09:18:35'},
+      //     {avatar: '', state: 2, nickName: '测试3', balance: 111,  time: '2024-04-14 19:18:04'},
+      //     {avatar: '', state: 1, nickName: '测试4', balance: 1,  time: '2024-05-23 04:48:11'}]
+      if (result.length > 0) {
+        setList(result)
+        // 计算失效数
+        const count = result.filter(item => item?.state === 2).length
+        setLoseCount(count)
+        // 已邀请显示所有
+        setInviteList([...result])
+      }
     }
-    getInviteInfo()
+    getInviteInfo().then()
   }, []);
 
   const changeTab = (val: number) => {
     setTab(val)
-    const newList = list.filter(item => item?.state === val)
-    setInviteList(newList)
+    if (val === 1) {
+      setInviteList([...list])
+    } else {
+      const newList = list.filter(item => item?.state === 2)
+      setInviteList(newList)
+    }
   }
   const showPreview = () => {
     Taro.previewImage({
-      enablesavephoto: true,
-      enableShowPhotoDownload: true,
       current: `${process.env.TARO_APP_BASEURL}/images/3`, // 当前显示图片的http链接
       urls: [`${process.env.TARO_APP_BASEURL}/images/3`] // 需要预览的图片http链接列表
     })
@@ -62,7 +69,7 @@ export default function InviteFriends () {
           </View>
           <View className={styles.invite__friends__author__info}>
             <Text className={styles.invite__friends__author__info__name}>{userInfo.name}</Text>
-            <Text className={styles.invite__friends__author__info__level}>荣誉会员</Text>
+            {/*<Text className={styles.invite__friends__author__info__level}>荣誉会员</Text>*/}
           </View>
           <View className={styles.invite__friends__author__rule}>
             规则
@@ -117,13 +124,13 @@ export default function InviteFriends () {
                   />
                   <View className={styles.invite__friends__list__li__item__info}>
                     <Text className={styles.invite__friends__list__li__item__info__h4}>{item?.nickName}</Text>
-                    <Text className={styles.invite__friends__list__li__item__info__h5}>一级会员</Text>
+                    {/*<Text className={styles.invite__friends__list__li__item__info__h5}>一级会员</Text>*/}
                   </View>
                 </View>
-                <View className={styles.invite__friends__list__li__item}>70 BOB币</View>
+                <View className={styles.invite__friends__list__li__item}>{item?.balance || 0} BOB币</View>
                 <View className={styles.invite__friends__list__li__last__item}>
-                  <Text className={styles.invite__friends__list__li__item__h6}>2024-04-04</Text>
-                  <Text className={styles.invite__friends__list__li__item__h6}>17:11:16</Text>
+                  <Text className={styles.invite__friends__list__li__item__h6}>{item.time.slice(0, 10)}</Text>
+                  <Text className={styles.invite__friends__list__li__item__h6}>{item.time.slice(10)}</Text>
                 </View>
               </View>
             ))

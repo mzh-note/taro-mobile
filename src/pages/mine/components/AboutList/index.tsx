@@ -42,8 +42,6 @@ const AboutList = memo(() => {
       return false
     }
     Taro.previewImage({
-      enablesavephoto: true,
-      enableShowPhotoDownload: true,
       current: `${process.env.TARO_APP_BASEURL}/images/2`, // 当前显示图片的http链接
       urls: [`${process.env.TARO_APP_BASEURL}/images/2`] // 需要预览的图片http链接列表
     })
