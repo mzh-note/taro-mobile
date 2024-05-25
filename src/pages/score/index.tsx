@@ -21,6 +21,7 @@ export default function Course () {
   const [isVisible, setIsVisible] = useState(false)
   const [date, setDate] = useState(currentDate())
   const [scoreList, setScoreList] = useState<any>([])
+  const currentD = currentDate()
 
   let weeks = useMemo(() => {
     return lastWeek(date)
@@ -53,15 +54,13 @@ export default function Course () {
   }, [])
 
   const getList = useCallback(async () => {
-    // 关注
-    if (tabValue === 4) {
-      setScoreList([])
-      return false
-    }
     Taro.showLoading()
     const matchDate = date.replace(/\//g, '-')
     const params = {
       matchDate
+    }
+    if (tabValue < '2') {
+      params.matchDate = currentD
     }
     const result = await getScoreList(apis[tabValue], params)
     if (result?.data?.data && result?.data?.data.length) {
@@ -126,10 +125,9 @@ export default function Course () {
           <Tabs.TabPane title='进行中'></Tabs.TabPane>
           <Tabs.TabPane title='赛程'></Tabs.TabPane>
           <Tabs.TabPane title='赛果'></Tabs.TabPane>
-          {/*<Tabs.TabPane title='关注'></Tabs.TabPane>*/}
         </Tabs>
         {
-          tabValue !== 4
+          tabValue > '1'
           &&
           <>
             <View className={styles.date__tabs}>
@@ -170,43 +168,43 @@ export default function Course () {
               onDayClick={select}
               startDate='2023-01-01'
             />
-            <Swiper
-              className='score-swiper'
-              ref={swiperRef}
-              loop={false}
-              defaultValue={0}
-              onChange={changeSwiper}
-            >
-              {apis.map((item) => (
-                <Swiper.Item key={item} className='score-swiper-item'>
-                  <ScrollView
-                    enhanced
-                    showScrollbar={false}
-                    scrollY
-                    style={{height: '100%'}}
-                  >
-                    <View className={styles.outer}>
-                      {
-                        scoreList.length > 0 &&
-                        scoreList.map((scoreItem: any) => (
-                          <ScoreItem
-                            scoreItem={scoreItem}
-                            tabValue={tabValue}
-                            updateParent={updateParent}
-                            key={scoreItem.matchId}
-                          />
-                        ))
-                      }
-                      {
-                        scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
-                      }
-                    </View>
-                  </ScrollView>
-                </Swiper.Item>
-              ))}
-            </Swiper>
-          </>
+            </>
         }
+        <Swiper
+          className='score-swiper'
+          ref={swiperRef}
+          loop={false}
+          defaultValue={0}
+          onChange={changeSwiper}
+        >
+          {apis.map((item) => (
+            <Swiper.Item key={item} className='score-swiper-item'>
+              <ScrollView
+                enhanced
+                showScrollbar={false}
+                scrollY
+                style={{height: '100%'}}
+              >
+                <View className={`${styles.score__outer} ${tabValue > '1' ? '' : styles.score__outer2}`}>
+                  {
+                    scoreList.length > 0 &&
+                    scoreList.map((scoreItem: any) => (
+                      <ScoreItem
+                        scoreItem={scoreItem}
+                        tabValue={tabValue}
+                        updateParent={updateParent}
+                        key={scoreItem.matchId}
+                      />
+                    ))
+                  }
+                  {
+                    scoreList.length === 0 && <Empty description='无数据' imageSize={80} />
+                  }
+                </View>
+              </ScrollView>
+            </Swiper.Item>
+          ))}
+        </Swiper>
       </View>
     </>
   )

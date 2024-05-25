@@ -14,6 +14,7 @@ export default function CalculatePro() {
   useEffect(() => {
     const fn = async () => {
       setLoading(true)
+      Taro.showLoading()
       const res = await calculatorList()
       const result = res?.data?.data.map(item => {
         item.time = item.startTime.slice(5, -3).replace(/T/, ' ')
@@ -35,6 +36,7 @@ export default function CalculatePro() {
       }
       setList(newList)
       setLoading(false)
+      Taro.hideLoading()
     }
     fn()
   }, []);
