@@ -1,4 +1,4 @@
 export default definePageConfig({
-  navigationBarTitleText: '计算器',
+  navigationBarTitleText: '我要推单',
   enablePullDownRefresh: false
 })

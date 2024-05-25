@@ -9,8 +9,7 @@ export default function CalculatePro() {
   const [loading, setLoading] = useState(false)
   const [list, setList] = useState<any>([])
   const [cost, setCost] = useState(1)
-  const [selectMatch, setSelectMatch] = useState({})
-  const [active, setActive] = useState({})
+  const [selectMatch, setSelectMatch] = useState<any>([])
 
   useEffect(() => {
     const fn = async () => {
@@ -40,85 +39,59 @@ export default function CalculatePro() {
     fn()
   }, []);
 
-  const selectItem = (time, item, forecast) => {
-    const keys = Object.keys(selectMatch)
-    let curr = {...selectMatch}
-    if (keys.indexOf(time) === -1) {
-      curr = {}
+  const selectItem = (item, forecast) => {
+    let newList = [...selectMatch]
+    let existItem = newList.filter(currItem => {
+      return currItem?.matchId === item.matchId && currItem?.forecast === forecast
+    })
+    if (existItem.length > 0) {
+      // 当前选项已存在，则剔除
+      const arr = newList.filter(currItem => {
+        return !(currItem?.matchId === item.matchId && currItem?.forecast === forecast)
+      })
+      setSelectMatch(arr)
+      return false
     }
-    if (keys.length > 1) {
-      delete curr[keys[0]]
-    }
-    if (curr[time]) {
-      if (curr[time].matchId === item.matchId) {
-        const newMatch = {
-          [time]: {
-            ...curr[time],
-            matchId: item.matchId,
-            forecast: forecast
-          }
-        }
-        updateDate(newMatch, time)
-      } else if (curr[time].matchId2 === item.matchId) {
-        const newMatch = {
-          [time]: {
-            ...curr[time],
-            matchId2: item.matchId,
-            forecast2: forecast
-          }
-        }
-        updateDate(newMatch, time)
-      } else if (curr[time].matchId2 === 0) {
-        if (curr[time].matchId === item.matchId) {
-          const newMatch = {
-            [time]: {
-              matchId: item.matchId,
-              forecast: forecast,
-              matchId2: 0,
-              forecast2: 0
-            }
-          }
-          updateDate(newMatch, time)
-        } else {
-          const newMatch = {
-            [time]: {
-              ...curr[time],
-              matchId2: item.matchId,
-              forecast2: forecast
-            }
-          }
-          updateDate(newMatch, time)
-        }
-      } else {
-        const newMatch = {
-          [time]: {
-            matchId: item.matchId,
-            forecast: forecast,
-            matchId2: curr[time].matchId,
-            forecast2: curr[time].forecast
-          }
-        }
-        updateDate(newMatch, time)
+    // 不存在，继续添加
+    const newType = forecast > 4 ? 2 : 1 // 1: 上半部分选择，2: 下半部分选择，上下只能选其一
+    let type = 0
+    newList.forEach(currItem => {
+      if (currItem.matchId === item.matchId) {
+        type = currItem.type
       }
-    } else {
-      const newMatch = {
-        [time]: {
-          matchId: item.matchId,
-          forecast: forecast,
-          matchId2: 0,
-          forecast2: 0
-        }
-      }
-      updateDate(newMatch, time)
+    })
+    if (type !== 0 && type !== newType) {
+      Taro.showToast({
+        icon: 'none',
+        title: '选择多种玩法，需重新开一单进行选择'
+      })
+      return false
     }
-  }
-  const updateDate = (newMatch, time) => {
-    setActive(newMatch[time])
-    setSelectMatch(newMatch)
+    const arr = newList.filter(currItem => {
+      return currItem?.matchId === item.matchId
+    })
+    if (arr.length === 2) {
+      console.log('同一行最多选2个')
+      return false
+    }
+    newList.push({
+      type: newType,
+      matchId: item.matchId,
+      forecast: forecast
+    })
+    let keys = newList.map(item => item.matchId)
+    keys = [...new Set(keys)]
+    if (keys.length > 2) {
+      Taro.showToast({
+        icon: 'none',
+        title: '最多选择2场比赛'
+      })
+      return false
+    }
+    setSelectMatch([...newList])
   }
   const calculate = async () => {
-    const keys = Object.keys(selectMatch)
-    if (keys.length === 0) {
+    if (selectMatch.length === 0) {
       Taro.showToast({
         icon: 'none',
         title: '请选择方案'
@@ -132,11 +105,24 @@ export default function CalculatePro() {
       })
       return
     }
+    const suggestList = selectMatch.map(item => {
+      return {
+        matchId: item.matchId,
+        forecast: item.forecast
+      }
+    })
     const data = {
-      ...selectMatch[keys[0]],
+      suggestList,
       cost
     }
-    await addSuggest(data)
+    const res = await addSuggest(data)
+    if (res?.statusCode != 200) {
+      Taro.showToast({
+        icon: 'none',
+        title: '保存失败'
+      })
+      return false
+    }
     Taro.showToast({
       icon: 'none',
       title: '保存成功'
@@ -191,31 +177,31 @@ export default function CalculatePro() {
                       <View className={styles['calculate-pro__list__odds__right']}>
                         <View className={styles['calculate-pro__list__odds__right__up']}>
                           <View
-                            onClick={() => selectItem(item.name, item2, 1)}
+                            onClick={() => selectItem(item2, 1)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 1 || active?.matchId2 === item2.matchId && active?.forecast2 === 1) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 1).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             胜 {item2?.rateList[1]}
                           </View>
                           <View
-                            onClick={() => selectItem(item.name, item2, 2)}
+                            onClick={() => selectItem(item2, 2)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 2 || active?.matchId2 === item2.matchId && active?.forecast2 === 2) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 2).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             平 {item2?.rateList[2]}
                           </View>
                           <View
-                            onClick={() => selectItem(item.name, item2, 3)}
+                            onClick={() => selectItem(item2, 3)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 3 || active?.matchId2 === item2.matchId && active?.forecast2 === 3) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 3).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             负 {item2?.rateList[3]}
@@ -223,31 +209,31 @@ export default function CalculatePro() {
                         </View>
                         <View className={styles['calculate-pro__list__odds__right__down']}>
                           <View
-                            onClick={() => selectItem(item.name, item2, 5)}
+                            onClick={() => selectItem(item2, 5)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 5 || active?.matchId2 === item2.matchId && active?.forecast2 === 5) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 5).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             胜 {item2?.rateList[5]}
                           </View>
                           <View
-                            onClick={() => selectItem(item.name, item2, 6)}
+                            onClick={() => selectItem(item2, 6)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 6 || active?.matchId2 === item2.matchId && active?.forecast2 === 6) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 6).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             平 {item2?.rateList[6]}
                           </View>
                           <View
-                            onClick={() => selectItem(item.name, item2, 7)}
+                            onClick={() => selectItem(item2, 7)}
                             className={`
                               ${styles['calculate-pro__list__odds__right__text']}
-                              ${(active?.matchId === item2.matchId && active?.forecast === 7 || active?.matchId2 === item2.matchId && active?.forecast2 === 7) ?
-                              `${styles['calculate-pro__list__odds__right__text_active']}` : ''}
+                              ${selectMatch.filter(currItem => currItem?.matchId === item2.matchId && currItem?.forecast === 7).length > 0 ?
+                              styles['calculate-pro__list__odds__right__text_active'] : ''}
                             `}
                           >
                             负 {item2?.rateList[7]}

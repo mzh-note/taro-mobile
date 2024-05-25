@@ -145,7 +145,7 @@ const AboutList = memo(() => {
               <Image src={person} mode='aspectFit' />
             </View>
             <View className={styles.list__item}>
-              <Text className={styles.list_item_top}>{info?.isPro === 0 ? '申请专家' : '计算器'}</Text>
+              <Text className={styles.list_item_top}>{info?.isPro === 0 ? '申请专家' : '我要推单'}</Text>
               <Text className={styles.list_item_bottom}>推单赚金币</Text>
             </View>
           </View>
