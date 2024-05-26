@@ -4,17 +4,20 @@ import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
 import {wxLogin} from '@/http/api';
 import AboutList from '@/pages/mine/components/AboutList';
+import useShareApp from '@/hooks/useShareApp';
 
 export default function Login () {
+  useShareApp()
+
   const dispatch = useDispatch()
   const instance = Taro.getCurrentInstance()
   const inviteCode = instance?.router?.params?.inviteCode || ''
   console.log('登陆页面inviteCode', inviteCode)
-  dispatch(setUser({
-    fromInviteCode: inviteCode
-  }))
 
   useEffect(() => {
+    dispatch(setUser({
+      fromInviteCode: inviteCode
+    }))
     Taro.login({
       success: async function (res) {
         console.log('获取登录凭证（code）', res.code)
@@ -42,7 +45,7 @@ export default function Login () {
         console.error('获取登录凭证（code）', err)
       }
     })
-  }, [dispatch]);
+  }, []);
 
   return <AboutList />
 }
