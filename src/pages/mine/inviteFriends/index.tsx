@@ -5,13 +5,14 @@ import {useAppSelector} from '@/store/hooks';
 import {ArrowRight} from '@nutui/icons-react-taro';
 import {Empty} from '@nutui/nutui-react-taro';
 import {useEffect, useState} from 'react';
-
+import useShareApp from '@/hooks/useShareApp';
 import {inviteInfo} from '@/http/api';
 import golden from '@/assets/icon-golden.png';
 import defaultIcon from '@/assets/default-icon.png'
 import styles from './index.module.less'
 
 export default function InviteFriends () {
+  useShareApp()
   const userInfo = useAppSelector(state => state.user.user)
   const instance = getCurrentInstance()
   const balance = instance?.router?.params?.balance as string

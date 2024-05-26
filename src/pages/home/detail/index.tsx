@@ -9,11 +9,13 @@ import like from '@/assets/like.png';
 import {favoriteAddMatch, favoriteDelMatch, matchInfo} from '@/http/api';
 import {useAppDispatch} from '@/store/hooks';
 import {setScore} from '@/store/modules/scoreReducer';
+import useShareApp from '@/hooks/useShareApp';
 
 import like_active from '@/assets/like_active.png';
 import styles from './index.module.less'
 
 export default function Detail() {
+  useShareApp()
   const dispatch = useAppDispatch()
   const instance = Taro.getCurrentInstance()
   const id = instance?.router?.params?.id

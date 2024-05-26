@@ -5,10 +5,12 @@ import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
-import styles from './index.module.less'
 import {useAppSelector} from '@/store/hooks';
+import useShareApp from '@/hooks/useShareApp';
+import styles from './index.module.less'
 
 export default function NickName () {
+  useShareApp()
   const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')

@@ -5,7 +5,7 @@ import {setUser} from '@/store/modules/userReducer';
 import {wxLogin} from '@/http/api';
 import AboutList from '@/pages/mine/components/AboutList';
 
-export default function Mine () {
+export default function Login () {
   const dispatch = useDispatch()
   const instance = Taro.getCurrentInstance()
   const inviteCode = instance?.router?.params?.inviteCode || ''

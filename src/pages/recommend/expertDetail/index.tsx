@@ -4,10 +4,12 @@ import Header from '@/components/Header';
 import {Overlay, Avatar, Button, Empty} from '@nutui/nutui-react-taro';
 import {useCallback, useEffect, useState} from 'react';
 import {favoriteAddPro, favoriteDelPro, proInfo, suggestList} from '@/http/api';
+import useShareApp from '@/hooks/useShareApp';
 
 import styles from './index.module.less'
 
 export default function ExpertDetail () {
+  useShareApp()
   const instance = Taro.getCurrentInstance()
   const proId = instance?.router?.params.proId
   const [proBase, setProBase] = useState({})

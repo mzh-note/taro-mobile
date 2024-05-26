@@ -2,12 +2,13 @@ import {View} from '@tarojs/components';
 import {useState} from 'react';
 import Header from '@/components/Header'
 import {Button} from '@nutui/nutui-react-taro';
-
+import useShareApp from '@/hooks/useShareApp';
 import RecommendExpert from '@/pages/recommend/components/RecommendExpert';
 
 import styles from './index.module.less'
 
 export default function Recommend () {
+  useShareApp()
   const [type, setType] = useState(1)
   return (
     <View className={styles.recommend}>

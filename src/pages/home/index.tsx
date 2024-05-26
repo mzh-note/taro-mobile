@@ -2,13 +2,14 @@ import Taro from '@tarojs/taro';
 import {useState} from 'react'
 import {Image, RichText, Text, View} from '@tarojs/components';
 import { Input, Button } from '@nutui/nutui-react-taro'
-
 import {getMatchId} from '@/http/api';
+import useShareApp from '@/hooks/useShareApp';
 
 import logo from '../../assets/logo.png'
 import styles from './index.module.less'
 
 export default function Home() {
+  useShareApp()
   const [code, setCode] = useState('')
   const prediction = async () => {
     // if (code.length === 0) {

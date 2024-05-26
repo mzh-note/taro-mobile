@@ -4,8 +4,10 @@ import {View, Text, Image, ScrollView} from '@tarojs/components';
 import {useEffect, useState} from 'react';
 import {addSuggest, calculatorList} from '@/http/api';
 import styles from './index.module.less'
+import useShareApp from '@/hooks/useShareApp';
 
 export default function CalculatePro() {
+  useShareApp()
   const [loading, setLoading] = useState(false)
   const [list, setList] = useState<any>([])
   const [cost, setCost] = useState(1)

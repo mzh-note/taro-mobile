@@ -4,7 +4,6 @@ import Taro, {useLoad, useShareAppMessage, useShareTimeline} from '@tarojs/taro'
 // 分享朋友、朋友圈
 export default function useShareApp () {
   const userInfo = useAppSelector(state => state.user.user)
-  console.log(userInfo.inviteCode)
   useLoad(() => {
     console.log('useLoad')
     Taro.showShareMenu({

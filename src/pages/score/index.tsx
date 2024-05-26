@@ -10,10 +10,12 @@ import ScoreItem from '@/components/ScoreItem';
 import {getScoreList} from '@/http/api'
 import { currentDate, lastWeek } from '@/utils';
 
+import useShareApp from '@/hooks/useShareApp';
 import {useAppSelector} from '@/store/hooks';
 import styles from './index.module.less'
 
 export default function Course () {
+  useShareApp()
   const score = useAppSelector(state => state.score.score)
   const [tabValue, setTabValue] = useState<string | number>('0')
   const swiperRef = useRef(null)
