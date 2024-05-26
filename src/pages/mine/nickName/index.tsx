@@ -6,8 +6,11 @@ import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
 import styles from './index.module.less'
+import {useAppSelector} from '@/store/hooks';
 
 export default function NickName () {
+  const userInfo = useAppSelector(state => state.user.user)
+  console.log(userInfo.fromInviteCode)
   const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')
   let nickname = ''
@@ -34,9 +37,6 @@ export default function NickName () {
       })
       return
     }
-    Taro.showLoading({
-      title: ''
-    })
     Taro.login({
       success: async function (res) {
         // console.log('获取登录凭证（code）', res.code)
@@ -50,24 +50,25 @@ export default function NickName () {
   const submitLogin = async (code: string) => {
     // console.log('wxlogin')
     const response = await wxLogin({ code })
-    // console.log('登陆成功', response.data.data)
+    console.log('登陆成功', response?.data?.data)
     // 设置openid、session_key
     dispatch(setUser(response?.data?.data))
     // console.log('uploadAvatar')
     const userAvatarResponse = await uploadAvatar(avatar)
-    // console.log('userAvatarResponse')
+    console.log('userAvatarResponse', userAvatarResponse.data)
     const imgUrl = JSON.parse(userAvatarResponse.data)
-    // console.log('userLogin')
+    console.log('imgUrl', imgUrl)
     const userNicknameResponse = await userLogin({
-      nickName: nickname
+      nickName: nickname,
+      inviter_code: userInfo.fromInviteCode
     })
-    // console.log('userNicknameResponse')
+    console.log('userNicknameResponse', userNicknameResponse)
     // 设置头像、昵称
     dispatch(setUser({
-      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl.data.url}?t=${new Date().getTime()}`,
+      userStatus: 1,
+      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl?.data?.url}?t=${new Date().getTime()}`,
       name: userNicknameResponse?.data?.data?.nikeName
     }))
-    Taro.hideLoading()
     Taro.showToast({
       title: '设置成功',
       success: () => {

@@ -7,11 +7,18 @@ import AboutList from '@/pages/mine/components/AboutList';
 
 export default function Mine () {
   const dispatch = useDispatch()
+  const instance = Taro.getCurrentInstance()
+  const inviteCode = instance?.router?.params?.inviteCode || ''
+  console.log('登陆页面inviteCode', inviteCode)
+  dispatch(setUser({
+    fromInviteCode: inviteCode
+  }))
+
   useEffect(() => {
     Taro.showLoading()
     Taro.login({
       success: async function (res) {
-        // console.log('获取登录凭证（code）', res.code)
+        console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
           const response = await wxLogin({ code })
@@ -29,11 +36,14 @@ export default function Mine () {
               icon: 'none',
               title: '请先登陆'
             })
-            // console.log('未注册')
+            console.log('未注册')
           }
         } else {
           Taro.hideLoading()
         }
+      },
+      fail: function(err) {
+        console.error('获取登录凭证（code）', err)
       }
     })
   }, [dispatch]);

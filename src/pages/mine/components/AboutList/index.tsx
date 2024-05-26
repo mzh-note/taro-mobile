@@ -34,9 +34,11 @@ const AboutList = memo(() => {
     }
   }
   const toUserInfo = () => {
-    Taro.navigateTo({
-      url: '/pages/mine/nickName/index'
-    })
+    if (!isLogin) {
+      Taro.navigateTo({
+        url: '/pages/mine/nickName/index'
+      })
+    }
   }
   const showPreview = () => {
     if (!isLogin) {

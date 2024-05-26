@@ -7,7 +7,8 @@ interface UserState {
   userStatus?: number,
   avatar?: string,
   name?: string,
-  inviteCode?: string
+  inviteCode?: string,  // 自身邀请码
+  fromInviteCode?: string // 来自别人的邀请码
 }
 const initialState = {
   user: {
@@ -16,7 +17,8 @@ const initialState = {
     userStatus: 0,
     avatar: '',
     name: '',
-    inviteCode: ''
+    inviteCode: '',
+    fromInviteCode: ''
   } as UserState
 }
 export const userSlice = createSlice({

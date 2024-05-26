@@ -33,7 +33,7 @@ const MyAttention = memo(() => {
 
   const getFavoriteMatchList = async () => {
     const res = await favoriteMatchList()
-    if (res?.data?.data.length > 0) {
+    if (res?.data?.data?.length > 0) {
       setScoreList(res?.data?.data)
     } else {
       setScoreList([])
@@ -45,7 +45,7 @@ const MyAttention = memo(() => {
 
   const getFavoriteProList = async () => {
     const res = await favoriteProList()
-    if (res?.data?.data.length > 0) {
+    if (res?.data?.data?.length > 0) {
       setList(res?.data?.data)
     } else {
       setList([])

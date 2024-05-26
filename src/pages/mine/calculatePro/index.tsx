@@ -73,7 +73,10 @@ export default function CalculatePro() {
       return currItem?.matchId === item.matchId
     })
     if (arr.length === 2) {
-      console.log('同一行最多选2个')
+      // console.log('同一行最多选2个')
+      Taro.showToast({
+        title: '一种玩法至多选2个'
+      })
       return false
     }
     newList.push({
