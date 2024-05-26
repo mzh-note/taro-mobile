@@ -54,7 +54,6 @@ export default function Course () {
   }, [])
 
   const getList = useCallback(async () => {
-    Taro.showLoading()
     const matchDate = date.replace(/\//g, '-')
     const params = {
       matchDate
@@ -68,7 +67,6 @@ export default function Course () {
     } else {
       setScoreList([])
     }
-    Taro.hideLoading()
   }, [date, apis, tabValue])
 
   useEffect(() => {

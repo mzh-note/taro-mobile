@@ -55,7 +55,7 @@ export default function NickName () {
     dispatch(setUser(response?.data?.data))
     // console.log('uploadAvatar')
     const userAvatarResponse = await uploadAvatar(avatar)
-    console.log('userAvatarResponse', userAvatarResponse.data)
+    console.log('userAvatarResponse', userAvatarResponse)
     const imgUrl = JSON.parse(userAvatarResponse.data)
     console.log('imgUrl', imgUrl)
     const userNicknameResponse = await userLogin({
@@ -87,7 +87,7 @@ export default function NickName () {
       >
         <Image
           className={styles.nickname__img}
-          mode='aspectFit'
+          mode='aspectFill'
           src={avatar ? avatar : defaultIcon}
         />
       </Button>

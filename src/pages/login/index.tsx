@@ -15,14 +15,12 @@ export default function Mine () {
   }))
 
   useEffect(() => {
-    Taro.showLoading()
     Taro.login({
       success: async function (res) {
         console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
           const response = await wxLogin({ code })
-          Taro.hideLoading()
           if (response?.data?.data?.userStatus === 1) {
             // console.log('已注册')
             const payload = response?.data?.data
@@ -38,8 +36,6 @@ export default function Mine () {
             })
             console.log('未注册')
           }
-        } else {
-          Taro.hideLoading()
         }
       },
       fail: function(err) {

@@ -5,6 +5,7 @@ import wx from '@/assets/icon-wx.png';
 import mine from '@/assets/icon-mine.png';
 import person from '@/assets/icon-person.png';
 import logo from '@/assets/logo.png';
+import qq from '@/assets/qq.png'
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import {useEffect, memo, useState} from 'react';
@@ -34,11 +35,14 @@ const AboutList = memo(() => {
     }
   }
   const toUserInfo = () => {
-    if (!isLogin) {
-      Taro.navigateTo({
-        url: '/pages/mine/nickName/index'
-      })
-    }
+    // if (!isLogin) {
+    //   Taro.navigateTo({
+    //     url: '/pages/mine/nickName/index'
+    //   })
+    // }
+    Taro.navigateTo({
+      url: '/pages/mine/nickName/index'
+    })
   }
   const showPreview = () => {
     if (!isLogin) {
@@ -102,7 +106,7 @@ const AboutList = memo(() => {
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
           {/*<Image className={styles.img__logo} src={logo} mode='aspectFit' />*/}
-          <Image className={styles.img__logo} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFit' />
+          <Image className={styles.img__logo} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFill' />
         </View>
         <View className={styles.mine__icon}>
           <Image className={styles.mine__icon__img} src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
@@ -156,6 +160,13 @@ const AboutList = memo(() => {
               <Text className={styles.list_item_bottom}>推单赚金币</Text>
             </View>
           </View>
+        </View>
+        <View className={styles.intro__img}>
+          <Image className={styles.intro__img__logo} src={`${process.env.TARO_APP_BASEURL}/images/5`} mode='aspectFit'/>
+        </View>
+        <View className={styles.customer}>
+          <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
+          <Text className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Text>
         </View>
       </View>
     </>
