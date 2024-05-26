@@ -6,7 +6,8 @@ interface UserState {
   session_key?: string,
   userStatus?: number,
   avatar?: string,
-  name?: string
+  name?: string,
+  inviteCode?: string
 }
 const initialState = {
   user: {
@@ -14,7 +15,8 @@ const initialState = {
     session_key: '',
     userStatus: 0,
     avatar: '',
-    name: ''
+    name: '',
+    inviteCode: ''
   } as UserState
 }
 export const userSlice = createSlice({

@@ -6,13 +6,15 @@ import mine from '@/assets/icon-mine.png';
 import person from '@/assets/icon-person.png';
 import logo from '@/assets/logo.png';
 import defaultIcon from '@/assets/default-icon.png';
-import {useAppSelector} from '@/store/hooks';
+import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import {useEffect, memo, useState} from 'react';
 import {applyPro, getUserInfo} from '@/http/api';
 import styles from './index.module.less'
+import {setUser} from '@/store/modules/userReducer';
 
 const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
+  const dispatch = useAppDispatch()
   const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
 
@@ -25,7 +27,10 @@ const AboutList = memo(() => {
   const getInfo = async () => {
     if (isLogin) {
       const res = await getUserInfo()
-      setInfo(res?.data.data)
+      setInfo(res?.data?.data)
+      dispatch(setUser({
+        inviteCode: res?.data?.data?.inviteCode || ''
+      }))
     }
   }
   const toUserInfo = () => {
@@ -153,5 +158,5 @@ const AboutList = memo(() => {
       </View>
     </>
   )
-}, [])
+})
 export default AboutList
