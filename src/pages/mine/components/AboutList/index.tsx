@@ -12,12 +12,15 @@ import {useEffect, memo, useState} from 'react';
 import {applyPro, getUserInfo} from '@/http/api';
 import styles from './index.module.less'
 import {setUser} from '@/store/modules/userReducer';
+import {Overlay} from '@nutui/nutui-react-taro';
 
 const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useAppDispatch()
   const [info, setInfo] = useState({})
   const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
+
+  const [visible, setVisible] = useState(false)
 
   useDidShow(() => {
     getInfo().then()
@@ -45,17 +48,18 @@ const AboutList = memo(() => {
     })
   }
   const showPreview = () => {
-    if (!isLogin) {
-      Taro.showToast({
-        icon: 'none',
-        title: '请先登陆'
-      })
-      return false
-    }
-    Taro.previewImage({
-      current: `${process.env.TARO_APP_BASEURL}/images/2`, // 当前显示图片的http链接
-      urls: [`${process.env.TARO_APP_BASEURL}/images/2`] // 需要预览的图片http链接列表
-    })
+    setVisible(true)
+    // if (!isLogin) {
+    //   Taro.showToast({
+    //     icon: 'none',
+    //     title: '请先登陆'
+    //   })
+    //   return false
+    // }
+    // Taro.previewImage({
+    //   current: `${process.env.TARO_APP_BASEURL}/images/2`, // 当前显示图片的http链接
+    //   urls: [`${process.env.TARO_APP_BASEURL}/images/2`] // 需要预览的图片http链接列表
+    // })
   }
   const goMyAttention = () => {
     if (!isLogin) {
@@ -169,6 +173,13 @@ const AboutList = memo(() => {
           <Text className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Text>
         </View>
       </View>
+      <Overlay visible={visible} onClick={() => setVisible(false)}>
+        <div className={styles.mine__overlay}>
+          <div className={styles.mine__overlay__content}>
+            <Image className={styles.mine__overlay__content__qrcode} src={`${process.env.TARO_APP_BASEURL}/images/6`} mode='aspectFill'/>
+          </div>
+        </div>
+      </Overlay>
     </>
   )
 })
