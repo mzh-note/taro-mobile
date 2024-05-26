@@ -38,14 +38,11 @@ const AboutList = memo(() => {
     }
   }
   const toUserInfo = () => {
-    // if (!isLogin) {
-    //   Taro.navigateTo({
-    //     url: '/pages/mine/nickName/index'
-    //   })
-    // }
-    Taro.navigateTo({
-      url: '/pages/mine/nickName/index'
-    })
+    if (!isLogin) {
+      Taro.navigateTo({
+        url: '/pages/mine/nickName/index'
+      })
+    }
   }
   const showPreview = () => {
     setVisible(true)
@@ -113,7 +110,7 @@ const AboutList = memo(() => {
           <Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFill' />
         </View>
         <View className={styles.mine__icon}>
-          <Image className={styles.mine__icon__img} src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
+          <Image className={styles.mine__icon__img} mode='aspectFill' src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
         </View>
         <View className={styles.user} onClick={toUserInfo}>
           {
@@ -166,7 +163,7 @@ const AboutList = memo(() => {
           </View>
         </View>
         <View className={styles.intro__img}>
-          <Image className={styles.intro__img__logo} src={`${process.env.TARO_APP_BASEURL}/images/5`} mode='aspectFit'/>
+          <Image className={styles.intro__img__logo} src={`${process.env.TARO_APP_BASEURL}/images/5`} mode='aspectFill'/>
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />

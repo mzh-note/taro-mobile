@@ -129,8 +129,8 @@ export default function InviteFriends () {
                 </View>
                 <View className={styles.invite__friends__list__li__item}>{item?.balance || 0} BOB币</View>
                 <View className={styles.invite__friends__list__li__last__item}>
-                  <Text className={styles.invite__friends__list__li__item__h6}>{item?.create_time?.slice(0, 10)}</Text>
-                  <Text className={styles.invite__friends__list__li__item__h6}>{item?.create_time?.slice(10)}</Text>
+                  <Text className={styles.invite__friends__list__li__item__h6}>{item?.inviteTime?.slice(0, 10)}</Text>
+                  <Text className={styles.invite__friends__list__li__item__h6}>{item?.inviteTime?.slice(11)}</Text>
                 </View>
               </View>
             ))

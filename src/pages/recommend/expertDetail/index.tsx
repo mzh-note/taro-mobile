@@ -111,11 +111,11 @@ export default function ExpertDetail () {
             </View>
           </View>
           <View className={styles.plan__rate}>
-            <Text className={styles.plan__rate__percent}>
-              <Text className={styles.plan__rate__percent__count}>{proBase?.sustainWin}</Text>
-              <Text className={styles.plan__rate__percent__unit}>%</Text>
-            </Text>
-            <Text className={styles.plan__rate__eval}>本场回报率</Text>
+            {/*<Text className={styles.plan__rate__percent}>*/}
+            {/*  <Text className={styles.plan__rate__percent__count}>{proBase?.sustainWin}</Text>*/}
+            {/*  <Text className={styles.plan__rate__percent__unit}>%</Text>*/}
+            {/*</Text>*/}
+            {/*<Text className={styles.plan__rate__eval}>本场回报率</Text>*/}
           </View>
         </View>
         {

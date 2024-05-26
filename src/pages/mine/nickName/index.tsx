@@ -68,6 +68,7 @@ export default function NickName () {
       name: userNicknameResponse?.data?.data?.nikeName
     }))
     Taro.showToast({
+      icon: 'none',
       title: '设置成功',
       success: () => {
         Taro.switchTab({
