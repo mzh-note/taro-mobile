@@ -10,7 +10,6 @@ import {useAppSelector} from '@/store/hooks';
 
 export default function NickName () {
   const userInfo = useAppSelector(state => state.user.user)
-  console.log(userInfo.fromInviteCode)
   const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')
   let nickname = ''
@@ -39,7 +38,7 @@ export default function NickName () {
     }
     Taro.login({
       success: async function (res) {
-        // console.log('获取登录凭证（code）', res.code)
+        console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
           await submitLogin(code)
@@ -53,8 +52,7 @@ export default function NickName () {
     console.log('登陆成功', response?.data?.data)
     // 设置openid、session_key
     dispatch(setUser(response?.data?.data))
-    // console.log('uploadAvatar')
-    const userAvatarResponse = await uploadAvatar(avatar)
+    const userAvatarResponse = await uploadAvatar(avatar, response?.data?.data?.openid)
     console.log('userAvatarResponse', userAvatarResponse)
     const imgUrl = JSON.parse(userAvatarResponse.data)
     console.log('imgUrl', imgUrl)

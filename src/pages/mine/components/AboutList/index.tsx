@@ -109,8 +109,8 @@ const AboutList = memo(() => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          {/*<Image className={styles.img__logo} src={logo} mode='aspectFit' />*/}
-          <Image className={styles.img__logo} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFill' />
+          {/*<Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />*/}
+          <Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFill' />
         </View>
         <View className={styles.mine__icon}>
           <Image className={styles.mine__icon__img} src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
