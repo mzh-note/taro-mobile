@@ -49,7 +49,7 @@ export default function RecommendExpert (props) {
   }
   const getHotList = async () => {
     const result = await hotMatchList()
-    const data = result?.data?.data.map(item => {
+    const data = result?.data?.data?.map(item => {
       const percent = item.totalHome + item.totalAway + item.totalDraw
       item.totalHome = `${(item.totalHome / percent * 100 || 0).toFixed(0)}%`
       item.totalAway = `${(item.totalAway / percent * 100 || 0).toFixed(0)}%`

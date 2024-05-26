@@ -64,7 +64,7 @@ export default defineAppConfig({
         iconPath: 'assets/tabBar/course.png',
         selectedIconPath: 'assets/tabBar/course-active.png',
         pagePath: 'pages/course/index',
-        text: '赛程',
+        text: '关注',
       },
       {
         iconPath: 'assets/tabBar/mine.png',
