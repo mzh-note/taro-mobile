@@ -1,4 +1,6 @@
 export default definePageConfig({
   navigationBarTitleText: '登陆',
-  disableScroll: true
+  disableScroll: true,
+  enableShareAppMessage: true,
+  enableShareTimeline: true
 })

@@ -18,12 +18,12 @@ const http = (options: any) => {
       method: options.method || 'GET',
       success: function(res) {
         Taro.hideLoading()
-        // console.log('success', res)
+        console.log('success', res)
         resolve(res)
       },
       fail: function (error) {
         Taro.hideLoading()
-        // console.error('fail', error)
+        console.error('fail', error)
         Taro.showToast({
           title: '访问异常' + JSON.stringify(error.errMsg),
           icon: 'none'

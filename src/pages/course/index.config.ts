@@ -1,4 +1,6 @@
 export default definePageConfig({
   navigationBarTitleText: '赛程',
-  enablePullDownRefresh: false
+  enablePullDownRefresh: false,
+  enableShareAppMessage: true,
+  enableShareTimeline: true
 })

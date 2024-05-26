@@ -1,5 +1,5 @@
 import {ScrollView, View} from '@tarojs/components';
-import Taro, {useDidShow, useLoad} from '@tarojs/taro';
+import Taro, {useDidShow, useLoad, useShareAppMessage, useShareTimeline} from '@tarojs/taro';
 import {Tabs, Swiper, Calendar, Empty} from '@nutui/nutui-react-taro';
 import {Calendar as CalendarIcon} from '@nutui/icons-react-taro';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
@@ -15,7 +15,37 @@ import {useAppSelector} from '@/store/hooks';
 import styles from './index.module.less'
 
 export default function Course () {
-  useShareApp()
+  const userInfo = useAppSelector(state => state.user.user)
+  useLoad(() => {
+    console.log('useLoad')
+    Taro.showShareMenu({
+      withShareTicket: true,
+      showShareItems: ['shareAppMessage', 'shareTimeline'],
+      success: function (res) {
+        console.log(res)
+      }
+    })
+  })
+  useShareAppMessage((res) => {
+    console.log(res)
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    } else if (res.from === 'menu') {
+      // 来自底部的分享转发按钮
+      console.log(res)
+    }
+    return {
+      title: '百宝AI足球预测',
+      path: `/pages/login/index?inviteCode=${userInfo.inviteCode}`,
+    }
+  })
+  useShareTimeline(() => {
+    return {
+      title: '百宝AI足球预测',
+      path: `/pages/login/index?inviteCode=${userInfo.inviteCode}`,
+    }
+  })
   const score = useAppSelector(state => state.score.score)
   const [tabValue, setTabValue] = useState<string | number>('0')
   const swiperRef = useRef(null)
