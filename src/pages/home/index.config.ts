@@ -1,4 +1,6 @@
 export default definePageConfig({
   navigationBarTitleText: '首页',
-  enablePullDownRefresh: false // 开启下拉刷新
+  enablePullDownRefresh: false,
+  enableShareAppMessage: true,
+  enableShareTimeline: true
 })
