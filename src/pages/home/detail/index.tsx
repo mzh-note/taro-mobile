@@ -134,7 +134,7 @@ export default function Detail() {
             <View className={styles.hot__country}>
               <Image
                 className={styles.hot__img}
-                src={`https://images.weserv.nl/?url=${detail?.baseInfo?.home_logo}`}
+                src={detail?.baseInfo?.home_logo}
                 mode='aspectFit'
               />
               <Text className={styles.hot__name}>{detail?.baseInfo?.home_name}</Text>
@@ -145,7 +145,7 @@ export default function Detail() {
             <View className={styles.hot__country}>
               <Image
                 className={styles.hot__img}
-                src={`https://images.weserv.nl/?url=${detail?.baseInfo?.away_logo}`}
+                src={detail?.baseInfo?.away_logo}
                 mode='aspectFit'
               />
               <Text className={styles.hot__name}>{detail?.baseInfo?.away_name}</Text>
@@ -181,15 +181,17 @@ export default function Detail() {
             <View className={styles.result__detail__p}>该预测可能会随比赛临近而改变。</View>
           </View>
           <View className={styles.result__chart}>
-            <CircleProgress
-              key={1}
-              percent={detail?.baseInfo?.confidence}
-              radius={50}
-              strokeWidth={10}
-              color={{'0%': '#a3221b', '50%': '#a5211b', '100%': '#541c17'}}
-            >
-              {detail?.baseInfo?.confidence}%
-            </CircleProgress>
+            {
+              detail?.baseInfo?.confidence &&
+              <CircleProgress
+                percent={detail?.baseInfo?.confidence}
+                strokeWidth={10}
+                color={{'0%': '#f86a61', '50%': '#ea3831', '100%': '#7e1d14'}}
+                background='#e5e9f2'
+              >
+                {detail?.baseInfo?.confidence}%
+              </CircleProgress>
+            }
           </View>
         </View>
         <View className={styles.percent}>

@@ -1,4 +1,4 @@
-import Taro, {useDidShow} from '@tarojs/taro';
+import Taro, {useDidShow, useLoad, useReady} from '@tarojs/taro';
 import {Image, Text, View} from '@tarojs/components';
 import golden from '@/assets/icon-golden.png';
 import wx from '@/assets/icon-wx.png';
@@ -8,28 +8,63 @@ import logo from '@/assets/logo.png';
 import qq from '@/assets/qq.png'
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
-import {useEffect, memo, useState} from 'react';
+import { memo, useState} from 'react';
 import {applyPro, getUserInfo} from '@/http/api';
-import styles from './index.module.less'
 import {setUser} from '@/store/modules/userReducer';
 import {Overlay} from '@nutui/nutui-react-taro';
+import styles from './index.module.less'
 
 const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useAppDispatch()
   const [info, setInfo] = useState({})
-  const isLogin = userInfo.openid && userInfo.avatar && userInfo.userStatus === 1
-
+  const [isLogin, setIsLogin] = useState(false)
   const [visible, setVisible] = useState(false)
 
+  useLoad(() => {
+    console.log('AboutList useLoad =====================')
+    Taro.getStorage({
+      key: 'fromInviteCode',
+      success: function(res) {
+        dispatch(setUser({
+          fromInviteCode: res?.data
+        }))
+      }
+    })
+    Taro.getStorage({
+      key: 'user',
+      success: async function(res) {
+        console.log(res)
+        if (res.errMsg.indexOf('ok') > -1) {
+          if (res?.data) {
+            const payload = res?.data
+            dispatch(setUser(payload))
+            setIsLogin(true)
+            const res2 = await getUserInfo()
+            setInfo(res2?.data?.data)
+            dispatch(setUser({
+              inviteCode: res2?.data?.data?.inviteCode || ''
+            }))
+          }
+        } else {
+          console.error('getStorage error')
+        }
+      },
+      fail: function () {
+        // console.error('user', err)
+      }
+    })
+  })
   useDidShow(() => {
+    console.log('AboutList useDidShow =====================请求info', isLogin)
     getInfo().then()
   })
-  useEffect(() => {
-
-  }, []);
+  useReady(() => {
+    console.log('AboutList useReady =====================')
+  })
   const getInfo = async () => {
     if (isLogin) {
+      console.log('get userInfo ===============')
       const res = await getUserInfo()
       setInfo(res?.data?.data)
       dispatch(setUser({
@@ -107,10 +142,15 @@ const AboutList = memo(() => {
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
           {/*<Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />*/}
-          <Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/4`} mode='aspectFill' />
+          <Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`} mode='aspectFill' />
         </View>
         <View className={styles.mine__icon}>
-          <Image className={styles.mine__icon__img} mode='aspectFill' src={userInfo.avatar ? userInfo.avatar : defaultIcon} onClick={toUserInfo} />
+          <Image
+            className={styles.mine__icon__img}
+            mode='aspectFill'
+            src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}?t=${new Date().getTime()}` : defaultIcon}
+            onClick={toUserInfo}
+          />
         </View>
         <View className={styles.user} onClick={toUserInfo}>
           {

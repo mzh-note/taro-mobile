@@ -30,6 +30,7 @@ export const userSlice = createSlice({
         ...state.user,
         ...action.payload
       }
+      Taro.setStorageSync('openid', state.user.openid)
       Taro.setStorage({
         key: 'user',
         data: state.user

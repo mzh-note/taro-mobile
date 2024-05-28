@@ -133,7 +133,7 @@ export default function ExpertDetail () {
                   <Text className={styles.course__ball__item__name}>{sugItem?.homeName1}</Text>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem?.homeLogo1}`}
+                    src={sugItem?.homeLogo1}
                     mode='aspectFit'
                   />
                 </View>
@@ -141,7 +141,7 @@ export default function ExpertDetail () {
                 <View className={styles.course__ball__item}>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem?.awayLogo1}`}
+                    src={sugItem?.awayLogo1}
                     mode='aspectFit'
                   />
                   <Text className={styles.course__ball__item__name}>{sugItem?.awayName1}</Text>
@@ -154,7 +154,15 @@ export default function ExpertDetail () {
                   </View>
                 </View>
                 <View className={styles.course__score__right}>
-                  {sugItem?.winState1 === 0 ? '负' : '胜'}({sugItem?.winRate1})
+                  {sugItem?.winstate11 === 0 ? '负' : '胜'}({sugItem?.winRate1})
+                </View>
+                <View className={`${styles.course__score__right} ${styles.course__score__right__r}`}>
+                  {sugItem?.winstate12 === 0 ? '负' : '胜'}({sugItem?.winRate11})
+                </View>
+                <View className={styles.course__score__left}>
+                  <View className={styles.course__score__left__res}>
+                    {sugItem?.forecast11}
+                  </View>
                 </View>
               </View>
           {
@@ -162,15 +170,15 @@ export default function ExpertDetail () {
             &&
             <>
               <View className={styles.course__time}>
-                <Text className={styles.course__time__week}>{sugItem.matchLotteryOne2}</Text>
-                <Text className={styles.course__time__name}>{sugItem.matchTypeName2}</Text>
+                <Text className={styles.course__time__week}>{sugItem?.matchLotteryOne2}</Text>
+                <Text className={styles.course__time__name}>{sugItem?.matchTypeName2}</Text>
               </View>
               <View className={styles.course__ball}>
                 <View className={styles.course__ball__item}>
-                  <Text className={styles.course__ball__item__name}>{sugItem.homeName2}</Text>
+                  <Text className={styles.course__ball__item__name}>{sugItem?.homeName2}</Text>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem.homeLogo2}`}
+                    src={sugItem?.homeLogo2}
                     mode='aspectFit'
                   />
                 </View>
@@ -178,20 +186,28 @@ export default function ExpertDetail () {
                 <View className={styles.course__ball__item}>
                   <Image
                     className={styles.course__ball__item__icon}
-                    src={`https://images.weserv.nl/?url=${sugItem.awayLogo2}`}
+                    src={sugItem?.awayLogo2}
                     mode='aspectFit'
                   />
-                  <Text className={styles.course__ball__item__name}>{sugItem.awayName2}</Text>
+                  <Text className={styles.course__ball__item__name}>{sugItem?.awayName2}</Text>
                 </View>
               </View>
               <View className={styles.course__score}>
                 <View className={styles.course__score__left}>
                   <View className={styles.course__score__left__res}>
-                    {sugItem.forecast2}
+                    {sugItem?.forecast2}
                   </View>
                 </View>
                 <View className={styles.course__score__right}>
-                  {sugItem.winState2 === 0 ? '负' : '胜'}({sugItem.winRate2})
+                  {sugItem?.winstate21 === 0 ? '负' : '胜'}({sugItem?.winRate2})
+                </View>
+                <View className={`${styles.course__score__right} ${styles.course__score__right__r}`}>
+                  {sugItem?.winstate22 === 0 ? '负' : '胜'}({sugItem?.winRate21})
+                </View>
+                <View className={styles.course__score__left}>
+                  <View className={styles.course__score__left__res}>
+                    {sugItem?.forecast21}
+                  </View>
                 </View>
               </View>
             </>

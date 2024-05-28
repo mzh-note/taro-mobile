@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import {useState} from 'react'
-import {Image, RichText, Text, View} from '@tarojs/components';
+import {RichText, Text, Video, View} from '@tarojs/components';
 import { Input, Button } from '@nutui/nutui-react-taro'
 import {getMatchId} from '@/http/api';
 import useShareApp from '@/hooks/useShareApp';
@@ -40,7 +40,18 @@ export default function Home() {
     <View className={styles.home}>
       <View className={styles.home__logo}>
         {/*<Image className={styles.img__logo} mode='aspectFit' src={logo} />*/}
-        <Image className={styles.img__logo} mode='aspectFill' src={`${process.env.TARO_APP_BASEURL}/images/1`} />
+        {/*<Image className={styles.img__logo} mode='aspectFill' src={`${process.env.TARO_APP_BASEURL}/images/1`} />*/}
+        <Video
+          className={styles.img__logo}
+          src={`${process.env.TARO_APP_BASEURL}/images/1.mp4`}
+          initialTime={0}
+          controls={false}
+          autoplay
+          loop
+          muted
+          showFullscreenBtn={false}
+          showPlayBtn={false}
+        />
       </View>
       <View className={styles.search__form}>
         <div className={styles.search__input}>

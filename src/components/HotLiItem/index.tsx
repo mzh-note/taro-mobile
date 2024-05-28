@@ -56,7 +56,7 @@ export default function HotLiItem (props) {
           <View className={styles.hot__country}>
             <Image
               className={styles.hot__img}
-              src={`https://images.weserv.nl/?url=${item?.homeLogo}`}
+              src={item?.homeLogo}
               mode='aspectFit'
             />
             <Text className={styles.hot__name}>{item?.homeName}</Text>
@@ -65,7 +65,7 @@ export default function HotLiItem (props) {
           <View className={styles.hot__country}>
             <Image
               className={styles.hot__img}
-              src={`https://images.weserv.nl/?url=${item?.awayLogo}`}
+              src={item?.awayLogo}
               mode='aspectFit'
             />
             <Text className={styles.hot__name}>{item?.awayName}</Text>

@@ -5,13 +5,17 @@ import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
-import {useAppSelector} from '@/store/hooks';
 import useShareApp from '@/hooks/useShareApp';
 import styles from './index.module.less'
 
 export default function NickName () {
   useShareApp()
-  const userInfo = useAppSelector(state => state.user.user)
+  let fromInviteCode = ''
+  try {
+    fromInviteCode = Taro.getStorageSync('fromInviteCode')
+  } catch(e) {
+
+  }
   const dispatch = useDispatch()
   const [avatar, setAvatar] = useState('')
   let nickname = ''
@@ -60,13 +64,13 @@ export default function NickName () {
     console.log('imgUrl', imgUrl)
     const userNicknameResponse = await userLogin({
       nickName: nickname,
-      inviter_code: userInfo.fromInviteCode
+      inviter_code: fromInviteCode
     })
     console.log('userNicknameResponse', userNicknameResponse)
     // 设置头像、昵称
     dispatch(setUser({
       userStatus: 1,
-      avatar: `${process.env.TARO_APP_BASEURL}${imgUrl?.data?.url}?t=${new Date().getTime()}`,
+      avatar: `${imgUrl?.data?.url}?t=${new Date().getTime()}`,
       name: userNicknameResponse?.data?.data?.nikeName
     }))
     Taro.showToast({

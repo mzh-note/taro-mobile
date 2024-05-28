@@ -160,7 +160,7 @@ export default function CalculatePro() {
                         <Text className={styles['calculate-pro__list__item__name__text']}>{item2?.homeName}</Text>
                         <Image
                           className={styles['calculate-pro__list__item__name__logo']}
-                          src={`https://images.weserv.nl/?url=${item2?.homeLogo}`}
+                          src={item2?.homeLogo}
                           mode='aspectFit'
                         />
                       </View>
@@ -168,7 +168,7 @@ export default function CalculatePro() {
                       <View className={styles['calculate-pro__list__item__name']}>
                         <Image
                           className={styles['calculate-pro__list__item__name__logo']}
-                          src={`https://images.weserv.nl/?url=${item2?.awayLogo}`}
+                          src={item2?.awayLogo}
                           mode='aspectFill'
                         />
                         <Text className={styles['calculate-pro__list__item__name__text']}>{item2?.awayName}</Text>
