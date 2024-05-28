@@ -1,5 +1,5 @@
 import Taro, {useDidShow, useLoad, useReady} from '@tarojs/taro';
-import {Image, Text, View} from '@tarojs/components';
+import {Image, Text, Video, View} from '@tarojs/components';
 import golden from '@/assets/icon-golden.png';
 import wx from '@/assets/icon-wx.png';
 import mine from '@/assets/icon-mine.png';
@@ -142,7 +142,18 @@ const AboutList = memo(() => {
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
           {/*<Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />*/}
-          <Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`} mode='aspectFill' />
+          {/*<Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`} mode='aspectFill' />*/}
+          <Video
+            className={styles.mine__logo__bg}
+            src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}
+            initialTime={0}
+            controls={false}
+            autoplay
+            loop
+            muted
+            showFullscreenBtn={false}
+            showPlayBtn={false}
+          />
         </View>
         <View className={styles.mine__icon}>
           <Image
