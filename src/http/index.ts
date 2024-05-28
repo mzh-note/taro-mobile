@@ -24,12 +24,25 @@ const http = (options: any) => {
       method: options.method || 'GET',
       success: function(res) {
         Taro.hideLoading()
-        // console.log('success', res)
-        resolve(res)
+        console.log('success', res)
+        if (res.statusCode === 403) {
+          Taro.setStorage({
+            key: 'user',
+            data: null,
+            success: function () {
+              Taro.redirectTo({
+                url: '/pages/login/index'
+              })
+            }
+          })
+          reject()
+        } else {
+          resolve(res)
+        }
       },
       fail: function (error) {
         Taro.hideLoading()
-        // console.error('fail', error)
+        console.error('fail', error)
         Taro.showToast({
           title: '访问异常' + JSON.stringify(error.errMsg),
           icon: 'none'
