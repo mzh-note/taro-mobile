@@ -12,22 +12,18 @@ export default function Home() {
   useShareApp()
   const [code, setCode] = useState('')
   const prediction = async () => {
-    // if (code.length === 0) {
-    //   Taro.showToast({
-    //     title: '请输入赛事编号',
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
-    // Taro.showToast({
-    //   title: '即将预测的编号为' + code,
-    //   icon: 'none'
-    // })
-    const res = await getMatchId({code: ''})
-    setCode('')
+    if (code.length === 0) {
+      Taro.showToast({
+        title: '请输入赛事编号',
+        icon: 'none'
+      })
+      return
+    }
+    const res = await getMatchId({code})
     if (res?.data?.data?.matchId) {
+      setCode('')
       Taro.navigateTo({
-        url: '/pages/home/detail/index?id=' + res.data.data.matchId
+        url: '/pages/home/detail/index?id=' + res?.data?.data?.matchId
       })
     } else {
       Taro.showToast({
@@ -59,7 +55,7 @@ export default function Home() {
             className={styles.input}
             placeholder='输入竞彩赛事编号如025'
             value={code}
-            onChange={setCode}
+            onChange={val => setCode(val)}
           />
           <Button className={styles.search__button} onClick={prediction}>
             <RichText nodes='预测<br />一下'></RichText>
