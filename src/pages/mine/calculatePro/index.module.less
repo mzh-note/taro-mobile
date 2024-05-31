@@ -1,0 +1,213 @@
+.calculate-pro {
+  position: absolute;
+  background: #eceded;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  &__red {
+    color: #f22;
+  }
+  &__scroll{
+    height: 100%;
+    &__container {
+      padding: 0 0 120px 0;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 3px #ddd;
+    &__title {
+      border-radius: 10px 10px 0 0;
+      background-color: #f4f9fa;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      font-size: 26px;
+      color: #333;
+      font-weight: 600;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    &__top {
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px 20px 0;
+      margin-top: 20px;
+      font-size: 26px;
+      color: #666;
+      &__date {
+        flex: 1;
+      }
+      &__time {
+        flex: 1;
+      }
+
+      &__team {
+        flex: 1;
+        text-align: right;
+      }
+    }
+    &__item {
+      width: 100%;
+      box-sizing: border-box;
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 20px 0;
+      font-size: 26px;
+      color: #666;
+      &__name {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 28px;
+        &:first-child{
+          text-align: right;
+        }
+        &__text {
+          flex: 1;
+        }
+        &__logo {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin: 0 5px;
+        }
+      }
+      &__vs {
+        width: 80px;
+        color: #000;
+        font-weight: bold;
+        font-size: 30px;
+        text-align: center;
+      }
+    }
+    &__odds {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      font-size: 26px;
+      flex-direction: row;
+      &__left {
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        &__score {
+          flex: 1;
+          border-radius: 5px 5px 0 0;
+          padding: 15px 0;
+          width: 100%;
+          text-align: center;
+          border: 1px solid #f2f2f2;
+          border-bottom: 0;
+          box-sizing: border-box;
+          background-color: #f2f2f2;
+          &:last-child{
+            background: #d6eadb;
+            border: 1px solid #d6eadb;
+            border-radius: 0 0 5px 5px;
+            color: green;
+          }
+        }
+      }
+      &__right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
+        border: 1px solid #e7e7e7;
+        border-radius: 5px;
+        &__up, &__down{
+          width: 100%;
+          flex: 1;
+          display: flex;
+        }
+        &__down {
+          border-top: 1px solid #e7e7e7;
+        }
+        &__text {
+          padding: 15px 0;
+          justify-content: center;
+          align-items: center;
+          flex: 1;
+          border: 0 solid #e7e7e7;
+          display: flex;
+          box-sizing: border-box;
+          &_active {
+            color: #fff;
+            background: #f22;
+          }
+          &:nth-child(2) {
+            border-left-width: 1px;
+            border-right-width: 1px;
+          }
+        }
+      }
+    }
+  }
+  &__fix {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    border-top: 1px solid #ddd;
+    padding: 20px;
+    font-size: 26px;
+    display: flex;
+    flex-direction: column;
+    &__submit {
+      margin-top: 10px;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__left {
+        font-size: 24px;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &__input {
+          flex: 1;
+          border: 1px solid #f2f2f2;
+          border-radius: 10px;
+          padding: 15px 20px;
+        }
+        &__unit {
+          margin-left: 10px;
+          font-size: 28px;
+        }
+      }
+      &__right {
+        flex: 1;
+        text-align: right;
+      }
+    }
+  }
+}
