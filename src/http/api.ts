@@ -3,7 +3,7 @@ import http from './index'
 
 export const uploadAvatar = (imagePath: string, openid: string) => {
   return Taro.uploadFile({
-    url: process.env.TARO_APP_BASEURL + '/api/images/upload', //仅为示例，非真实的接口地址
+    url: process.env.TARO_APP_BASEURL + '/api/images/upload',
     filePath: imagePath,
     name: 'avatarImg',
     header: {

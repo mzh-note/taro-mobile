@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import { memo, useState} from 'react';
 import {applyPro, getUserInfo} from '@/http/api';
 import {setUser} from '@/store/modules/userReducer';
-import {Overlay} from '@nutui/nutui-react-taro';
+import {Button, Overlay} from '@nutui/nutui-react-taro';
 import styles from './index.module.less'
 
 const AboutList = memo(() => {
@@ -218,7 +218,7 @@ const AboutList = memo(() => {
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
-          <Text className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Text>
+          <Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
         </View>
       </View>
       <Overlay visible={visible} onClick={() => setVisible(false)}>
