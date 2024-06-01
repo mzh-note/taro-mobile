@@ -151,8 +151,12 @@ const AboutList = memo(() => {
             autoplay
             loop
             muted
+            showProgress={false}
             showFullscreenBtn={false}
             showPlayBtn={false}
+            showCenterPlayBtn={false}
+            enableProgressGesture={false}
+            showBottomProgress={false}
           />
         </View>
         <View className={styles.mine__icon}>

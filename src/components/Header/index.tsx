@@ -1,5 +1,4 @@
-import {Image, View, Video} from "@tarojs/components";
-
+import {Image, Video, View} from "@tarojs/components";
 import styles from './index.module.less'
 import logo from '../../assets/logo.png'
 
@@ -16,8 +15,13 @@ export default function Header () {
         autoplay
         loop
         muted
+        showProgress={false}
         showFullscreenBtn={false}
         showPlayBtn={false}
+        showCenterPlayBtn={false}
+        enableProgressGesture={false}
+        showBottomProgress={false}
+        vslideGesture={false}
       />
     </View>
   )

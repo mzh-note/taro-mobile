@@ -60,28 +60,35 @@ export default function NickName () {
     dispatch(setUser(response?.data?.data))
     const userAvatarResponse = await uploadAvatar(avatar, response?.data?.data?.openid)
     console.log('userAvatarResponse', userAvatarResponse)
-    const imgUrl = JSON.parse(userAvatarResponse.data)
-    console.log('imgUrl', imgUrl)
-    const userNicknameResponse = await userLogin({
-      nickName: nickname,
-      inviter_code: fromInviteCode
-    })
-    console.log('userNicknameResponse', userNicknameResponse)
-    // 设置头像、昵称
-    dispatch(setUser({
-      userStatus: 1,
-      avatar: `${imgUrl?.data?.url}?t=${new Date().getTime()}`,
-      name: userNicknameResponse?.data?.data?.nikeName
-    }))
-    Taro.showToast({
-      icon: 'none',
-      title: '设置成功',
-      success: () => {
-        Taro.switchTab({
-          url: '/pages/mine/mine'
-        })
-      }
-    })
+    try {
+      const imgUrl = JSON.parse(userAvatarResponse.data)
+      console.log('imgUrl', imgUrl)
+      const userNicknameResponse = await userLogin({
+        nickName: nickname,
+        inviter_code: fromInviteCode
+      })
+      console.log('userNicknameResponse', userNicknameResponse)
+      // 设置头像、昵称
+      dispatch(setUser({
+        userStatus: 1,
+        avatar: `${imgUrl?.data?.url}?t=${new Date().getTime()}`,
+        name: userNicknameResponse?.data?.data?.nikeName
+      }))
+      Taro.showToast({
+        icon: 'none',
+        title: '设置成功',
+        success: () => {
+          Taro.switchTab({
+            url: '/pages/mine/mine'
+          })
+        }
+      })
+    } catch (e) {
+      Taro.showToast({
+        icon: 'none',
+        title: '设置失败'
+      })
+    }
   }
   return (
     <View className={styles.nickname}>

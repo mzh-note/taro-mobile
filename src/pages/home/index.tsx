@@ -45,8 +45,12 @@ export default function Home() {
           autoplay
           loop
           muted
+          showProgress={false}
           showFullscreenBtn={false}
           showPlayBtn={false}
+          showCenterPlayBtn={false}
+          enableProgressGesture={false}
+          showBottomProgress={false}
         />
       </View>
       <View className={styles.search__form}>
