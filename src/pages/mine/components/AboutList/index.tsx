@@ -34,7 +34,7 @@ const AboutList = memo(() => {
     Taro.getStorage({
       key: 'user',
       success: async function(res) {
-        console.log(res)
+        // console.log(res)
         if (res.errMsg.indexOf('ok') > -1) {
           if (res?.data) {
             const payload = res?.data
@@ -56,7 +56,7 @@ const AboutList = memo(() => {
     })
   })
   useDidShow(() => {
-    console.log('AboutList useDidShow =====================请求info', isLogin)
+    console.log('AboutList useDidShow =====================请求info, 是否已登陆', isLogin)
     getInfo().then()
   })
   useReady(() => {
@@ -64,7 +64,7 @@ const AboutList = memo(() => {
   })
   const getInfo = async () => {
     if (isLogin) {
-      console.log('get userInfo ===============')
+      // console.log('get userInfo ===============')
       const res = await getUserInfo()
       setInfo(res?.data?.data)
       dispatch(setUser({
