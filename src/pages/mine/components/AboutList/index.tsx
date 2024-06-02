@@ -97,8 +97,6 @@ const AboutList = memo(() => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          {/*<Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />*/}
-          {/*<Image className={styles.mine__logo__bg} src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`} mode='aspectFill' />*/}
           <Video
             className={styles.mine__logo__bg}
             src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}
@@ -181,7 +179,12 @@ const AboutList = memo(() => {
       <Overlay visible={visible} onClick={() => setVisible(false)}>
         <div className={styles.mine__overlay}>
           <div className={styles.mine__overlay__content}>
-            <Image className={styles.mine__overlay__content__qrcode} src={`${process.env.TARO_APP_BASEURL}/images/6`} mode='aspectFill'/>
+            <Image
+              className={styles.mine__overlay__content__qrcode}
+              src={`${process.env.TARO_APP_BASEURL}/images/6`}
+              mode='aspectFill'
+              showMenuByLongpress
+            />
           </div>
         </div>
       </Overlay>
