@@ -18,7 +18,7 @@ const AboutList = memo(() => {
   const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useAppDispatch()
   const [info, setInfo] = useState({})
-  const [isLogin, setIsLogin] = useState(false)
+  const [firstLoad, setFirstLoad] = useState(true)
   const [visible, setVisible] = useState(false)
 
   useLoad(() => {
@@ -39,7 +39,7 @@ const AboutList = memo(() => {
           if (res?.data) {
             const payload = res?.data
             dispatch(setUser(payload))
-            setIsLogin(true)
+            setFirstLoad(false)
             const res2 = await getUserInfo()
             setInfo(res2?.data?.data)
             dispatch(setUser({
@@ -55,50 +55,22 @@ const AboutList = memo(() => {
       }
     })
   })
-  useDidShow(() => {
-    console.log('AboutList useDidShow =====================请求info, 是否已登陆', isLogin)
-    getInfo().then()
-  })
-  useReady(() => {
-    console.log('AboutList useReady =====================')
-  })
-  const getInfo = async () => {
-    if (isLogin) {
-      // console.log('get userInfo ===============')
+  useDidShow(async () => {
+    if (!firstLoad) {
       const res = await getUserInfo()
       setInfo(res?.data?.data)
       dispatch(setUser({
         inviteCode: res?.data?.data?.inviteCode || ''
       }))
     }
-  }
-  const toUserInfo = () => {
-    if (!isLogin) {
-      Taro.navigateTo({
-        url: '/pages/mine/nickName/index'
-      })
-    }
-  }
+  })
+
   const goMyAttention = () => {
-    if (!isLogin) {
-      Taro.showToast({
-        icon: 'none',
-        title: '请先登陆'
-      })
-      return false
-    }
     Taro.switchTab({
       url: '/pages/course/index'
     })
   }
   const applyExpert = async () => {
-    if (!isLogin) {
-      Taro.showToast({
-        icon: 'none',
-        title: '请先登陆'
-      })
-      return false
-    }
     if (info?.isPro === 0) {
       await applyPro()
       Taro.showToast({
@@ -112,13 +84,6 @@ const AboutList = memo(() => {
     }
   }
   const toInviteFriends = () => {
-    if (!isLogin) {
-      Taro.showToast({
-        icon: 'none',
-        title: '请先登陆'
-      })
-      return false
-    }
     Taro.navigateTo({
       url: `/pages/mine/inviteFriends/index?balance=${info?.balance}&freezeBalance=${info?.freezeBalance}`
     })
@@ -150,13 +115,10 @@ const AboutList = memo(() => {
             className={styles.mine__icon__img}
             mode='aspectFill'
             src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}` : defaultIcon}
-            onClick={toUserInfo}
           />
         </View>
-        <View className={styles.user} onClick={toUserInfo}>
-          {
-            userInfo.openid ? (userInfo.name || '匿名') : '当前未登陆，请登陆'
-          }
+        <View className={styles.user}>
+          {userInfo.openid ? userInfo.name : '匿名'}
         </View>
         <View className={styles.assets}>
           <Text className={styles.assets__txt}>个人资产：<Text className={styles.assets_num}>{info?.balance || 0}</Text> 币</Text>
@@ -208,8 +170,7 @@ const AboutList = memo(() => {
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
-          {/*<Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>*/}
-          <Button className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
+          <Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
         </View>
       </View>
       <Overlay visible={visible} onClick={() => setVisible(false)}>

@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro';
+import Taro, {useDidShow, useLoad} from '@tarojs/taro';
 import {Image, Text, Video, View} from '@tarojs/components';
 import golden from '@/assets/icon-golden.png';
 import wx from '@/assets/icon-wx.png';
@@ -7,12 +7,23 @@ import person from '@/assets/icon-person.png';
 import qq from '@/assets/qq.png'
 import defaultIcon from '@/assets/default-icon.png';
 import {Button} from '@nutui/nutui-react-taro';
+import useShareApp from '@/hooks/useShareApp';
 import styles from './index.module.less'
 
 const Login = () => {
+  useShareApp()
+  useLoad(() => {
+    Taro.hideHomeButton()
+  });
   const toUserInfo = () => {
     Taro.navigateTo({
       url: '/pages/mine/nickName/index'
+    })
+  }
+  const handleClick = () => {
+    Taro.showToast({
+      icon: 'none',
+      title: '请先登陆'
     })
   }
   return (
@@ -51,7 +62,7 @@ const Login = () => {
           <Text className={styles.assets__txt}>锁定：<Text className={styles.assets_num}>0</Text> 币</Text>
           <Image className={styles.assets__img} src={golden} mode='aspectFit' />
         </View>
-        <View className={styles.list}>
+        <View className={styles.list} onClick={handleClick}>
           <View className={styles.list_li}>
             <View className={`${styles.list__img} }`}>
               <Image src={wx} mode='aspectFit' />
@@ -71,7 +82,7 @@ const Login = () => {
             </View>
           </View>
         </View>
-        <View className={styles.list}>
+        <View className={styles.list} onClick={handleClick}>
           <View className={styles.list_li}>
             <View className={styles.list__img}>
               <Image src={person} mode='aspectFit' />
