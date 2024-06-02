@@ -15,6 +15,7 @@ import {Button, Overlay} from '@nutui/nutui-react-taro';
 import styles from './index.module.less'
 
 const AboutList = memo(() => {
+  const app = Taro.getApp()
   const userInfo = useAppSelector(state => state.user.user)
   const dispatch = useAppDispatch()
   const [info, setInfo] = useState({})
@@ -56,6 +57,10 @@ const AboutList = memo(() => {
     })
   })
   useDidShow(async () => {
+    if (app.isPreviewShareHide) {
+      app.isPreviewShareHide = false
+      return false
+    }
     if (!firstLoad) {
       const res = await getUserInfo()
       setInfo(res?.data?.data)

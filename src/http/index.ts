@@ -26,6 +26,10 @@ const http = (options: any) => {
         // console.log('success', res)
         if (res.statusCode === 403) {
           Taro.setStorage({
+            key: 'openid',
+            data: null
+          })
+          Taro.setStorage({
             key: 'user',
             data: null,
             success: function () {

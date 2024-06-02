@@ -6,19 +6,24 @@ import ScoreItem from '@/components/ScoreItem';
 import {Empty} from '@nutui/nutui-react-taro';
 import ExpertItem from '@/components/ExpertItem';
 import {useEffect, useState} from 'react';
-import {useDidHide, useDidShow, useReady} from '@tarojs/taro';
+import Taro, {useDidHide, useDidShow, useReady} from '@tarojs/taro';
 import {favoriteMatchList, favoriteProList} from '@/http/api';
 
 import styles from './index.module.less'
 
 export default function Course() {
   useShareApp()
+  const app = Taro.getApp()
   const tabValue = 3;
   const [scoreList, setScoreList] = useState<any>([])
   const [list, setList] = useState([])
 
   useDidShow(() => {
     console.log('useDidShow')
+    if (app.isPreviewShareHide) {
+      app.isPreviewShareHide = false
+      return false
+    }
     getFavoriteMatchList().then()
     getFavoriteProList().then()
   })

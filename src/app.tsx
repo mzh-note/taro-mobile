@@ -7,6 +7,7 @@ import {wxLogin} from '@/http/api';
 import './app.less'
 
 function App({ children }: PropsWithChildren<any>) {
+  const app = Taro.getApp()
   const [isLaunch, setLaunch] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const router = useRouter()
@@ -26,6 +27,14 @@ function App({ children }: PropsWithChildren<any>) {
 
   useDidShow(() => {
     console.log('getCurrentInstance', Taro.getCurrentInstance().router)
+    const path = Taro.getCurrentInstance().router?.path
+    if (path === 'pages/mine/nickName/index') {
+      return false
+    }
+    if (app.isPreviewShare) {
+      app.isPreviewShare = false
+      return false
+    }
     if (isLaunch) {
       console.log('App useDidShow 触发toLogin', isLaunch, inviteCode, router)
       checkLogin()
@@ -40,6 +49,8 @@ function App({ children }: PropsWithChildren<any>) {
 
   useDidHide(() => {
     console.log('App did hide.')
+    console.log(app.isPreviewShare)
+    app.isPreviewShareHide = true
   })
 
   useError(() => {
@@ -83,7 +94,7 @@ function App({ children }: PropsWithChildren<any>) {
               key: 'user',
               data: response?.data?.data,
               success: function() {
-                if (currentPath && currentPath !== '/pages/mine/mine') {
+                if (currentPath && currentPath === '/pages/login/index') {
                   Taro.switchTab({
                     url: '/pages/mine/mine'
                   })

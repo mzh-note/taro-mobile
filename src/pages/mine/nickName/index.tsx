@@ -5,11 +5,9 @@ import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
-import useShareApp from '@/hooks/useShareApp';
 import styles from './index.module.less'
 
 export default function NickName () {
-  useShareApp()
   let fromInviteCode = ''
   try {
     fromInviteCode = Taro.getStorageSync('fromInviteCode')
