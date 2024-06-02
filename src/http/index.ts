@@ -25,11 +25,18 @@ const http = (options: any) => {
       success: function(res) {
         Taro.hideLoading()
         if (res.statusCode === 403) {
-          Taro.clearStorage().then(() => {
-            Taro.redirectTo({
-              url: '/pages/login/index'
-            })
+          // 不能clearStorage，邀请码要存储，注册使用
+          Taro.removeStorage({
+            key: 'openid'
           })
+          Taro.removeStorage({
+            key: 'user',
+            success: function () {
+              Taro.redirectTo({
+                url: '/pages/login/index'
+              })
+            }
+          });
           reject()
         } else {
           resolve(res)

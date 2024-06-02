@@ -25,18 +25,9 @@ const AboutList = memo(() => {
   useLoad(() => {
     console.log('AboutList useLoad =====================')
     Taro.getStorage({
-      key: 'fromInviteCode',
-      success: function(res) {
-        dispatch(setUser({
-          fromInviteCode: res?.data
-        }))
-      }
-    })
-    Taro.getStorage({
       key: 'user',
       success: async function(res) {
-        // console.log(res)
-        if (res.errMsg.indexOf('ok') > -1) {
+        if (res?.errMsg?.indexOf('ok') > -1) {
           if (res?.data) {
             const payload = res?.data
             dispatch(setUser(payload))
