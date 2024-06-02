@@ -37,4 +37,17 @@ export default function useShareApp () {
       path: `/pages/login/index?inviteCode=${userInfo.inviteCode}`,
     }
   })
+  // 禁止复制链接
+  Taro.onCopyUrl(() => {
+    setTimeout(()=>{
+      Taro.setClipboardData({
+        data: '暂不支持复制短链接',
+        success (res) {
+          // 隐藏提示语
+          Taro.hideToast()
+        }
+      })
+    },1500)
+    return { query: '' }
+  })
 }

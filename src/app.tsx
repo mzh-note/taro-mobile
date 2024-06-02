@@ -11,6 +11,7 @@ function App({ children }: PropsWithChildren<any>) {
   const [isLaunch, setLaunch] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const router = useRouter()
+  console.log('获取本次小程序启动时的参数', Taro.getEnterOptionsSync())
   useLaunch((options) => {
     setLaunch(true)
     const code = options.query?.inviteCode || ''
