@@ -62,7 +62,7 @@ export default function InviteFriends () {
           <View className={styles.invite__friends__author__icon}>
             <Image
               className={styles.invite__friends__author__icon__img}
-              src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}?t=${new Date().getTime()}` : defaultIcon}
+              src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}` : defaultIcon}
               mode='aspectFit'
             />
           </View>

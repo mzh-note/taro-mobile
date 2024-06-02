@@ -79,20 +79,6 @@ const AboutList = memo(() => {
       })
     }
   }
-  const showPreview = () => {
-    setVisible(true)
-    // if (!isLogin) {
-    //   Taro.showToast({
-    //     icon: 'none',
-    //     title: '请先登陆'
-    //   })
-    //   return false
-    // }
-    // Taro.previewImage({
-    //   current: `${process.env.TARO_APP_BASEURL}/images/2`, // 当前显示图片的http链接
-    //   urls: [`${process.env.TARO_APP_BASEURL}/images/2`] // 需要预览的图片http链接列表
-    // })
-  }
   const goMyAttention = () => {
     if (!isLogin) {
       Taro.showToast({
@@ -163,7 +149,7 @@ const AboutList = memo(() => {
           <Image
             className={styles.mine__icon__img}
             mode='aspectFill'
-            src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}?t=${new Date().getTime()}` : defaultIcon}
+            src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}` : defaultIcon}
             onClick={toUserInfo}
           />
         </View>
@@ -178,7 +164,7 @@ const AboutList = memo(() => {
           <Image className={styles.assets__img} src={golden} mode='aspectFit' />
         </View>
         <View className={styles.list}>
-          <View className={styles.list_li} onClick={showPreview}>
+          <View className={styles.list_li} onClick={() => setVisible(true)}>
             <View className={`${styles.list__img} }`}>
               <Image src={wx} mode='aspectFit' />
             </View>
@@ -222,7 +208,8 @@ const AboutList = memo(() => {
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
-          <Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
+          {/*<Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>*/}
+          <Button className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
         </View>
       </View>
       <Overlay visible={visible} onClick={() => setVisible(false)}>

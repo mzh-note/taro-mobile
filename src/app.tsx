@@ -20,7 +20,7 @@ function App({ children }: PropsWithChildren<any>) {
     })
     if (!isLaunch) {
       console.log('App launched.触发toLogin', options.query, isLaunch, router)
-      toLogin()
+      checkLogin()
     }
   })
 
@@ -28,7 +28,7 @@ function App({ children }: PropsWithChildren<any>) {
     console.log('getCurrentInstance', Taro.getCurrentInstance().router)
     if (isLaunch) {
       console.log('App useDidShow 触发toLogin', isLaunch, inviteCode, router)
-      toLogin()
+      checkLogin()
       Taro.getStorage({
         key: 'fromInviteCode', // 邀请码
         success: function(res) {
@@ -46,17 +46,36 @@ function App({ children }: PropsWithChildren<any>) {
     console.log('App error.')
   })
 
+  const checkLogin = () => {
+    Taro.getStorage({
+      key: 'user',
+      success: function (res) {
+        if (res?.data?.openid) {
+          const instance = Taro.getCurrentInstance()
+          const currentPath = instance?.router?.path
+          console.log('已登陆', currentPath)
+          if (currentPath && currentPath === '/pages/login/index') {
+            Taro.switchTab({
+              url: '/pages/mine/mine'
+            })
+          }
+        } else {
+          toLogin()
+        }
+      },
+      fail: function () {
+        toLogin()
+      }
+    })
+  }
   const toLogin = () => {
     Taro.login({
       success: async function (res) {
         // console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
-          // console.log('/api/wx/login================')
           const response = await wxLogin({ code })
-          // console.log('/api/wx/login================', response?.data?.data)
           const instance = Taro.getCurrentInstance()
-          console.log(instance?.router?.path)
           const currentPath = instance?.router?.path
           if (response?.data?.data?.userStatus === 1) {
             console.log('已注册')

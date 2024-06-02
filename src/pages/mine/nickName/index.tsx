@@ -71,7 +71,7 @@ export default function NickName () {
       // 设置头像、昵称
       dispatch(setUser({
         userStatus: 1,
-        avatar: `${imgUrl?.data?.url}?t=${new Date().getTime()}`,
+        avatar: imgUrl?.data?.url,
         name: userNicknameResponse?.data?.data?.nikeName
       }))
       Taro.showToast({
