@@ -7,7 +7,8 @@ const http = (options: any) => {
     }
     let openid = ''
     try {
-      openid = Taro.getStorageSync('openid')
+      const user = Taro.getStorageSync('user')
+      openid = user?.openid
     } catch(e) {
 
     }
@@ -23,20 +24,11 @@ const http = (options: any) => {
       method: options.method || 'GET',
       success: function(res) {
         Taro.hideLoading()
-        // console.log('success', res)
         if (res.statusCode === 403) {
-          Taro.setStorage({
-            key: 'openid',
-            data: null
-          })
-          Taro.setStorage({
-            key: 'user',
-            data: null,
-            success: function () {
-              Taro.redirectTo({
-                url: '/pages/login/index'
-              })
-            }
+          Taro.clearStorage().then(() => {
+            Taro.redirectTo({
+              url: '/pages/login/index'
+            })
           })
           reject()
         } else {
