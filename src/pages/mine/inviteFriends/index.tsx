@@ -1,4 +1,3 @@
-import Taro, {useShareAppMessage} from '@tarojs/taro';
 import {View, Text, Image} from '@tarojs/components';
 import {getCurrentInstance} from '@tarojs/runtime';
 import {useAppSelector} from '@/store/hooks';
@@ -25,9 +24,6 @@ export default function InviteFriends () {
     const getInviteInfo = async() => {
       const res = await inviteInfo()
       let result = res?.data?.data || []
-      // result = [{avatar: '', state: 1, nickName: '测试', balance: 1, time: '2024-04-11 09:18:35'},
-      //     {avatar: '', state: 2, nickName: '测试3', balance: 111,  time: '2024-04-14 19:18:04'},
-      //     {avatar: '', state: 1, nickName: '测试4', balance: 1,  time: '2024-05-23 04:48:11'}]
       if (result.length > 0) {
         setList(result)
         // 计算失效数
@@ -62,8 +58,8 @@ export default function InviteFriends () {
           <View className={styles.invite__friends__author__icon}>
             <Image
               className={styles.invite__friends__author__icon__img}
-              src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}?t=${new Date().getTime()}` : defaultIcon}
-              mode='aspectFit'
+              src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}` : defaultIcon}
+              mode='aspectFill'
             />
           </View>
           <View className={styles.invite__friends__author__info}>

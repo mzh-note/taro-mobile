@@ -7,7 +7,8 @@ const http = (options: any) => {
     }
     let openid = ''
     try {
-      openid = Taro.getStorageSync('openid')
+      const user = Taro.getStorageSync('user')
+      openid = user?.openid
     } catch(e) {
 
     }
@@ -23,17 +24,19 @@ const http = (options: any) => {
       method: options.method || 'GET',
       success: function(res) {
         Taro.hideLoading()
-        // console.log('success', res)
         if (res.statusCode === 403) {
-          Taro.setStorage({
+          // 不能clearStorage，邀请码要存储，注册使用
+          Taro.removeStorage({
+            key: 'openid'
+          })
+          Taro.removeStorage({
             key: 'user',
-            data: null,
             success: function () {
               Taro.redirectTo({
                 url: '/pages/login/index'
               })
             }
-          })
+          });
           reject()
         } else {
           resolve(res)

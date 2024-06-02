@@ -7,10 +7,13 @@ import {wxLogin} from '@/http/api';
 import './app.less'
 
 function App({ children }: PropsWithChildren<any>) {
+  const app = Taro.getApp()
   const [isLaunch, setLaunch] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const router = useRouter()
   useLaunch((options) => {
+    console.log('获取本次小程序启动时的参数', Taro.getEnterOptionsSync())
+    console.log('useLaunch options', options)
     setLaunch(true)
     const code = options.query?.inviteCode || ''
     setInviteCode(code)
@@ -20,43 +23,66 @@ function App({ children }: PropsWithChildren<any>) {
     })
     if (!isLaunch) {
       console.log('App launched.触发toLogin', options.query, isLaunch, router)
-      toLogin()
+      checkLogin()
     }
   })
 
   useDidShow(() => {
     console.log('getCurrentInstance', Taro.getCurrentInstance().router)
+    const path = Taro.getCurrentInstance().router?.path
+    if (path === 'pages/mine/nickName/index') {
+      return false
+    }
+    if (app.isPreviewShare) {
+      app.isPreviewShare = false
+      return false
+    }
     if (isLaunch) {
       console.log('App useDidShow 触发toLogin', isLaunch, inviteCode, router)
-      toLogin()
-      Taro.getStorage({
-        key: 'fromInviteCode', // 邀请码
-        success: function(res) {
-          console.log('App fromInviteCode', res)
-        }
-      })
+      checkLogin()
     }
   })
 
   useDidHide(() => {
     console.log('App did hide.')
+    console.log(app.isPreviewShare)
+    app.isPreviewShareHide = true
   })
 
   useError(() => {
     console.log('App error.')
   })
 
+  const checkLogin = () => {
+    Taro.getStorage({
+      key: 'user',
+      success: function (res) {
+        if (res?.data?.openid) {
+          const instance = Taro.getCurrentInstance()
+          const currentPath = instance?.router?.path
+          console.log('已登陆', currentPath)
+          if (currentPath && currentPath === '/pages/login/index') {
+            Taro.switchTab({
+              url: '/pages/mine/mine'
+            })
+          }
+        } else {
+          toLogin()
+        }
+      },
+      fail: function () {
+        toLogin()
+      }
+    })
+  }
   const toLogin = () => {
     Taro.login({
       success: async function (res) {
         // console.log('获取登录凭证（code）', res.code)
         const code = res.code
         if (code) {
-          // console.log('/api/wx/login================')
           const response = await wxLogin({ code })
-          // console.log('/api/wx/login================', response?.data?.data)
           const instance = Taro.getCurrentInstance()
-          console.log(instance?.router?.path)
           const currentPath = instance?.router?.path
           if (response?.data?.data?.userStatus === 1) {
             console.log('已注册')
@@ -64,7 +90,7 @@ function App({ children }: PropsWithChildren<any>) {
               key: 'user',
               data: response?.data?.data,
               success: function() {
-                if (currentPath && currentPath !== '/pages/mine/mine') {
+                if (currentPath && currentPath === '/pages/login/index') {
                   Taro.switchTab({
                     url: '/pages/mine/mine'
                   })

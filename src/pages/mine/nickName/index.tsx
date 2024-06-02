@@ -5,11 +5,9 @@ import {uploadAvatar, userLogin, wxLogin} from '@/http/api';
 import defaultIcon from '@/assets/default-icon.png'
 import {useDispatch} from 'react-redux';
 import {setUser} from '@/store/modules/userReducer';
-import useShareApp from '@/hooks/useShareApp';
 import styles from './index.module.less'
 
 export default function NickName () {
-  useShareApp()
   let fromInviteCode = ''
   try {
     fromInviteCode = Taro.getStorageSync('fromInviteCode')
@@ -53,7 +51,6 @@ export default function NickName () {
     })
   }
   const submitLogin = async (code: string) => {
-    // console.log('wxlogin')
     const response = await wxLogin({ code })
     console.log('登陆成功', response?.data?.data)
     // 设置openid、session_key
@@ -62,7 +59,7 @@ export default function NickName () {
     console.log('userAvatarResponse', userAvatarResponse)
     try {
       const imgUrl = JSON.parse(userAvatarResponse.data)
-      console.log('imgUrl', imgUrl)
+      console.log('inviter_code', fromInviteCode)
       const userNicknameResponse = await userLogin({
         nickName: nickname,
         inviter_code: fromInviteCode
@@ -70,8 +67,9 @@ export default function NickName () {
       console.log('userNicknameResponse', userNicknameResponse)
       // 设置头像、昵称
       dispatch(setUser({
+        fromInviteCode: fromInviteCode,
         userStatus: 1,
-        avatar: `${imgUrl?.data?.url}?t=${new Date().getTime()}`,
+        avatar: imgUrl?.data?.url,
         name: userNicknameResponse?.data?.data?.nikeName
       }))
       Taro.showToast({
