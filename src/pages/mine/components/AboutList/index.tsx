@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import { memo, useState} from 'react';
 import {applyPro, getUserInfo} from '@/http/api';
 import {setUser} from '@/store/modules/userReducer';
-import {Overlay} from '@nutui/nutui-react-taro';
+import {Button, Overlay} from '@nutui/nutui-react-taro';
 import styles from './index.module.less'
 
 const AboutList = memo(() => {
@@ -34,7 +34,7 @@ const AboutList = memo(() => {
     Taro.getStorage({
       key: 'user',
       success: async function(res) {
-        console.log(res)
+        // console.log(res)
         if (res.errMsg.indexOf('ok') > -1) {
           if (res?.data) {
             const payload = res?.data
@@ -56,7 +56,7 @@ const AboutList = memo(() => {
     })
   })
   useDidShow(() => {
-    console.log('AboutList useDidShow =====================请求info', isLogin)
+    console.log('AboutList useDidShow =====================请求info, 是否已登陆', isLogin)
     getInfo().then()
   })
   useReady(() => {
@@ -64,7 +64,7 @@ const AboutList = memo(() => {
   })
   const getInfo = async () => {
     if (isLogin) {
-      console.log('get userInfo ===============')
+      // console.log('get userInfo ===============')
       const res = await getUserInfo()
       setInfo(res?.data?.data)
       dispatch(setUser({
@@ -151,8 +151,12 @@ const AboutList = memo(() => {
             autoplay
             loop
             muted
+            showProgress={false}
             showFullscreenBtn={false}
             showPlayBtn={false}
+            showCenterPlayBtn={false}
+            enableProgressGesture={false}
+            showBottomProgress={false}
           />
         </View>
         <View className={styles.mine__icon}>
@@ -218,7 +222,7 @@ const AboutList = memo(() => {
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
-          <Text className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Text>
+          <Button openType='contact' className={styles.customer__txt}>有任何问题请联系BOBdata官方客服</Button>
         </View>
       </View>
       <Overlay visible={visible} onClick={() => setVisible(false)}>

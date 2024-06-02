@@ -76,7 +76,8 @@ export default function ExpertDetail () {
           <Avatar
             className={styles.overview__img}
             size='normal'
-            src={`${process.env.TARO_APP_BASEURL}/images/${proBase?.avatar}`}
+            shape='round'
+            src={proBase?.avatar ? `${process.env.TARO_APP_BASEURL}/images/${proBase?.avatar}` : ''}
           />
           <View className={styles.overview__info}>
             <View className={styles.info__author}>{proBase?.nickName}</View>

@@ -1,9 +1,9 @@
-import Taro from '@tarojs/taro';
+import Taro, {useShareAppMessage} from '@tarojs/taro';
 import {View, Text, Image} from '@tarojs/components';
 import {getCurrentInstance} from '@tarojs/runtime';
 import {useAppSelector} from '@/store/hooks';
 import {ArrowRight} from '@nutui/icons-react-taro';
-import {Empty} from '@nutui/nutui-react-taro';
+import {Button, Empty} from '@nutui/nutui-react-taro';
 import {useEffect, useState} from 'react';
 import useShareApp from '@/hooks/useShareApp';
 import {inviteInfo} from '@/http/api';
@@ -49,12 +49,6 @@ export default function InviteFriends () {
       setInviteList(newList)
     }
   }
-  const showPreview = () => {
-    Taro.previewImage({
-      current: `${process.env.TARO_APP_BASEURL}/images/3`, // 当前显示图片的http链接
-      urls: [`${process.env.TARO_APP_BASEURL}/images/3`] // 需要预览的图片http链接列表
-    })
-  }
   return (
     <>
       <View className={styles.invite__friends}>
@@ -62,11 +56,15 @@ export default function InviteFriends () {
           <Text className={styles.invite__friends__rules__title}>【如何获得BOB币】</Text>
           <Text className={styles.invite__friends__rules__content}>把我们的小程序链接或者二维码，分享给你的好友，只要好友添加我们客服微信，即可获得70BOB币。</Text>
           <Text className={styles.invite__friends__rules__title}>【BOB可以做什么】</Text>
-          <Text className={styles.invite__friends__rules__content}>BoB币可以在全站使用，一个BOB币即等于1元人民币，不可提现，不可买卖。可以查看专家推荐方案。可以兑换年度会员。年度会员365BOB币。</Text>
+          <Text className={styles.invite__friends__rules__content}>BOB币可以在全站使用，不可提现，不可买卖。可以查看专家推荐方案。</Text>
         </View>
         <View className={styles.invite__friends__author}>
           <View className={styles.invite__friends__author__icon}>
-            <Image className={styles.invite__friends__author__icon__img} src={userInfo.avatar as string} mode='aspectFit' />
+            <Image
+              className={styles.invite__friends__author__icon__img}
+              src={userInfo.avatar ? `${process.env.TARO_APP_BASEURL}${userInfo.avatar}?t=${new Date().getTime()}` : defaultIcon}
+              mode='aspectFit'
+            />
           </View>
           <View className={styles.invite__friends__author__info}>
             <Text className={styles.invite__friends__author__info__name}>{userInfo.name}</Text>
@@ -89,7 +87,9 @@ export default function InviteFriends () {
               <Image className={styles.invite__friends__tips__coin__down__img} src={golden} mode='aspectFit' />
             </View>
           </View>
-          <View className={styles.invite__friends__tips__btn} onClick={showPreview}>邀请好友</View>
+          <Button className={styles.invite__friends__tips__btn} openType='share'>
+            邀请好友
+          </Button>
         </View>
         <View className={styles.invite__friends__list}>
           <View className={styles.invite__friends__list__tabs}>

@@ -15,7 +15,7 @@ export default function useShareApp () {
     })
   })
   useShareAppMessage((res) => {
-    // console.log(res)
+    console.log('当前分享url', `/pages/login/index?inviteCode=${userInfo.inviteCode}`)
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)

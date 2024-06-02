@@ -8,7 +8,6 @@ const http = (options: any) => {
     let openid = ''
     try {
       openid = Taro.getStorageSync('openid')
-      console.log('getStorageSync', openid)
     } catch(e) {
 
     }
