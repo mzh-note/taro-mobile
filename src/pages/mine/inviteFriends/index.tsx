@@ -135,7 +135,7 @@ export default function InviteFriends () {
           {
             inviteList.length === 0 &&
             <View className={styles.invite__friends__list__li}>
-              <Empty description='暂无数据' size='small' />
+              <Empty description='暂无数据' imageSize={60} />
             </View>
           }
         </View>

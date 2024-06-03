@@ -256,7 +256,7 @@ export default function CalculatePro() {
           !loading &&
           list.length === 0 &&
           <View className={styles['calculate-pro__list']}>
-            <Empty description='暂无数据' size='small' />
+            <Empty description='暂无数据' imageSize={60} />
           </View>
         }
         </View>
