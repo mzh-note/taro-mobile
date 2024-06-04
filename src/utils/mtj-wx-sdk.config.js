@@ -7,7 +7,7 @@ module.exports = {
      * 从百度移动统计获取的AppKey
      * @type {string}
      */
-    appKey: 'wx6d13035910b84f98',
+    appKey: '5e334b0216',
 
     /**
      * 是否使用了插件
