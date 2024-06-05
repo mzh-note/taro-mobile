@@ -1,7 +1,6 @@
 import '@/utils/mtj-wx-sdk'
 import {PropsWithChildren, useState} from 'react';
 import Taro, { useDidHide, useDidShow, useError, useLaunch, useRouter } from '@tarojs/taro'
-import '@nutui/nutui-react-taro/dist/style.css'
 import store from '@/store';
 import {Provider} from 'react-redux';
 import {wxLogin} from '@/http/api';
