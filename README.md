@@ -1,4 +1,4 @@
-####  使用Taro进行多端开发的实例 - 足球AI预测（微信小程序 + H5）。
+####  使用Taro开发的（微信小程序 + H5）
 技术栈 Taro3.6.24 + typescript + react18，所用技术涉及
 
 UI：NUTUI-React

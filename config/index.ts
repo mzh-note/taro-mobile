@@ -46,14 +46,17 @@ export default defineConfig(async (merge) => {
       type: 'webpack5',  // 自定义编译工具，可选 'Webpack4' 或 'Webpack5'
       // 依赖预编译配置
       prebundle: {
-        // exclude: ['@nutui/nutui-react-taro', '@nutui/icons-react-taro']
-           enable: false // webpack5可解决微信小程序中出现的打包依赖问题
+        exclude: ['@nutui/nutui-react-taro', '@nutui/icons-react-taro'],
+        enable: false // webpack5可解决微信小程序中出现的打包依赖问题
       }
     },
     cache: {
       enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
     },
     mini: {
+      optimizeMainPackage: {
+        enable: true,
+      },
       postcss: {
         autoprefixer: {
           enable: true,

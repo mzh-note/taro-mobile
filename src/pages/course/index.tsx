@@ -82,7 +82,7 @@ export default function Course() {
             }
             {
               scoreList.length === 0 &&
-              <Empty description='无数据' imageSize={50} />
+              <Empty description='暂无数据' imageSize={60} />
             }
           </View>
           <View className={styles.my__attention__title}>
@@ -96,7 +96,7 @@ export default function Course() {
               ))
             }
             {
-              list.length === 0 && <Empty description='无数据' imageSize={60} />
+              list.length === 0 && <Empty description='暂无数据' imageSize={60} />
             }
           </View>
         </View>

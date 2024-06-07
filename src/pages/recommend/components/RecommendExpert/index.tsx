@@ -91,7 +91,7 @@ export default function RecommendExpert (props) {
       {
         hotList.length === 0 &&
         <View className={styles.hot__li}>
-          <Empty description='无数据' imageSize={80} />
+          <Empty description='暂无数据' imageSize={60} />
         </View>
       }
     </>

@@ -109,7 +109,7 @@ export default function ExpertDetail () {
               {
                 !visible && !loading &&
                 list.length === 0 &&
-                <Empty description='暂无数据' size='small' />
+                <Empty description='暂无数据' imageSize={60} />
               }
             </View>
           </View>
@@ -219,7 +219,7 @@ export default function ExpertDetail () {
         }
         {
           !visible && !loading && sugList.length === 0 &&
-          <Empty description='暂无数据' size='small' />
+          <Empty description='暂无数据' imageSize={60} />
         }
       </View>
       <Overlay visible={visible} closeOnOverlayClick={false}>
