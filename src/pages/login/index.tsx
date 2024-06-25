@@ -32,7 +32,7 @@ const Login = () => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          <Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />
+          <Image className={styles.mine__logo__bg} src={defaultIcon} mode='aspectFit' />
           {/*<Video*/}
           {/*  className={styles.mine__logo__bg}*/}
           {/*  src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}*/}
