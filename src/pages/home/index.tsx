@@ -1,12 +1,12 @@
 import Taro from '@tarojs/taro';
 import {useState} from 'react'
-import {RichText, Text, Video, View} from '@tarojs/components';
+import {RichText, Text, Image, View} from '@tarojs/components';
 import { Input, Button } from '@nutui/nutui-react-taro'
 import {getMatchId} from '@/http/api';
 import useShareApp from '@/hooks/useShareApp';
 
-import logo from '../../assets/logo.png'
 import styles from './index.module.less'
+import logo from '../../assets/logo.png'
 
 export default function Home() {
   useShareApp()
@@ -35,21 +35,22 @@ export default function Home() {
   return (
     <View className={styles.home}>
       <View className={styles.home__logo}>
-        <Video
-          className={styles.img__logo}
-          src={`${process.env.TARO_APP_BASEURL}/images/1.mp4`}
-          initialTime={0}
-          controls={false}
-          autoplay
-          loop
-          muted
-          showProgress={false}
-          showFullscreenBtn={false}
-          showPlayBtn={false}
-          showCenterPlayBtn={false}
-          enableProgressGesture={false}
-          showBottomProgress={false}
-        />
+        <Image className={styles.img__logo} mode='aspectFit' src={logo} />
+        {/*<Video*/}
+        {/*  className={styles.img__logo}*/}
+        {/*  src={`${process.env.TARO_APP_BASEURL}/images/1.mp4`}*/}
+        {/*  initialTime={0}*/}
+        {/*  controls={false}*/}
+        {/*  autoplay*/}
+        {/*  loop*/}
+        {/*  muted*/}
+        {/*  showProgress={false}*/}
+        {/*  showFullscreenBtn={false}*/}
+        {/*  showPlayBtn={false}*/}
+        {/*  showCenterPlayBtn={false}*/}
+        {/*  enableProgressGesture={false}*/}
+        {/*  showBottomProgress={false}*/}
+        {/*/>*/}
       </View>
       <View className={styles.search__form}>
         <div className={styles.search__input}>

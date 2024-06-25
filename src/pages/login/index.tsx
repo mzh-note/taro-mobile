@@ -9,6 +9,8 @@ import defaultIcon from '@/assets/default-icon.png';
 import {Button} from '@nutui/nutui-react-taro';
 import useShareApp from '@/hooks/useShareApp';
 import styles from './index.module.less'
+import logo from '../../assets/logo.png'
+import mineWarn from '../../assets/mine-warn.png'
 
 const Login = () => {
   useShareApp()
@@ -30,21 +32,22 @@ const Login = () => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          <Video
-            className={styles.mine__logo__bg}
-            src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}
-            initialTime={0}
-            controls={false}
-            autoplay
-            loop
-            muted
-            showProgress={false}
-            showFullscreenBtn={false}
-            showPlayBtn={false}
-            showCenterPlayBtn={false}
-            enableProgressGesture={false}
-            showBottomProgress={false}
-          />
+          <Image className={styles.mine__logo__bg} src={defaultIcon} mode='aspectFit' />
+          {/*<Video*/}
+          {/*  className={styles.mine__logo__bg}*/}
+          {/*  src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}*/}
+          {/*  initialTime={0}*/}
+          {/*  controls={false}*/}
+          {/*  autoplay*/}
+          {/*  loop*/}
+          {/*  muted*/}
+          {/*  showProgress={false}*/}
+          {/*  showFullscreenBtn={false}*/}
+          {/*  showPlayBtn={false}*/}
+          {/*  showCenterPlayBtn={false}*/}
+          {/*  enableProgressGesture={false}*/}
+          {/*  showBottomProgress={false}*/}
+          {/*/>*/}
         </View>
         <View className={styles.mine__icon}>
           <Image
@@ -101,7 +104,7 @@ const Login = () => {
           </View>
         </View>
         <View className={styles.intro__img}>
-          <Image className={styles.intro__img__logo} src={`${process.env.TARO_APP_BASEURL}/images/5`} mode='aspectFill' />
+          <Image className={styles.intro__img__logo} src={mineWarn} mode='aspectFill' />
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />

@@ -6,6 +6,8 @@ import mine from '@/assets/icon-mine.png';
 import person from '@/assets/icon-person.png';
 import logo from '@/assets/logo.png';
 import qq from '@/assets/qq.png'
+import code from '@/assets/code.png'
+import mineWarn from '@/assets/mine-warn.png'
 import defaultIcon from '@/assets/default-icon.png';
 import {useAppDispatch, useAppSelector} from '@/store/hooks';
 import { memo, useState} from 'react';
@@ -88,21 +90,22 @@ const AboutList = memo(() => {
     <>
       <View className={styles.mine}>
         <View className={styles.mine__logo}>
-          <Video
-            className={styles.mine__logo__bg}
-            src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}
-            initialTime={0}
-            controls={false}
-            autoplay
-            loop
-            muted
-            showProgress={false}
-            showFullscreenBtn={false}
-            showPlayBtn={false}
-            showCenterPlayBtn={false}
-            enableProgressGesture={false}
-            showBottomProgress={false}
-          />
+          <Image className={styles.mine__logo__bg} src={logo} mode='aspectFit' />
+        {/*  <Video*/}
+        {/*    className={styles.mine__logo__bg}*/}
+        {/*    src={`${process.env.TARO_APP_BASEURL}/images/8.mp4`}*/}
+        {/*    initialTime={0}*/}
+        {/*    controls={false}*/}
+        {/*    autoplay*/}
+        {/*    loop*/}
+        {/*    muted*/}
+        {/*    showProgress={false}*/}
+        {/*    showFullscreenBtn={false}*/}
+        {/*    showPlayBtn={false}*/}
+        {/*    showCenterPlayBtn={false}*/}
+        {/*    enableProgressGesture={false}*/}
+        {/*    showBottomProgress={false}*/}
+        {/*  />*/}
         </View>
         <View className={styles.mine__icon}>
           <Image
@@ -160,7 +163,7 @@ const AboutList = memo(() => {
           </View>
         </View>
         <View className={styles.intro__img}>
-          <Image className={styles.intro__img__logo} src={`${process.env.TARO_APP_BASEURL}/images/5`} mode='aspectFill'/>
+          <Image className={styles.intro__img__logo} src={mineWarn} mode='aspectFill' />
         </View>
         <View className={styles.customer}>
           <Image className={styles.customer__qq} src={qq} mode='aspectFit' />
@@ -172,7 +175,7 @@ const AboutList = memo(() => {
           <div className={styles.mine__overlay__content}>
             <Image
               className={styles.mine__overlay__content__qrcode}
-              src={`${process.env.TARO_APP_BASEURL}/images/6`}
+              src={code}
               mode='aspectFill'
               showMenuByLongpress
             />
